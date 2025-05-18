@@ -1,0 +1,11 @@
+{
+    "welcome": {
+        "title": "Welcome to the File Management System",
+        "description": "This is a file management system that allows you to manage your files and folders.",
+        "button": "Get Started"
+    },
+    "switchLanguage": {
+        "English": "English",
+        "Khmer": "Khmer"
+    }
+}
