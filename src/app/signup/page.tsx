@@ -4,9 +4,9 @@ import SignUp from "@/components/signup/signup";
 
 export default function SignupPage() {
   return (
-    <Base insideClassName="p-0">
-      <div className="flex flex-col w-full h-full">
-        <Header back title="Signup" />
+    <Base>
+      <Header back title="Signup" />
+      <div className="flex w-full items-center justify-center p-3">
         <SignUp />
       </div>
     </Base>

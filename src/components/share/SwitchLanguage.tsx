@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 
 export default function SwitchLanguage() {
-  const [currentLanguage, setCurrentLanguage] = useState<string | null>(null);
+  const [currentLanguage, setCurrentLanguage] = useState<string>("en");
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -23,8 +23,6 @@ export default function SwitchLanguage() {
     }
   }, []);
 
-  console.log("currentLanguage", currentLanguage);
-
   const handleChangeLanguage = (value: string) => {
     changeLanguage(value);
     setCurrentLanguage(value);
@@ -32,10 +30,7 @@ export default function SwitchLanguage() {
 
   return (
     <div>
-      <Select
-        defaultValue={currentLanguage === "en" ? "en" : "km"}
-        onValueChange={handleChangeLanguage}
-      >
+      <Select value={currentLanguage} onValueChange={handleChangeLanguage}>
         <SelectTrigger>
           <div className="flex items-center gap-2">
             <SelectValue placeholder="Select a language" />

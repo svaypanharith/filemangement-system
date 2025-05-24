@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SwitchLanguage from "@/components/share/SwitchLanguage";
 import { useRouter } from "next/navigation";
 import MButton from "@/components/m-ui/m-button";
+import { useTranslation } from "react-i18next";
 import {
   FileText,
   Upload,
@@ -21,6 +22,7 @@ import {
 export default function WelcomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
       {/* Header Section */}
@@ -35,12 +37,21 @@ export default function WelcomePage() {
           <div className="flex items-center gap-4">
             <Button variant="ghost">Docs</Button>
             <Button variant="ghost">Support</Button>
-            <Button variant="outline" onClick={() => router.push("/signin")}>
-              Sign In
-            </Button>
+            <MButton
+              size="sm"
+              variant="outline"
+              onClick={() => router.push("/signin")}
+              preset="primary"
+            >
+              {t("signin.button")}
+            </MButton>
             <SwitchLanguage />
-            <MButton size="sm" preset="primary">
-              Get Started
+            <MButton
+              size="sm"
+              onClick={() => router.push("/signup")}
+              preset="primary"
+            >
+              {t("welcome.button")}
             </MButton>
           </div>
         </div>

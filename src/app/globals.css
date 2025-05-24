@@ -1,7 +1,19 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 @custom-variant dark (&:is(.dark *));
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../../public/assets/fonts/Roboto-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -41,6 +53,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --font-poppins: "Poppins", sans-serif;
 }
 
 :root {
