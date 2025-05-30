@@ -1,0 +1,34 @@
+{
+    "welcome": {
+        "title": "Welcome to the File Management System",
+        "description": "This is a file management system that allows you to manage your files and folders.",
+        "button": "Get Started"
+    },
+    "switchLanguage": {
+        "English": "English",
+        "Khmer": "Khmer"
+    },
+    "signup": {
+        "title": "Create account",
+        "signup_with_google": "Sign up with Google",
+        "description": "Enter your credentials to create your account!",
+        "button": "Create account"
+    },
+    "signin": {
+        "title": "Sign in",
+        "signin_with_google": "Sign in with Google",
+        "description": "Enter your credentials to sign in!",
+        "button": "Sign in"
+    },
+    "chatbot": {
+        "title": "Chatbot ASK TO AI",
+        "description": "Ask to AI",
+        "button": "Ask to AI"
+    },
+    "dashboard": {
+        "dashboard": "Dashboard",
+        "document": "Document",
+        "chatbot": "Chatbot",
+        "folder": "Folder"
+    }
+}
