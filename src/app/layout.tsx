@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import I18nProvider from "@/provider/I18nProvider";
+import { SnackBarAppToaster } from "@/hooks/usesnack-bar";
 
 const poppins = localFont({
   src: "../../public/assets/fonts/Poppins-Regular.ttf",
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.variable} font-poppins antialiased`}>
         <I18nProvider>{children}</I18nProvider>
+        <SnackBarAppToaster />
       </body>
     </html>
   );

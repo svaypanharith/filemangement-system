@@ -19,5 +19,16 @@
         "signin_with_google": "Sign in with Google",
         "description": "Enter your credentials to sign in!",
         "button": "Sign in"
+    },
+    "chatbot": {
+        "title": "Chatbot ASK TO AI",
+        "description": "Ask to AI",
+        "button": "Ask to AI"
+    },
+    "dashboard": {
+        "dashboard": "Dashboard",
+        "document": "Document",
+        "chatbot": "Chatbot",
+        "folder": "Folder"
     }
 }

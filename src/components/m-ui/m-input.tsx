@@ -9,6 +9,7 @@ interface MInputProps {
   type?: string;
   className?: string;
   required?: boolean;
+  rounded?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -19,6 +20,7 @@ export default function MInput({
   onChange,
   className,
   required,
+  rounded,
 }: MInputProps) {
   console.log("type", type);
   return (
@@ -30,7 +32,8 @@ export default function MInput({
       <Input
         className={cn(
           className,
-          "h-15 rounded-lg shadow-sm border border-gray-200 rounded-lg"
+          "h-15  shadow-sm border border-gray-200",
+          rounded && "rounded-lg"
         )}
         placeholder={placeholder}
         type={type}

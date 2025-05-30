@@ -45,6 +45,7 @@ export default function SignUp() {
           {t.t("signup.or_continue_with")}
         </p>
         <MInput
+          rounded
           required
           label="Name"
           placeholder="Name"
@@ -53,7 +54,13 @@ export default function SignUp() {
             console.log(e.target.value);
           }}
         />
-        <MInput required label="Email" placeholder="Email" type="email" />
+        <MInput
+          required
+          label="Email"
+          placeholder="Email"
+          type="email"
+          rounded
+        />
         <MInputPassword
           required
           label="Password"

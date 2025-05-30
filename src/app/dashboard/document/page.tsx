@@ -11,7 +11,8 @@ export default function DocumentPage() {
           <h1 className="text-2xl font-bold">Document</h1>
         </div>
         <p className="text-gray-500">
-          Document is a collection of files that are stored in the database.
+          Keep all your PDF files in one place. Simply drag and drop to upload,
+          find what you need quickly, and manage your documents with ease.
         </p>
       </div>
       <Document />

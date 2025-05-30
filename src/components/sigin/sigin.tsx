@@ -26,7 +26,13 @@ export default function SignIn() {
       </MButton>
       <div className="flex w-full flex-col gap-4">
         <p className="text-sm text-gray-500">Or continue with</p>
-        <MInput required label="Email" placeholder="Email" type="email" />
+        <MInput
+          required
+          label="Email"
+          placeholder="Email"
+          type="email"
+          rounded
+        />
         <MInputPassword
           required
           label="Password"

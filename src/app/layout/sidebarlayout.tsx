@@ -7,7 +7,8 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 
-import { AppSidebar } from "@/components/dashboard/sidebargroup";
+import Header from "./header";
+import { AppSidebar } from "@/components/dashboard/AppSidebar";
 export default function SidebarLayout({
   children,
 }: {
@@ -20,7 +21,7 @@ export default function SidebarLayout({
         <div className="flex h-full flex-col gap-4 ">
           <main className="flex-1 overflow-auto">
             <div className="flex flex-col gap-4 py-6 px-10">
-              <SidebarTrigger />
+              <Header />
               {children}
             </div>
           </main>
