@@ -5,7 +5,7 @@ import I18nProvider from "@/provider/I18nProvider";
 import { SnackBarAppToaster } from "@/hooks/usesnack-bar";
 
 const poppins = localFont({
-  src: "../../public/assets/fonts/Poppins-Regular.ttf",
+  src: "../../public/assets/fonts/KantumruyPro-Regular.ttf",
   variable: "--font-poppins",
   weight: "400",
   display: "swap",

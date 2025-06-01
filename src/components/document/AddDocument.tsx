@@ -1,6 +1,6 @@
 "use client";
 
-import { Folder } from "lucide-react";
+import { Folder, Upload } from "lucide-react";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { Input } from "../ui/input";
@@ -34,7 +34,7 @@ export default function AddDocument() {
   return (
     <div className="flex flex-col items-center gap-6 w-full max-w-md">
       <div
-        className="rounded-full p-6 border-2 border-dashed border-gray-300 hover:border-primary transition-colors cursor-pointer"
+        className="rounded-full p-6 bg-blue-50 hover:border-primary transition-colors cursor-pointer"
         onDragOver={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -49,7 +49,7 @@ export default function AddDocument() {
         }}
       >
         <label className="cursor-pointer block w-full h-full">
-          <Folder className="w-30 h-30 text-gray" />
+          <Upload className="w-20 h-20 text-blue-800" />
           <Input
             type="file"
             className="hidden"
@@ -73,13 +73,14 @@ export default function AddDocument() {
       ) : (
         <div className="flex flex-col items-center gap-2 w-full">
           <p className="text-lg font-bold text-black text-center break-words max-w-full">
-            Documents
+            Upload Source
           </p>
           <p className="text-sm text-gray-500 text-center">
-            Add a document to your collection
+            Drag and drop or choose file to upload
           </p>
           <p className="text-sm text-gray-500 text-center">
-            Drag and drop your files here or click to upload
+            Supported file types: PDF, DOCX, TXT, CSV, XLSX, PPTX, RTF, ODT,
+            ODS,
           </p>
         </div>
       )}

@@ -1,13 +1,13 @@
 "use client";
 
-import { ChevronRight, Link, type LucideIcon } from "lucide-react";
-
 import {
   SidebarGroup,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { ChevronRight, type LucideIcon } from "lucide-react";
 
 interface SubItem {
   title: string;
@@ -16,28 +16,26 @@ interface SubItem {
 
 interface MenuItem {
   title: string;
+  url?: string;
   icon?: LucideIcon;
   isActive?: boolean;
-  url: string;
+  items?: SubItem[];
 }
 
-interface DocumentDropDownProps {
+interface SettingMenusProps {
   items: MenuItem[];
   groupLabel?: string;
 }
-
-export default function DocumentDropDown({ items }: DocumentDropDownProps) {
+export default function SettingMenus({ items }: SettingMenusProps) {
   return (
     <SidebarGroup>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton>
-              <a href={item.url} key={item.title}>
-                <div className="flex items-center gap-2">
-                  {item.icon && <item.icon className="w-5 h-5" />}
-                  <span className="text-lg">{item.title}</span>
-                </div>
+              {item.icon && <item.icon className="w-5 h-5" />}
+              <a href={item.url}>
+                <span className="text-lg">{item.title}</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>

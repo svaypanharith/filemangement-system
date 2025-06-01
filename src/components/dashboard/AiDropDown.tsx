@@ -1,11 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ChevronRight, type LucideIcon } from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -51,7 +47,10 @@ export default function AiDropDown({
           >
             <SidebarMenuItem>
               <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
+                <SidebarMenuButton
+                  tooltip={item.title}
+                  className="cursor-pointer"
+                >
                   {item.icon && <item.icon className="w-5 h-5" />}
                   <a href={item.url}>
                     <span className="text-lg">{item.title}</span>

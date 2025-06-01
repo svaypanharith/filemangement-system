@@ -9,8 +9,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @font-face {
-  font-family: "Roboto";
-  src: url("../../public/assets/fonts/Roboto-Regular.ttf") format("truetype");
+  font-family: "Kantumruy";
+  src: url("../../public/assets/fonts/KantumruyPro-Regular.ttf")
+    format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -53,7 +54,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-  --font-poppins: "Poppins", sans-serif;
+  --font-poppins: "Kantumruy", sans-serif;
 }
 
 :root {

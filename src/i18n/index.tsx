@@ -1,5 +1,4 @@
 "use client";
-
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import en from "./locales/en.json";
@@ -16,15 +15,14 @@ const resources = {
 
 // Check if i18n is already initialized
 if (!i18n.isInitialized) {
-  const savedLang =
-    typeof window !== "undefined"
-      ? localStorage.getItem("language") || "en"
-      : "en";
+  const defaultLanguage = "en";
+  const savedLanguage =
+    typeof window !== "undefined" ? localStorage.getItem("language") : null;
 
   i18n.use(initReactI18next).init({
     resources,
-    lng: savedLang,
-    fallbackLng: "en",
+    lng: savedLanguage || defaultLanguage,
+    fallbackLng: defaultLanguage,
     interpolation: {
       escapeValue: false,
     },
@@ -36,7 +34,7 @@ if (!i18n.isInitialized) {
 
 export default i18n;
 
-export const changeLanguage = (lng: string) => {
+export const switchAppLanguage = (lng: string) => {
   try {
     i18n.changeLanguage(lng);
     if (typeof window !== "undefined") {

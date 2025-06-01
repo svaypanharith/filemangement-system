@@ -1,4 +1,10 @@
-import { Link, MessageCircle, LayoutDashboard, File } from "lucide-react";
+import {
+  Link,
+  MessageCircle,
+  LayoutDashboard,
+  File,
+  Settings,
+} from "lucide-react";
 
 const data = {
   menuItems: [
@@ -6,12 +12,6 @@ const data = {
       title: "Document",
       url: "/dashboard/document",
       icon: File,
-      items: [
-        {
-          title: "add document",
-          url: "/dashboard/document",
-        },
-      ],
     },
   ],
   Dashboard: [
@@ -19,6 +19,13 @@ const data = {
       title: "Dashboard",
       url: "/dashboard",
       icon: LayoutDashboard,
+    },
+  ],
+  Settings: [
+    {
+      title: "Settings",
+      url: "/dashboard/setting",
+      icon: Settings,
     },
   ],
   chatbot: [

@@ -1,19 +1,15 @@
+"use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState, useEffect } from "react";
+import { TrendingUp } from "lucide-react";
 
 interface MCardProps {
   title: string;
   value: number;
-  icon1: React.ReactNode;
-  icon2: React.ReactNode;
+  icon: React.ReactNode;
 }
 
-export default function MCardStatistics({
-  title,
-  value,
-  icon1,
-  icon2,
-}: MCardProps) {
+export default function MCardStatistics({ title, value, icon }: MCardProps) {
   const AnimationNumber = ({ value }: { value: number }) => {
     const [displayValue, setDisplayValue] = useState(0);
 
@@ -43,17 +39,17 @@ export default function MCardStatistics({
   return (
     <Card className="transition-all hover:shadow-lg hover:-translate-y-1 shadow-xl cursor-pointer">
       <CardHeader className="pb-2">
-        <CardTitle className="text-muted-foreground text-sm font-bold">
-          <span className="bg-primary/10 rounded-full p-2">{title}</span>
+        <CardTitle className="text-muted-foreground text-sm">
+          <span className="bg-blue-500/10 rounded-full p-4">{title}</span>
         </CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between">
-          <p className="text-4xl font-bold text-primary flex items-center gap-2">
-            {icon1}
+          <p className="text-4xl font-bold text-primary flex items-center gap-6">
             <AnimationNumber value={value} />
+            {value > 0 && <TrendingUp className="text-green-500" />}
           </p>
-          <div className="rounded-full bg-primary/10 p-3">{icon2}</div>
+          <div className="rounded-full bg-blue-500/10 p-3">{icon}</div>
         </div>
       </CardContent>
     </Card>

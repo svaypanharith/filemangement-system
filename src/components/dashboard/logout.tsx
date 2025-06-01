@@ -2,6 +2,7 @@
 
 import { useTranslation } from "react-i18next";
 import MAlertDialog from "../m-ui/m-alert-dilog";
+import { useRouter } from "next/navigation";
 
 type LogoutDialogProps = {
   open: boolean;
@@ -10,9 +11,11 @@ type LogoutDialogProps = {
 };
 
 const LogoutDialog = ({ open, onOpenChange, onSuccess }: LogoutDialogProps) => {
-  const { t } = useTranslation("home");
+  const { t } = useTranslation("");
+  const router = useRouter();
 
   const handleLogout = () => {
+    router.push("/welcome");
     if (onSuccess) {
       onSuccess();
     }
@@ -23,12 +26,12 @@ const LogoutDialog = ({ open, onOpenChange, onSuccess }: LogoutDialogProps) => {
       preset="destructive"
       open={open}
       onOpenChange={onOpenChange}
-      title={"Logout"}
-      description={"Are you sure you want to logout?"}
+      title={t("logout.logout")}
+      description={t("logout.logout_description")}
       onConfirm={handleLogout}
       onCancel={() => onOpenChange?.(false)}
-      cancelText={"Cancel"}
-      confirmText={"Logout"}
+      cancelText={t("logout.cancel")}
+      confirmText={t("logout.logout")}
     />
   );
 };
