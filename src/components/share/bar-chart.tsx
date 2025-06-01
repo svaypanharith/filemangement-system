@@ -87,6 +87,6 @@ export default function BarChartComponent({
           </BarChart>
         </ChartContainer>
       </CardContent>
-    </Card>
+  </Card>
   );
 }

@@ -55,7 +55,7 @@ const MButton = React.forwardRef<HTMLButtonElement, ButtonProps & MButtonProps>(
       { "w-full": full },
       className
     );
-
+    
     return (
       <button
         ref={ref}

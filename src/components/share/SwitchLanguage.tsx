@@ -10,32 +10,23 @@ import {
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import { useHydration } from "@/hooks/useHydration";
 
 export default function SwitchLanguage() {
   const [currentLanguage, setCurrentLanguage] = useState<string>("en");
-  const isHydrated = useHydration();
+
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (isHydrated) {
-      const storedLanguage = localStorage.getItem("language");
-      if (storedLanguage) {
-        setCurrentLanguage(storedLanguage);
-      }
+    const storedLanguage = localStorage.getItem("language");
+    if (storedLanguage) {
+      setCurrentLanguage(storedLanguage);
     }
-  }, [isHydrated]);
+  }, []);
 
   const handleChangeLanguage = (value: string) => {
     switchAppLanguage(value);
     setCurrentLanguage(value);
   };
-
-  if (!isHydrated) {
-    return (
-      <div className="w-[120px] h-[40px] bg-gray-100 rounded animate-pulse" />
-    );
-  }
 
   return (
     <div>

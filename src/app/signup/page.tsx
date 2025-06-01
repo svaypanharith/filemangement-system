@@ -1,14 +1,16 @@
-import Base from "@/components/share/base";
+"use client";
 import Header from "@/components/share/header";
-import SignUp from "@/components/signup/signup";
+import SignUpForm from "@/components/auth/SignUp-Form";
+import { useTranslation } from "react-i18next";
 
 export default function SignupPage() {
+  const { t } = useTranslation();
   return (
-    <Base>
-      <Header back title="Signup" />
+    <div className="flex flex-col w-full h-full">
+      <Header back title={t("signup.title")} />
       <div className="flex w-full items-center justify-center p-3">
-        <SignUp />
+        <SignUpForm />
       </div>
-    </Base>
+    </div>
   );
 }

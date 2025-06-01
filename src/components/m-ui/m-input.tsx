@@ -10,6 +10,7 @@ interface MInputProps {
   className?: string;
   required?: boolean;
   rounded?: boolean;
+  error?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,6 +22,7 @@ export default function MInput({
   className,
   required,
   rounded,
+  error,
 }: MInputProps) {
   console.log("type", type);
   return (
@@ -39,6 +41,7 @@ export default function MInput({
         type={type}
         onChange={onChange}
       />
+      {error && <p className="text-red-500 text-sm">{error}</p>}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import I18nProvider from "@/provider/I18nProvider";
 import { SnackBarAppToaster } from "@/hooks/usesnack-bar";
-
+import LoadLanguageProvider from "@/provider/LoadLanguageProvider";
 const poppins = localFont({
   src: "../../public/assets/fonts/KantumruyPro-Regular.ttf",
   variable: "--font-poppins",
@@ -24,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} font-poppins antialiased`}>
-        <I18nProvider>{children}</I18nProvider>
+        <I18nProvider>
+          <LoadLanguageProvider>{children}</LoadLanguageProvider>
+        </I18nProvider>
         <SnackBarAppToaster />
       </body>
     </html>

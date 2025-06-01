@@ -12,7 +12,10 @@
         "title": "Create account",
         "signup_with_google": "Sign up with Google",
         "description": "Enter your credentials to create your account!",
-        "button": "Create account"
+        "button": "Create account",
+        "common": {
+            "or": "Or"
+        }
     },
     "signin": {
         "title": "Sign in",
@@ -45,6 +48,7 @@
         "user_account": "User Account",
         "change_password": "Change Password",
         "logout": "Logout",
+        "logout_description": "Logout from your account",
         "appearance": "Appearance",
         "notifications": "Notifications",
         "privacy": "Privacy"

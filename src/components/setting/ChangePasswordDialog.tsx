@@ -1,8 +1,8 @@
 "use client";
 
 import MDialog from "@/components/m-ui/m-dialog";
-import ChangePasswordForm from "@/components/setting/ChangePasswordForm";
-import MButton from "@/components/m-ui/m-button";
+import ChangePasswordForm from "@/components/auth/ChangePasswordForm";
+import { useTranslation } from "react-i18next";
 
 interface ChangePasswordDialogProps {
   open: boolean;
@@ -13,27 +13,14 @@ export default function ChangePasswordDialog({
   open,
   onOpenChange,
 }: ChangePasswordDialogProps) {
+  const { t } = useTranslation();
   return (
     <MDialog
       open={open}
       onOpenChange={onOpenChange}
-      description="Change your password to secure your account"
-      header="Change Password"
-      content={<ChangePasswordForm />}
-      footer={
-        <div className="flex justify-end gap-2">
-          <MButton
-            preset="secondary"
-            size="sm"
-            onClick={() => onOpenChange(false)}
-          >
-            Cancel
-          </MButton>
-          <MButton preset="primary" size="sm">
-            Change Password
-          </MButton>
-        </div>
-      }
+      description={t("setting.change_password.description")}
+      header={t("setting.change_password.title")}
+      content={<ChangePasswordForm onOpenChange={onOpenChange} />}
     />
   );
 }

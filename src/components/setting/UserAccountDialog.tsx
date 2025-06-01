@@ -1,7 +1,7 @@
 "use client";
 
 import MDialog from "@/components/m-ui/m-dialog";
-import UserAccountDetail from "@/components/setting/UserAccountDetail";
+import UserAccountDetail from "@/components/profiles/UserAccountDetail";
 import { useTranslation } from "react-i18next";
 import { EditProfileDialog } from "./EditProfileDialog";
 import { useState } from "react";

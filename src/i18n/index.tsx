@@ -13,16 +13,12 @@ const resources = {
   },
 };
 
-// Check if i18n is already initialized
+// Simple initialization - no localStorage checks at all
 if (!i18n.isInitialized) {
-  const defaultLanguage = "en";
-  const savedLanguage =
-    typeof window !== "undefined" ? localStorage.getItem("language") : null;
-
   i18n.use(initReactI18next).init({
     resources,
-    lng: savedLanguage || defaultLanguage,
-    fallbackLng: defaultLanguage,
+    lng: "en", // Always English
+    fallbackLng: "en",
     interpolation: {
       escapeValue: false,
     },
@@ -42,5 +38,15 @@ export const switchAppLanguage = (lng: string) => {
     }
   } catch (error) {
     console.error("Error changing language:", error);
+  }
+};
+
+// Called automatically by LanguageProvider after hydration
+export const loadUserLanguage = () => {
+  if (typeof window !== "undefined") {
+    const savedLanguage = localStorage.getItem("language");
+    if (savedLanguage && savedLanguage !== i18n.language) {
+      switchAppLanguage(savedLanguage);
+    }
   }
 };
