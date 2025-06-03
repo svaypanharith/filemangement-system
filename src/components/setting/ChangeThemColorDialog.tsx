@@ -15,6 +15,12 @@ export default function ChangeThemColorDialog({
   open,
   onOpenChange,
 }: ChangeThemColorDialogProps) {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setLocalStorage("theme", "light");
+    }
+  }, []);
+
   const [switchTheme, setSwitchTheme] = useState(() => {
     const storedTheme = getLocalStorage("theme");
     return storedTheme ? storedTheme === "light" : true;
