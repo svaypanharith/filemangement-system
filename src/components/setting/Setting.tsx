@@ -8,8 +8,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Moon, Sun, Bell, Shield, User, Lock, LogOut } from "lucide-react";
-import { useState } from "react";
+import {
+  Moon,
+  Sun,
+  Bell,
+  Shield,
+  User,
+  Lock,
+  LogOut,
+  ToggleLeft,
+  ImageMinus,
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import ChangeThemColorDialog from "@/components/setting/ChangeThemColorDialog";
 import ChangePasswordDialog from "@/components/setting/ChangePasswordDialog";
 import UserAccountDialog from "@/components/setting/UserAccountDialog";
 import { useTranslation } from "react-i18next";
@@ -21,24 +32,38 @@ const CardWrapper = ({
   icon,
   description,
 }: {
-  onClick: () => void;
-  title: string;
-  icon: React.ReactNode;
-  description: string;
+  onClick?: () => void;
+  title?: string;
+  icon?: React.ReactNode;
+  description?: string;
 }) => {
+  const [hover, setHover] = useState(false);
+  const localTheme = localStorage.getItem("theme");
+
+  useEffect(() => {
+    if (localTheme === "light") {
+      setHover(true);
+    } else {
+      setHover(false);
+    }
+  }, [localTheme]);
   return (
     <Card
-      className="cursor-pointer hover:bg-gray-100 shadow-md"
+      className={`cursor-pointer shadow-md ${hover ? "hover:bg-gray-100" : ""}`}
       onClick={onClick}
     >
       <CardHeader>
         <div className="flex items-center gap-2 cursor-pointer">
           {icon}
-          <CardTitle>{title}</CardTitle>
+          <CardTitle>
+            <span className="text-xl font-bold">{title}</span>
+          </CardTitle>
         </div>
       </CardHeader>
       <CardContent>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription>
+          <span className="text-lg text-gray-500">{description}</span>
+        </CardDescription>
       </CardContent>
     </Card>
   );
@@ -49,6 +74,8 @@ export default function Setting() {
   const [isOpenChangePassword, setIsOpenChangePassword] = useState(false);
   const [isOpenUserAccountDialog, setIsOpenUserAccountDialog] = useState(false);
   const [isOpenLogoutDialog, setIsOpenLogoutDialog] = useState(false);
+  const [isOpenChangeThemeColorDialog, setIsOpenChangeThemeColorDialog] =
+    useState(false);
   const { t } = useTranslation();
   return (
     <>
@@ -74,15 +101,7 @@ export default function Setting() {
           title={"Theme"}
           icon={<Sun className="w-5 h-5 text-yellow-500" />}
           description="Change the theme of the app"
-          onClick={() => {}}
-        />
-
-        {/* Notification Settings */}
-        <CardWrapper
-          title={t("setting.notifications")}
-          icon={<Bell className="w-5 h-5 text-blue-500" />}
-          description="Manage your notification preferences"
-          onClick={() => {}}
+          onClick={() => setIsOpenChangeThemeColorDialog(true)}
         />
 
         {/* Privacy Settings */}
@@ -113,6 +132,10 @@ export default function Setting() {
       <LogoutDialog
         open={isOpenLogoutDialog}
         onOpenChange={setIsOpenLogoutDialog}
+      />
+      <ChangeThemColorDialog
+        open={isOpenChangeThemeColorDialog}
+        onOpenChange={setIsOpenChangeThemeColorDialog}
       />
     </>
   );
