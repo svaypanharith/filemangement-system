@@ -12,6 +12,7 @@ interface AddDocumentProps {
 export default function AddDocument({ onUploadComplete }: AddDocumentProps) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
+  // read file as base64
   const readFileAsBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -32,16 +33,17 @@ export default function AddDocument({ onUploadComplete }: AddDocumentProps) {
   const onSubmitFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length > 0) {
-      setSelectedFiles(files);
+      // setSelectedFiles(files);
       try {
         const existingFiles = JSON.parse(
           localStorage.getItem("selectedFiles") || "[]"
         );
+        // setSelectedFiles(files);
         if (existingFiles.find((file: any) => file.name === files[0].name)) {
           toast.error("File already exists");
           return;
         }
-
+        setSelectedFiles(files);
         const newFiles = await Promise.all(
           files.map(async (file) => {
             const content = await readFileAsBase64(file);
