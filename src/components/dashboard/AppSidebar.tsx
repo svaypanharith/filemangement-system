@@ -1,6 +1,6 @@
 "use client";
 
-import { SideBarContent } from "@/components/dashboard/SideBarContent";
+import { DashboardMenu } from "@/components/dashboard/DashboardMenu";
 import AiDropDown from "./AiDropDown";
 import DocumentDropDown from "./DocumentDropDown";
 import { FooterSidebar } from "@/components/dashboard/FooterSidebar";
@@ -11,10 +11,12 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
 } from "@/components/ui/sidebar";
+import { useTranslation } from "react-i18next";
 
 import { data } from "@/components/dashboard/MenuItem";
 
 export function AppSidebar() {
+  const { t } = useTranslation();
   return (
     <Sidebar
       className={`w-64
@@ -24,10 +26,12 @@ export function AppSidebar() {
         <div>
           <SidebarGroup className="gap-8">
             <SidebarGroupLabel className="flex justify-center items-center me-10">
-              <h1 className="text-sm font-bold">File Management</h1>
+              <h1 className="text-sm font-bold">
+                {t("welcome.file_management")}
+              </h1>
             </SidebarGroupLabel>
             <SidebarGroupContent className="mb-1">
-              <SideBarContent items={data.Dashboard} />
+              <DashboardMenu items={data.Dashboard} />
             </SidebarGroupContent>
             <SidebarGroupContent className="mb-1">
               <DocumentDropDown items={data.menuItems} />

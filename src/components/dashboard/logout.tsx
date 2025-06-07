@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import MAlertDialog from "../m-ui/m-alert-dilog";
+import MAlertDialog from "../m-ui/m-alert-dialog";
 import { useRouter } from "next/navigation";
 
 type LogoutDialogProps = {
