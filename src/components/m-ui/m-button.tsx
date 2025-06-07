@@ -50,12 +50,12 @@ const MButton = React.forwardRef<HTMLButtonElement, ButtonProps & MButtonProps>(
     };
     const postSetClassName = clsx(
       "active:opacity-70 transition-colors active:[transform:translate3d(0,2px,0)]  cursor-pointer",
-      presetStyle[preset as keyof typeof presetStyle],
-      sizeStyle[size as keyof typeof sizeStyle],
+      presetStyle[preset || ("primary" as keyof typeof presetStyle)],
+      sizeStyle[size || ("sm" as keyof typeof sizeStyle)],
       { "w-full": full },
       className
     );
-    
+
     return (
       <button
         ref={ref}

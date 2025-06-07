@@ -8,6 +8,7 @@ import { Trash, Pen } from "lucide-react";
 import MAlertDialog from "../m-ui/m-alert-dialog";
 import NoteDialog from "./NoteDialog";
 import { getLocalStorage } from "@/utils/storage";
+import MButton from "@/components/m-ui/m-button";
 
 import toast from "react-hot-toast";
 import {
@@ -153,7 +154,7 @@ export default function Document() {
             </div>
           </div>
 
-          <div className="grid grid-cols-6 gap-4">
+          <div className="grid grid-cols-4 gap-4">
             {files.length === 0 ? (
               <div className=" col-span-6 flex justify-center items-center py-8">
                 <span className="text-gray-500">No files yet</span>
@@ -162,7 +163,7 @@ export default function Document() {
               files.map((file) => (
                 <Card
                   key={file.name}
-                  className="rounded-2xl max-w-[250px] h-auto shadow-md relative cursor-pointer hover:shadow-lg transition-shadow"
+                  className="rounded-2xl w-full h-auto shadow-md relative cursor-pointer hover:shadow-lg transition-shadow"
                   style={{
                     backgroundColor: noteColors[file.name] || "#ffffff",
                   }}
@@ -180,22 +181,20 @@ export default function Document() {
                   <CardContent>
                     <div className="flex flex-col gap-6 ">
                       <div className="flex justify-between">
-                        <span className="text-sm text-gray-500 flex ">
-                          last modified:
+                        <span className="text-sm text-gray-500 flex items-center gap-2">
+                          last modified:{" "}
                           {new Date(file.lastModified).toLocaleDateString()}
                         </span>
                       </div>
-                      <div
-                        className="flex gap-1 rounded-full items-center bg-green-300 p-2 w-fit cursor-pointer"
-                        onClick={(e) => {
+                      <MButton
+                        className="bg-green-300 hover:bg-green-400 w-fit"
+                        onClick={() => {
                           setIsopenNoteDialog(true);
                           setSelectedFileName(file.name);
                         }}
                       >
-                        <span className="text-sm text-green-500 flex font-bold">
-                          Note
-                        </span>
-                      </div>
+                        Note
+                      </MButton>
                     </div>
                   </CardContent>
                   <div
