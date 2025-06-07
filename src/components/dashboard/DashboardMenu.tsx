@@ -28,7 +28,7 @@ interface MenuItem {
   isActive?: boolean;
 }
 
-export function SideBarContent({ items }: { items: MenuItem[] }) {
+export function DashboardMenu({ items }: { items: MenuItem[] }) {
   const pathname = usePathname();
 
   return (
