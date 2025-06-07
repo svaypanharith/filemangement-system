@@ -11,12 +11,16 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
 } from "@/components/ui/sidebar";
+
 import { data } from "@/components/dashboard/MenuItem";
 
 export function AppSidebar() {
   return (
-    <Sidebar className="w-64 min-h-screen flex flex-col rounded-l-2xl">
-      <SidebarContent className="flex flex-col justify-between h-full bg-gray-100 p-4">
+    <Sidebar
+      className={`w-64
+     min-h-screen flex flex-col rounded-l-2xl bg-black`}
+    >
+      <SidebarContent className={`flex flex-col justify-between h-full  p-4`}>
         <div>
           <SidebarGroup className="gap-8">
             <SidebarGroupLabel className="flex justify-center items-center me-10">

@@ -1,20 +1,13 @@
 "use client";
-import { useState } from "react";
+
 import { ChevronRight, type LucideIcon } from "lucide-react";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import Link from "next/link";
+
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 
 interface SubItem {
@@ -26,7 +19,7 @@ interface MenuItem {
   title: string;
   icon?: LucideIcon;
   isActive?: boolean;
-  items?: SubItem[];
+  url: string;
 }
 
 interface DocumentDropDownProps {
@@ -34,44 +27,21 @@ interface DocumentDropDownProps {
   groupLabel?: string;
 }
 
-export default function DocumentDropDown({
-  items,
-  groupLabel = "Document feature",
-}: DocumentDropDownProps) {
+export default function DocumentDropDown({ items }: DocumentDropDownProps) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{groupLabel}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
-          <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={item.isActive}
-            className="group/collapsible"
-          >
-            <SidebarMenuItem>
-              <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
+          <SidebarMenuItem key={item.title}>
+            <SidebarMenuButton>
+              <Link href={item.url} key={item.title}>
+                <div className="flex items-center gap-2">
                   {item.icon && <item.icon className="w-5 h-5" />}
                   <span className="text-lg">{item.title}</span>
-                  <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="pt-4">
-                <SidebarMenuSub className="border-l-2 border-blue-500 pl-4 ">
-                  {item.items?.map((subItem) => (
-                    <SidebarMenuSubItem key={subItem.title}>
-                      <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
-                          <span>{subItem.title}</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              </CollapsibleContent>
-            </SidebarMenuItem>
-          </Collapsible>
+                </div>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         ))}
       </SidebarMenu>
     </SidebarGroup>

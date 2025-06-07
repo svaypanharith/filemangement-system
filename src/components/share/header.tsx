@@ -12,11 +12,13 @@ export default function Header({ title, back }: HeaderProps) {
   const router = useRouter();
 
   return (
-    <div className="flex gap-2 items-center">
+    <div
+      className="flex gap-2 items-center cursor-pointer"
+      onClick={() => router.back()}
+    >
       {back && (
         <ChevronLeft
           className="w-6 h-6 text-black dark:text-white"
-          onClick={() => router.back()}
           strokeWidth={1.5}
         />
       )}

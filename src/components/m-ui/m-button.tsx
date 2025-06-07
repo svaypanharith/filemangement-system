@@ -2,9 +2,9 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
-import { ButtonProps } from "@/components/ui/button";
 import clsx from "clsx";
 import { Loader2 } from "lucide-react";
+import { ButtonProps } from "@/components/ui/button";
 
 interface MButtonProps {
   loading?: boolean;
@@ -42,20 +42,20 @@ const MButton = React.forwardRef<HTMLButtonElement, ButtonProps & MButtonProps>(
       secondary:
         "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80 rounded-full",
       danger:
-        "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+        "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60 rounded-full",
       warning:
         "bg-warning text-warning-foreground shadow-xs hover:bg-warning/90 focus-visible:ring-warning/20 dark:focus-visible:ring-warning/40 dark:bg-warning/60",
       success:
-        "bg-success text-success-foreground shadow-xs hover:bg-success/90 focus-visible:ring-success/20 dark:focus-visible:ring-success/40 dark:bg-success/60",
+        "bg-success text-success-foreground shadow-xs hover:bg-success/90 focus-visible:ring-success/20 dark:focus-visible:ring-success/40 dark:bg-success/60 rounded-full",
     };
     const postSetClassName = clsx(
-      "active:opacity-70 transition-colors active:[transform:translate3d(0,2px,0)]",
+      "active:opacity-70 transition-colors active:[transform:translate3d(0,2px,0)]  cursor-pointer",
       presetStyle[preset as keyof typeof presetStyle],
       sizeStyle[size as keyof typeof sizeStyle],
       { "w-full": full },
       className
     );
-
+    
     return (
       <button
         ref={ref}

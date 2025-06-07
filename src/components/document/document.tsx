@@ -58,7 +58,7 @@ export default function Document() {
   return (
     <>
       <div className="flex flex-col gap-8">
-        <div className="border-2 border-gray-200 p-8 rounded-2xl">
+        <div className="border-2 border-dashed border-gray-200 p-8 rounded-2xl">
           <div className="flex flex-col gap-2 items-center justify-center">
             <AddDocument />
           </div>
@@ -75,10 +75,9 @@ export default function Document() {
                   <SelectValue placeholder="Filter" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="pdf">PDF</SelectItem>
-                  <SelectItem value="docx">Docx</SelectItem>
-                  <SelectItem value="doc">Doc</SelectItem>
+                  <SelectItem value="all">last modified</SelectItem>
+                  <SelectItem value="all">file size</SelectItem>
+                  <SelectItem value="all">file name</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -86,7 +85,7 @@ export default function Document() {
 
           <div className="grid grid-cols-6">
             {files.length === 0 ? (
-              <div className=" flex justify-center items-center py-8">
+              <div className=" col-span-6 flex justify-center items-center py-8">
                 <span className="text-gray-500">No files yet</span>
               </div>
             ) : (

@@ -1,107 +1,56 @@
 "use client";
-
-import {
-  Label,
-  PolarGrid,
-  PolarRadiusAxis,
-  RadialBar,
-  RadialBarChart,
-} from "recharts";
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ChartConfig, ChartContainer } from "@/components/ui/chart";
-import { File } from "lucide-react";
-const chartData = [
-  {
-    browser: "totalDocument",
-    totalDocument: 1260,
-    fill: "var(--color-safari)",
-  },
-];
-
-const chartConfig = {
-  visitors: {
-    label: "Total Document",
-  },
-  safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig;
+import MCardStatistics from "../m-ui/m-card-statistics";
+import { File, Sparkles, HardDrive } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import BarChartComponent from "../share/bar-chart";
+import { ChartConfig } from "../ui/chart";
 
 export function Statistic() {
+  const { t } = useTranslation();
+  const data = [
+    { month: "January", value: 400 },
+    { month: "February", value: 300 },
+    { month: "March", value: 200 },
+    { month: "April", value: 100 },
+    { month: "May", value: 50 },
+    { month: "June", value: 0 },
+  ];
+  const config: ChartConfig = {
+    label: { label: "value" },
+  };
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <Card className="rounded-xl">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-lg flex items-center gap-2">
-            <span className="bg-primary/10 rounded-full p-2">
-              <File />
-            </span>
-            Total Document
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ChartContainer
-            config={chartConfig}
-            className="mx-auto flex items-center justify-center aspect-square max-h-[250px]"
-          >
-            <RadialBarChart
-              data={chartData}
-              endAngle={100}
-              innerRadius={60}
-              outerRadius={100}
-            >
-              <PolarGrid
-                gridType="circle"
-                radialLines={false}
-                stroke="none"
-                className="first:fill-muted last:fill-background"
-                polarRadius={[86, 74]}
-              />
-              <RadialBar dataKey="totalDocument" background />
-              <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
-                <Label
-                  content={({ viewBox }) => {
-                    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                      return (
-                        <text
-                          x={viewBox.cx}
-                          y={viewBox.cy}
-                          textAnchor="middle"
-                          dominantBaseline="middle"
-                        >
-                          <tspan
-                            x={viewBox.cx}
-                            y={viewBox.cy}
-                            className="fill-foreground text-4xl font-bold"
-                          >
-                            {chartData[0].totalDocument.toLocaleString()}
-                          </tspan>
-                          <tspan
-                            x={viewBox.cx}
-                            y={(viewBox.cy || 0) + 24}
-                            className="fill-muted-foreground"
-                          >
-                            Total Document
-                          </tspan>
-                        </text>
-                      );
-                    }
-                  }}
-                />
-              </PolarRadiusAxis>
-            </RadialBarChart>
-          </ChartContainer>
-        </CardContent>
-      </Card>
+    <div className="flex flex-col gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <MCardStatistics
+          title={t("dashboard.total_document")}
+          value={30}
+          icon={<File className="text-blue-900" />}
+        />
+        <MCardStatistics
+          title={t("dashboard.total_file_size")}
+          value={40}
+          icon={<HardDrive className="text-blue-900" />}
+        />
+        <MCardStatistics
+          title={t("dashboard.ai_credit")}
+          value={20}
+          icon={<Sparkles className="text-blue-900" />}
+        />
+        <MCardStatistics
+          title={t("dashboard.total_ai_credit")}
+          value={0}
+          icon={<Sparkles className="text-blue-900" />}
+        />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+        <BarChartComponent
+          config={config}
+          dataKey="value"
+          data={data}
+          color="blue"
+          radius={8}
+        />
+      </div>
     </div>
   );
 }
