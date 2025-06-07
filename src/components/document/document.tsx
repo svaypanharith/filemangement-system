@@ -1,31 +1,97 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import AddDocument from "./AddDocument";
-import { Input } from "../ui/input";
+import AddDocument from "@/components/document/AddDocument";
+import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Trash } from "lucide-react";
-import MAlertDialog from "../m-ui/m-alert-dilog";
-import toast from "react-hot-toast";
+import { Trash, Pen } from "lucide-react";
+import MAlertDialog from "../m-ui/m-alert-dialog";
+import NoteDialog from "./NoteDialog";
+import { getLocalStorage } from "@/utils/storage";
 
+import toast from "react-hot-toast";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "@/components/ui/select";
 
 interface StoredFile {
   name: string;
   size: number;
   type: string;
   lastModified: number;
+  content: string;
+  url: string;
 }
+
+const DocumentService = {
+  getFiles: async (): Promise<StoredFile[]> => {
+    // For now, get from localStorage
+    const storedFiles = localStorage.getItem("selectedFiles");
+    if (storedFiles) {
+      return JSON.parse(storedFiles);
+    }
+    return [];
+  },
+
+  openFile: async (file: StoredFile) => {
+    try {
+      // If we have a URL (from API), use it directly
+      if (file.url) {
+        window.open(file.url, "_blank");
+        return;
+      }
+      //  handle local storage file `selectedFiles`
+      const storedFiles = localStorage.getItem("selectedFiles");
+      if (storedFiles) {
+        const filesData = JSON.parse(storedFiles) as StoredFile[];
+        const fileData = filesData.find((f) => f.name === file.name);
+
+        if (fileData?.content) {
+          // Convert base64 to binary
+          const binaryString = window.atob(fileData.content.split(",")[1]);
+          const bytes = new Uint8Array(binaryString.length);
+          for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+          }
+          const blob = new Blob([bytes], { type: fileData.type });
+          const url = URL.createObjectURL(blob);
+          window.open(url, "_blank");
+        } else {
+          toast.error("File content not found");
+        }
+      } else {
+        toast.error("No files found");
+      }
+    } catch (error) {
+      console.error("Error opening file:", error);
+      toast.error("Error opening file");
+    }
+  },
+};
 
 export default function Document() {
   const [files, setfiles] = useState<File[]>([]);
-  const [open, setOpen] = useState(false);
+  const [isopenDeleteDialog, setIsopenDeleteDialog] = useState(false);
+  const [isopenNoteDialog, setIsopenNoteDialog] = useState(false);
+  const [selectedFileName, setSelectedFileName] = useState<string>("");
+  const [noteColors, setNoteColors] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    // Load all note colors from localStorage
+    const storedColors: Record<string, string> = {};
+    files.forEach((file) => {
+      const color = getLocalStorage(`note-${file.name}`);
+      if (color) {
+        storedColors[file.name] = color;
+      }
+    });
+    setNoteColors(storedColors);
+  }, [files]);
+
   useEffect(() => {
     // todo intergrate with api
     try {
@@ -45,6 +111,10 @@ export default function Document() {
       console.error(error);
     }
   }, []);
+
+  const handleFileOpen = async (file: StoredFile) => {
+    await DocumentService.openFile(file);
+  };
 
   const handleDelete = () => {
     try {
@@ -83,40 +153,55 @@ export default function Document() {
             </div>
           </div>
 
-          <div className="grid grid-cols-6">
+          <div className="grid grid-cols-6 gap-4">
             {files.length === 0 ? (
               <div className=" col-span-6 flex justify-center items-center py-8">
                 <span className="text-gray-500">No files yet</span>
               </div>
             ) : (
-              files.map((file, index) => (
+              files.map((file) => (
                 <Card
-                  key={index}
-                  className="rounded-2xl max-w-[200px] h-auto shadow-md relative"
+                  key={file.name}
+                  className="rounded-2xl max-w-[250px] h-auto shadow-md relative cursor-pointer hover:shadow-lg transition-shadow"
+                  style={{
+                    backgroundColor: noteColors[file.name] || "#ffffff",
+                  }}
                 >
                   <CardHeader>
-                    <CardTitle className="text-sm truncate">
+                    <CardTitle
+                      className="text-sm truncate"
+                      onClick={() =>
+                        handleFileOpen(file as unknown as StoredFile)
+                      }
+                    >
                       {file.name}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex flex-col gap-4">
-                      <span className="text-xs text-gray-500 flex">
-                        {file.type}
-                      </span>
-                      <span className="text-xs text-gray-500 gap-2 flex">
-                        file size:{(file.size / 1024).toFixed(2)} KB
-                      </span>
-                      <span className="text-xs text-green-500 flex ">
-                        last modified:{" "}
-                        {new Date(file.lastModified).toLocaleDateString()}
-                      </span>
+                    <div className="flex flex-col gap-6 ">
+                      <div className="flex justify-between">
+                        <span className="text-sm text-gray-500 flex ">
+                          last modified:
+                          {new Date(file.lastModified).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <div
+                        className="flex gap-1 rounded-full items-center bg-green-300 p-2 w-fit cursor-pointer"
+                        onClick={(e) => {
+                          setIsopenNoteDialog(true);
+                          setSelectedFileName(file.name);
+                        }}
+                      >
+                        <span className="text-sm text-green-500 flex font-bold">
+                          Note
+                        </span>
+                      </div>
                     </div>
                   </CardContent>
                   <div
                     className="absolute top-2 z-10 right-2 cursor-pointer"
-                    onClick={() => {
-                      setOpen(true);
+                    onClick={(e) => {
+                      setIsopenDeleteDialog(true);
                     }}
                   >
                     <Trash className="w-4 h-4 text-red-500" />
@@ -129,13 +214,19 @@ export default function Document() {
       </div>
       <MAlertDialog
         preset="destructive"
-        open={open}
-        onOpenChange={setOpen}
+        open={isopenDeleteDialog}
+        onOpenChange={setIsopenDeleteDialog}
         title="Delete Document"
         description="Are you sure you want to delete this document?"
         cancelText="Cancel"
         confirmText="Delete"
         onConfirm={handleDelete}
+      />
+      <NoteDialog
+        open={isopenNoteDialog}
+        onOpenChange={setIsopenNoteDialog}
+        fileName={selectedFileName}
+        initialColor={noteColors[selectedFileName]}
       />
     </>
   );
