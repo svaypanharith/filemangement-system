@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import MDialog from "../m-ui/m-dialog";
 import { Sun, Moon, Palette } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
-import { getLocalStorage, setLocalStorage } from "@/utils/storage";
+import toast from "react-hot-toast";
+import { useTheme } from "next-themes";
 
 interface ChangeThemColorDialogProps {
   open: boolean;
@@ -15,29 +16,75 @@ export default function ChangeThemColorDialog({
   open,
   onOpenChange,
 }: ChangeThemColorDialogProps) {
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setLocalStorage("theme", "light");
-    }
-  }, []);
+  const { setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
-  const [switchTheme, setSwitchTheme] = useState(() => {
-    const storedTheme = getLocalStorage("theme");
-    return storedTheme ? storedTheme === "light" : true;
-  });
+  // After mounting, we have access to the theme
+  useEffect(() => setMounted(true), []);
+
+  const [switchTheme, setSwitchTheme] = useState(
+    resolvedTheme === "dark" ? true : false
+  );
+
   const [selectedColor, setSelectedColor] = useState(() => {
-    const storedTheme = getLocalStorage("theme");
-    return storedTheme || "light";
+    return resolvedTheme === "dark" ? "dark" : "light";
   });
 
-  // Single useEffect to handle theme changes
-  useEffect(() => {
-    const theme = switchTheme ? "light" : "dark";
-    setLocalStorage("theme", theme);
-    document.body.classList.remove("light", "dark");
-    document.body.classList.add(theme);
-    setSelectedColor(theme);
-  }, [switchTheme]);
+  // my code implement
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   if (switchTheme) {
+  //     dispatch(setTheme(true));
+  //     setSelectedColor("dark");
+  //     setLocalStorage("theme", "dark");
+  //   } else {
+  //     dispatch(setTheme(false));
+  //     setSelectedColor("light");
+  //     setLocalStorage("theme", "light");
+  //   }
+  // }, [switchTheme]);
+
+  // const handleChangeTheme = useCallback(() => {
+  //   setSwitchTheme(!switchTheme);
+  //   if (switchTheme) {
+  //     toast.success("Theme changed to light");
+  //   } else {
+  //     toast.success("Theme changed to dark", {
+  //       style: {
+  //         background: "#000",
+  //         color: "#fff",
+  //       },
+  //     });
+  //   }
+  // }, [switchTheme]);
+
+  const handleThemeChange = useCallback(
+    (isDark: boolean) => {
+      if (isDark) {
+        setSwitchTheme(true);
+        setTheme("dark");
+        toast.success("Theme changed to dark", {
+          style: {
+            background: "#000",
+            color: "#fff",
+          },
+        });
+      } else {
+        setSwitchTheme(false);
+        setTheme("light");
+        toast.success("Theme changed to light", {
+          style: {
+            background: "#fff",
+            color: "#000",
+          },
+        });
+      }
+
+      setSelectedColor(isDark ? "dark" : "light");
+    },
+    [setTheme]
+  );
 
   const themeOptions = [
     {
@@ -53,6 +100,9 @@ export default function ChangeThemColorDialog({
       color: "bg-black",
     },
   ];
+
+  // Prevent hydration mismatch
+  if (!mounted) return null;
 
   return (
     <MDialog
@@ -73,13 +123,13 @@ export default function ChangeThemColorDialog({
         </div>
       }
       content={
-        <div className="space-y-8 py-2 ">
+        <div className="space-y-8 py-2">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               {switchTheme ? (
-                <Sun className="w-5 h-5 text-amber-500" />
-              ) : (
                 <Moon className="w-5 h-5 text-slate-400" />
+              ) : (
+                <Sun className="w-5 h-5 text-amber-500" />
               )}
               <div>
                 <h3 className="font-medium text-gray-900 dark:text-gray-100">
@@ -92,13 +142,12 @@ export default function ChangeThemColorDialog({
             </div>
             <Switch
               checked={switchTheme}
-              onCheckedChange={setSwitchTheme}
+              onCheckedChange={(checked) => handleThemeChange(checked)}
               className="data-[state=checked]:bg-blue-500 cursor-pointer"
             />
           </div>
 
-          {/* Theme Mode Cards */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-4">
             {themeOptions.map((theme) => (
               <div
                 key={theme.id}
@@ -107,7 +156,7 @@ export default function ChangeThemColorDialog({
                     ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
                     : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
                 }`}
-                onClick={() => setSwitchTheme(theme.id === "light")}
+                onClick={() => handleThemeChange(theme.id === "dark")}
               >
                 <div
                   className={`w-full h-16 rounded-md bg-gradient-to-br ${theme.color} mb-2`}

@@ -7,19 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import {
-  Moon,
-  Sun,
-  Bell,
-  Shield,
-  User,
-  Lock,
-  LogOut,
-  ToggleLeft,
-  ImageMinus,
-} from "lucide-react";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
+import { Sun, Shield, User, Lock, LogOut } from "lucide-react";
+import { useState } from "react";
 import ChangeThemColorDialog from "@/components/setting/ChangeThemColorDialog";
 import ChangePasswordDialog from "@/components/setting/ChangePasswordDialog";
 import UserAccountDialog from "@/components/setting/UserAccountDialog";
@@ -37,21 +27,8 @@ const CardWrapper = ({
   icon?: React.ReactNode;
   description?: string;
 }) => {
-  const [hover, setHover] = useState(false);
-  const localTheme = localStorage.getItem("theme");
-
-  useEffect(() => {
-    if (localTheme === "light") {
-      setHover(true);
-    } else {
-      setHover(false);
-    }
-  }, [localTheme]);
   return (
-    <Card
-      className={`cursor-pointer shadow-md ${hover ? "hover:bg-gray-100" : ""}`}
-      onClick={onClick}
-    >
+    <Card className={`cursor-pointer shadow-md`} onClick={onClick}>
       <CardHeader>
         <div className="flex items-center gap-2 cursor-pointer">
           {icon}
@@ -70,73 +47,82 @@ const CardWrapper = ({
 };
 
 export default function Setting() {
-  const [darkMode, setDarkMode] = useState(false);
+  // const [darkMode, setDarkMode] = useState(false);
   const [isOpenChangePassword, setIsOpenChangePassword] = useState(false);
   const [isOpenUserAccountDialog, setIsOpenUserAccountDialog] = useState(false);
   const [isOpenLogoutDialog, setIsOpenLogoutDialog] = useState(false);
   const [isOpenChangeThemeColorDialog, setIsOpenChangeThemeColorDialog] =
     useState(false);
   const { t } = useTranslation();
-  return (
-    <>
-      <div className="grid gap-6 ">
-        {/* Language Settings */}
-        <CardWrapper
-          title={t("setting.user_account")}
-          icon={<User className="w-5 h-5 text-blue-500" />}
-          description="Manage your account settings"
-          onClick={() => setIsOpenUserAccountDialog(true)}
-        />
+  return useMemo(
+    () => (
+      <>
+        <div className="grid gap-6 ">
+          {/* Language Settings */}
+          <CardWrapper
+            title={t("setting.user_account")}
+            icon={<User className="w-5 h-5 text-blue-500" />}
+            description="Manage your account settings"
+            onClick={() => setIsOpenUserAccountDialog(true)}
+          />
 
-        {/* change password */}
-        <CardWrapper
-          title={t("setting.change_password.title")}
-          icon={<Lock className="w-5 h-5 text-blue-500" />}
-          description={t("setting.change_password.description")}
-          onClick={() => setIsOpenChangePassword(true)}
-        />
+          {/* change password */}
+          <CardWrapper
+            title={t("setting.change_password.title")}
+            icon={<Lock className="w-5 h-5 text-blue-500" />}
+            description={t("setting.change_password.description")}
+            onClick={() => setIsOpenChangePassword(true)}
+          />
 
-        {/* Appearance Settings */}
-        <CardWrapper
-          title={"Theme"}
-          icon={<Sun className="w-5 h-5 text-yellow-500" />}
-          description="Change the theme of the app"
-          onClick={() => setIsOpenChangeThemeColorDialog(true)}
-        />
+          {/* Appearance Settings */}
+          <CardWrapper
+            title={"Theme"}
+            icon={<Sun className="w-5 h-5 text-yellow-500" />}
+            description="Change the theme of the app"
+            onClick={() => setIsOpenChangeThemeColorDialog(true)}
+          />
 
-        {/* Privacy Settings */}
-        <CardWrapper
-          title={t("setting.privacy")}
-          icon={<Shield className="w-5 h-5 text-blue-500" />}
-          description="Manage your privacy settings"
-          onClick={() => {}}
-        />
+          {/* Privacy Settings */}
+          <CardWrapper
+            title={t("setting.privacy")}
+            icon={<Shield className="w-5 h-5 text-blue-500" />}
+            description="Manage your privacy settings"
+            onClick={() => {}}
+          />
 
-        {/* logout */}
-        <CardWrapper
-          title={t("setting.logout")}
-          icon={<LogOut className="w-5 h-5 text-red-500" />}
-          description={t("setting.logout_description")}
-          onClick={() => setIsOpenLogoutDialog(true)}
-        />
-      </div>
+          {/* logout */}
+          <CardWrapper
+            title={t("setting.logout")}
+            icon={<LogOut className="w-5 h-5 text-red-500" />}
+            description={t("setting.logout_description")}
+            onClick={() => setIsOpenLogoutDialog(true)}
+          />
+        </div>
 
-      <ChangePasswordDialog
-        open={isOpenChangePassword}
-        onOpenChange={setIsOpenChangePassword}
-      />
-      <UserAccountDialog
-        open={isOpenUserAccountDialog}
-        onOpenChange={setIsOpenUserAccountDialog}
-      />
-      <LogoutDialog
-        open={isOpenLogoutDialog}
-        onOpenChange={setIsOpenLogoutDialog}
-      />
-      <ChangeThemColorDialog
-        open={isOpenChangeThemeColorDialog}
-        onOpenChange={setIsOpenChangeThemeColorDialog}
-      />
-    </>
+        <ChangePasswordDialog
+          open={isOpenChangePassword}
+          onOpenChange={setIsOpenChangePassword}
+        />
+        <UserAccountDialog
+          open={isOpenUserAccountDialog}
+          onOpenChange={setIsOpenUserAccountDialog}
+        />
+        <LogoutDialog
+          open={isOpenLogoutDialog}
+          onOpenChange={setIsOpenLogoutDialog}
+        />
+        <ChangeThemColorDialog
+          open={isOpenChangeThemeColorDialog}
+          onOpenChange={setIsOpenChangeThemeColorDialog}
+        />
+      </>
+    ),
+    [
+      isOpenChangePassword,
+      isOpenUserAccountDialog,
+      isOpenLogoutDialog,
+      isOpenChangeThemeColorDialog,
+      t,
+    ]
   );
 }

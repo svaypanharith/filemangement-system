@@ -1,12 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import dataSlice from "./slices/data-slice";
+import changeThemeColorReducer from "@/redux/slices/theme-slice";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 
 export const store = configureStore({
   reducer: {
-    data: dataSlice.reducer,
+    changeThemeColor: changeThemeColorReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(dataSlice.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

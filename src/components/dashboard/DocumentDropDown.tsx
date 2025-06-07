@@ -1,6 +1,7 @@
 "use client";
 
-import { ChevronRight, Link, type LucideIcon } from "lucide-react";
+import { ChevronRight, type LucideIcon } from "lucide-react";
+import Link from "next/link";
 
 import {
   SidebarGroup,
@@ -33,12 +34,12 @@ export default function DocumentDropDown({ items }: DocumentDropDownProps) {
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton>
-              <a href={item.url} key={item.title}>
+              <Link href={item.url} key={item.title}>
                 <div className="flex items-center gap-2">
                   {item.icon && <item.icon className="w-5 h-5" />}
                   <span className="text-lg">{item.title}</span>
                 </div>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}

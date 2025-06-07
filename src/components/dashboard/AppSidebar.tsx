@@ -11,22 +11,16 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
 } from "@/components/ui/sidebar";
+
 import { data } from "@/components/dashboard/MenuItem";
 
 export function AppSidebar() {
-  const getTheme = () => {
-    const localTheme = localStorage.getItem("theme");
-
-    if (localTheme) {
-      return localTheme;
-    }
-    return "light";
-  };
   return (
-    <Sidebar className="w-64 min-h-screen flex flex-col rounded-l-2xl">
-      <SidebarContent
-        className={`flex flex-col justify-between h-full  p-4 ${getTheme()}`}
-      >
+    <Sidebar
+      className={`w-64
+     min-h-screen flex flex-col rounded-l-2xl bg-black`}
+    >
+      <SidebarContent className={`flex flex-col justify-between h-full  p-4`}>
         <div>
           <SidebarGroup className="gap-8">
             <SidebarGroupLabel className="flex justify-center items-center me-10">
