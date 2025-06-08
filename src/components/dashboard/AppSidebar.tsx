@@ -1,8 +1,8 @@
 "use client";
 
 import { DashboardMenu } from "@/components/dashboard/DashboardMenu";
-import AiDropDown from "./AiDropDown";
-import DocumentDropDown from "./DocumentDropDown";
+import ChatBotMenu from "./ChatBotMenu";
+import DocumentMenu from "./DocumentMenu";
 import { FooterSidebar } from "@/components/dashboard/FooterSidebar";
 import {
   Sidebar,
@@ -12,6 +12,7 @@ import {
   SidebarGroupLabel,
 } from "@/components/ui/sidebar";
 import { useTranslation } from "react-i18next";
+import { Separator } from "@/components/ui/separator";
 
 import { data } from "@/components/dashboard/MenuItem";
 
@@ -24,20 +25,17 @@ export function AppSidebar() {
     >
       <SidebarContent className={`flex flex-col justify-between h-full  p-4`}>
         <div>
-          <SidebarGroup className="gap-8">
-            <SidebarGroupLabel className="flex justify-center items-center me-10">
-              <h1 className="text-sm font-bold">
+          <SidebarGroup className="gap-4">
+            <SidebarGroupLabel className="flex justify-center items-center ">
+              <h1 className="text-xl font-bold">
                 {t("welcome.file_management")}
               </h1>
             </SidebarGroupLabel>
-            <SidebarGroupContent className="mb-1">
+            <Separator />
+            <SidebarGroupContent className="flex flex-col gap-10">
               <DashboardMenu items={data.Dashboard} />
-            </SidebarGroupContent>
-            <SidebarGroupContent className="mb-1">
-              <DocumentDropDown items={data.menuItems} />
-            </SidebarGroupContent>
-            <SidebarGroupContent className="mb-1">
-              <AiDropDown items={data.chatbot} />
+              <DocumentMenu items={data.menuItems} />
+              <ChatBotMenu items={data.chatbot} />
             </SidebarGroupContent>
           </SidebarGroup>
         </div>

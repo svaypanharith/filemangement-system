@@ -1,8 +1,8 @@
 "use client";
 
 import { LucideIcon } from "lucide-react";
+
 import SideBarMenu from "../share/SideBarMenu";
-import { data } from "./MenuItem";
 
 interface SubItem {
   title: string;
@@ -14,13 +14,13 @@ interface MenuItem {
   url: string;
   icon: LucideIcon;
   isActive?: boolean;
-  items?: SubItem[];
 }
 
-interface SettingMenusProps {
+interface ChatBotMenuProps {
   items: MenuItem[];
-  groupLabel?: string;
+  // groupLabel?: string;
 }
-export default function SettingMenus({ items }: SettingMenusProps) {
-  return <SideBarMenu items={items} />;
+
+export default function ChatBotMenu({ items }: ChatBotMenuProps) {
+  return <SideBarMenu items={items} collapsible={true} />;
 }
