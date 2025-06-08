@@ -129,11 +129,7 @@ export default function Document() {
   return (
     <>
       <div className="flex flex-col gap-8">
-        <div className="border-2 border-dashed border-gray-200 p-8 rounded-2xl">
-          <div className="flex flex-col gap-2 items-center justify-center">
-            <AddDocument />
-          </div>
-        </div>
+        <AddDocument />
         <div className="flex flex-col gap-8 border-2 border-gray-200 p-8  shadow-xl rounded-2xl">
           <div className="flex justify-between">
             <div className="flex gap-4 w-1/4 ">
