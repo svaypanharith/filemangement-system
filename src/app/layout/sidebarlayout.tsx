@@ -51,7 +51,7 @@ export default function SidebarLayout({ children }: SidebarLayoutProps) {
             <main className="flex-1 overflow-auto">
               <div className="flex flex-col gap-4 py-6 px-10">
                 <Header />
-                {children}
+                <div className="flex flex-col mt-6">{children}</div>
               </div>
             </main>
           </div>
