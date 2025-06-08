@@ -1,8 +1,5 @@
 "use client";
 
-import { DashboardMenu } from "@/components/dashboard/DashboardMenu";
-import ChatBotMenu from "./ChatBotMenu";
-import DocumentMenu from "./DocumentMenu";
 import { FooterSidebar } from "@/components/dashboard/FooterSidebar";
 import {
   Sidebar,
@@ -13,6 +10,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useTranslation } from "react-i18next";
 import { Separator } from "@/components/ui/separator";
+import SideBarMenu from "../share/SideBarMenu";
 
 import { data } from "@/components/dashboard/MenuItem";
 
@@ -33,9 +31,9 @@ export function AppSidebar() {
             </SidebarGroupLabel>
             <Separator />
             <SidebarGroupContent className="flex flex-col gap-10">
-              <DashboardMenu items={data.Dashboard} />
-              <DocumentMenu items={data.menuItems} />
-              <ChatBotMenu items={data.chatbot} />
+              <SideBarMenu items={data.Dashboard} />
+              <SideBarMenu items={data.menuItems} />
+              <SideBarMenu items={data.chatbot} collapsible={true} />
             </SidebarGroupContent>
           </SidebarGroup>
         </div>
