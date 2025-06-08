@@ -3,6 +3,8 @@
 import { useTranslation } from "react-i18next";
 import MAlertDialog from "../m-ui/m-alert-dialog";
 import { useRouter } from "next/navigation";
+import Dialog from "../m-ui/m-dialog";
+import { Button } from "../ui/button";
 
 type LogoutDialogProps = {
   open: boolean;
@@ -22,16 +24,21 @@ const LogoutDialog = ({ open, onOpenChange, onSuccess }: LogoutDialogProps) => {
   };
 
   return (
-    <MAlertDialog
-      preset="destructive"
+    <Dialog
       open={open}
       onOpenChange={onOpenChange}
-      title={t("logout.logout")}
+      header={t("logout.logout")}
       description={t("logout.logout_description")}
-      onConfirm={handleLogout}
-      onCancel={() => onOpenChange?.(false)}
-      cancelText={t("logout.cancel")}
-      confirmText={t("logout.logout")}
+      footer={
+        <div className="flex justify-end gap-2">
+          <Button variant="outline" onClick={() => onOpenChange?.(false)}>
+            {t("logout.cancel")}
+          </Button>
+          <Button variant="destructive" onClick={handleLogout}>
+            {t("logout.logout")}
+          </Button>
+        </div>
+      }
     />
   );
 };
