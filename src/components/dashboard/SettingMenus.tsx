@@ -2,7 +2,6 @@
 
 import { LucideIcon } from "lucide-react";
 import SideBarMenu from "../share/SideBarMenu";
-import { data } from "./MenuItem";
 
 interface SubItem {
   title: string;
