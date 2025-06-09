@@ -31,7 +31,12 @@ export default function SignInForm() {
   });
 
   const onSubmit = (data: FormSchemaType) => {
-    console.log(data);
+    // todo intergrate with api
+    try {
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

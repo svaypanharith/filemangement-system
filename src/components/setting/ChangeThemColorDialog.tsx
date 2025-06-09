@@ -6,6 +6,7 @@ import { Sun, Moon, Palette } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import toast from "react-hot-toast";
 import { useTheme } from "next-themes";
+import { useTranslation } from "react-i18next";
 
 interface ChangeThemColorDialogProps {
   open: boolean;
@@ -59,6 +60,8 @@ export default function ChangeThemColorDialog({
   //   }
   // }, [switchTheme]);
 
+  const { t } = useTranslation();
+
   const handleThemeChange = useCallback(
     (isDark: boolean) => {
       if (isDark) {
@@ -89,13 +92,13 @@ export default function ChangeThemColorDialog({
   const themeOptions = [
     {
       id: "light",
-      label: "Light",
+      label: t("setting.theme.light"),
       icon: Sun,
       color: "bg-white",
     },
     {
       id: "dark",
-      label: "Dark",
+      label: t("setting.theme.dark"),
       icon: Moon,
       color: "bg-black",
     },
@@ -156,7 +159,7 @@ export default function ChangeThemColorDialog({
                     ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
                     : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
                 }`}
-                onClick={() => handleThemeChange(theme.id === "dark")}
+                // onClick={() => handleThemeChange(theme.id === "dark")}
               >
                 <div
                   className={`w-full h-16 rounded-md bg-gradient-to-br ${theme.color} mb-2`}

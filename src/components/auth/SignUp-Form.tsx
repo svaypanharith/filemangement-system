@@ -59,8 +59,14 @@ export default function SignUpForm() {
   });
 
   const onSubmit = (data: FormSchemaType) => {
-    router.push("/dashboard");
-    console.log(data);
+    // todo intergrate with api
+
+    try {
+      router.push("/dashboard");
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

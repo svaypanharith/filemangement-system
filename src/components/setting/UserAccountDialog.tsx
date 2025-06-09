@@ -18,22 +18,22 @@ export default function UserAccountDialog({
   const [openEditProfileDialog, setOpenEditProfileDialog] = useState(false);
   return (
     <>
-        <MDialog
-          className="w-full max-w-md"
-          header={t("setting.user_account")}
-          content={
-            <div className="w-full mx-auto">
-              <UserAccountDetail
-                onOpenEditProfileDialog={() => {
-                  setOpenEditProfileDialog(true);
-                  onOpenChange(false);
-                }}
-              />
-            </div>
-          }
-          open={open}
-          onOpenChange={onOpenChange}
-        />
+      <MDialog
+        className="w-full max-w-md"
+        header={t("setting.user_account")}
+        content={
+          <div className="w-full mx-auto">
+            <UserAccountDetail
+              onOpenEditProfileDialog={() => {
+                setOpenEditProfileDialog(true);
+                onOpenChange(false);
+              }}
+            />
+          </div>
+        }
+        open={open}
+        onOpenChange={onOpenChange}
+      />
       <EditProfileDialog
         open={openEditProfileDialog}
         onOpenChange={setOpenEditProfileDialog}

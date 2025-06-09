@@ -73,7 +73,7 @@ export default function SideBarMenu({
                           {item.title}
                         </span>
                       </Link>
-                      <ChevronRight className="ml-auto transition-all duration-200 group-data-[state=open]/collapsible:rotate-90 text-black" />
+                      <ChevronRight className="ml-auto transition-all duration-200 group-data-[state=open]/collapsible:rotate-90 text-gray-500" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
                 </Collapsible>
