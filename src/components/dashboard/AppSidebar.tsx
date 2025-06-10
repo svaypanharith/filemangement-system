@@ -11,11 +11,12 @@ import {
 import { useTranslation } from "react-i18next";
 import { Separator } from "@/components/ui/separator";
 import SideBarMenu from "../share/SideBarMenu";
-
-import { data } from "@/components/dashboard/MenuItem";
+import { MenuData } from "./MenuItem";
 
 export function AppSidebar() {
   const { t } = useTranslation();
+  const data = MenuData();
+
   return (
     <Sidebar
       className={`w-64
