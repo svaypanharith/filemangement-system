@@ -40,14 +40,14 @@ export default function SignInForm() {
   };
 
   return (
-    <div className="flex flex-col bg-white rounded-2xl shadow-lg max-w-[600px] w-full h-full gap-10 p-10 ">
+    <div className="flex flex-col bg-gray-50 rounded-2xl shadow-lg max-w-[600px] w-full h-full gap-10 p-10 ">
       <div className="flex w-full flex-col gap-2">
         <p className="text-2xl font-bold">{t("signin.title")}</p>
         <p className="text-sm text-gray-500">{t("signin.description")}</p>
       </div>
       <MButton
         preset="secondary"
-        size="lg"
+        size="md"
         className="w-full rounded-lg bg-transparent border border-gray-200 flex items-center justify-center gap-2"
       >
         <Image src={googleIcon} alt="google" width={30} height={20} />
@@ -95,7 +95,7 @@ export default function SignInForm() {
           <MButton
             type="submit"
             preset="primary"
-            size="lg"
+            size="md"
             className="w-full rounded-full shadow-lg shadow-gray-200"
           >
             <span>{t("signin.signin_button")}</span>

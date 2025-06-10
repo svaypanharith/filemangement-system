@@ -31,7 +31,8 @@ const password_error_messages = {
 
 const formSchema = z
   .object({
-    name: z.string().min(6, "Name is required"),
+    firstName: z.string().min(6, "First name is required"),
+    lastName: z.string().min(6, "Last name is required"),
     email: z.string().email("Invalid email address"),
     password: passwordValidation,
     confirmPassword: z
@@ -51,7 +52,8 @@ export default function SignUpForm() {
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -60,7 +62,6 @@ export default function SignUpForm() {
 
   const onSubmit = (data: FormSchemaType) => {
     // todo intergrate with api
-
     try {
       router.push("/dashboard");
       console.log(data);
@@ -70,14 +71,14 @@ export default function SignUpForm() {
   };
 
   return (
-    <div className="flex flex-col  justify-center items-center bg-white rounded-2xl shadow-lg max-w-[600px] w-full h-full gap-10 p-10 ">
+    <div className="flex flex-col  justify-center  items-center bg-gray-50 rounded-2xl  shadow-xl  max-w-[600px] w-full p-10 gap-6">
       <div className="flex w-full flex-col gap-2">
         <p className="text-2xl font-bold font-roboto">{t("signup.title")}</p>
         <p className="text-sm text-gray-500">{t("signup.description")}</p>
       </div>
       <MButton
         preset="secondary"
-        size="lg"
+        size="sm"
         className="w-full rounded-lg bg-transparent border border-gray-200 flex items-center justify-center gap-2"
       >
         <Image src={googleIcon} alt="google" width={30} height={20} />
@@ -89,17 +90,24 @@ export default function SignUpForm() {
         <Separator className="w-1/2" />
       </div>
       <FormProvider {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full gap-4">
           <div className="flex w-full flex-col gap-4">
             <p className="text-sm text-gray-500">
               {t("signup.or_continue_with")}
             </p>
             <MInput
-              rounded
-              error={form.formState.errors.name?.message}
-              {...form.register("name")}
               required
-              label={t("signup.name")}
+              error={form.formState.errors.firstName?.message}
+              {...form.register("firstName")}
+              label={t("signup.first_name")}
+              placeholder={t("signup.first_name")}
+            />
+            <MInput
+              rounded
+              error={form.formState.errors.lastName?.message}
+              {...form.register("lastName")}
+              required
+              label={t("signup.last_name")}
               placeholder={t("signup.name")}
               type="text"
             />
@@ -129,7 +137,7 @@ export default function SignUpForm() {
             <MButton
               type="submit"
               preset="primary"
-              size="lg"
+              size="md"
               className="w-full rounded-full shadow-lg shadow-gray-200"
             >
               <span>{t("signup.create_account")}</span>

@@ -1,30 +1,19 @@
 "use client";
 
-import clsx from "clsx";
-import React from "react";
-
-interface BaseProps {
-  children: React.ReactNode;
-  className?: string;
-  outsideClassName?: string;
-  insideClassName?: string;
+interface baseprobs {
+  header?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
-export default function Base({
-  children,
-  className,
-  outsideClassName,
-  insideClassName,
-}: BaseProps) {
+export const Base = ({ header, children }: baseprobs) => {
   return (
-    <div
-      className={clsx(
-        "flex items-center justify-center w-full h-screen bg-gray-50 ",
-        outsideClassName,
-        className
-      )}
-    >
-      <div className={clsx(insideClassName, "w-full h-full")}>{children}</div>
+    <div className=" flex-col w-full h-screen">
+      {header}
+      <div className="flex w-full items-center justify-center h-full">
+        <div className="flex w-full items-center justify-center ">
+          {children}
+        </div>
+      </div>
     </div>
   );
-}
+};
