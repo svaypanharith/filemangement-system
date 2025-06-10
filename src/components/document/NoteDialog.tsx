@@ -31,6 +31,10 @@ export default function NoteDialog({
             fileName={fileName}
             initialColor={initialColor}
             onSubmit={onSubmit}
+            onSubmitSuccess={() => {
+              onOpenChange(false);
+              setOnSubmit(false);
+            }}
           />
         </div>
       }
@@ -49,7 +53,6 @@ export default function NoteDialog({
             preset="primary"
             onClick={() => {
               setOnSubmit(true);
-              onOpenChange(false);
             }}
           >
             Save
