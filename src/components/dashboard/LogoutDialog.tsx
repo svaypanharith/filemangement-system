@@ -20,8 +20,10 @@ const LogoutDialog = ({ open, onOpenChange, onSuccess }: LogoutDialogProps) => {
   const [signOut, { isLoading }] = useSignOutMutation();
 
   const handleLogout = async () => {
-    await signOut().unwrap();
-    logout();
+    // await signOut().unwrap();
+    // logout()
+
+    window.location.href = "/";
     router.push("/");
   };
 
