@@ -117,7 +117,7 @@ export default function SignUpForm({
               }}
               required
               label={t("signup.last_name")}
-              placeholder={t("signup.name")}
+              placeholder={t("signup.last_name")}
               type="text"
             />
             <MInput
@@ -153,7 +153,7 @@ export default function SignUpForm({
               className="w-full rounded-full shadow-lg shadow-gray-200"
               disabled={isLoading}
             >
-              {t("signup.create_account")}
+              {t("signup.button")}
             </MButton>
           </div>
         </form>

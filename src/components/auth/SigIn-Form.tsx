@@ -73,8 +73,8 @@ export const SignInForm = ({
           </p>
           <MInput
             required
-            label={t("signin.email")}
-            placeholder={t("signin.email")}
+            label={t("signin.label.email")}
+            placeholder={t("signin.label.email")}
             type="email"
             rounded
             onChange={(e) => {
@@ -86,8 +86,8 @@ export const SignInForm = ({
             {...form.register("password")}
             error={form.formState.errors.password?.message}
             required
-            label={t("signin.password")}
-            placeholder={t("signin.password")}
+            label={t("signin.label.password")}
+            placeholder={t("signin.label.password")}
             onChange={(e) => {
               console.log(e.target.value);
             }}
@@ -97,7 +97,7 @@ export const SignInForm = ({
             <p className="text-sm flex text-gray-500 gap-2">
               {t("signin.dont_have_account")}
               <Link href="/signup" className="text-blue-500">
-                {t("signin.signup")}
+                {t("signin.title")}
               </Link>
             </p>
             <p className="text-sm text-gray-500">
@@ -109,10 +109,10 @@ export const SignInForm = ({
             disabled={isLoading}
             preset="primary"
             size="md"
-            isLoading={isLoading}
+            loading={isLoading}
             className="w-full rounded-full shadow-lg shadow-gray-200"
           >
-            <span>{t("signin.signin_button")}</span>
+            <span>{t("signin.button")}</span>
           </MButton>
         </form>
       </FormProvider>

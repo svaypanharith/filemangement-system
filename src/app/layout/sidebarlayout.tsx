@@ -4,7 +4,6 @@ import type React from "react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import Header from "./header";
 import { AppSidebar } from "@/components/dashboard/AppSidebar";
-
 import { ThemeProvider } from "@/provider/ThemProvider";
 
 interface SidebarLayoutProps {
@@ -15,7 +14,7 @@ interface SidebarLayoutProps {
 export default function SidebarLayout({ children }: SidebarLayoutProps) {
   return (
     <ThemeProvider
-      attribute="class"
+      attribute="data-theme"
       defaultTheme="system"
       enableSystem
       disableTransitionOnChange
