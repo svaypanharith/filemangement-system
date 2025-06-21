@@ -1,27 +1,43 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const protectedRoutes = ["/dashboard"];
-const publicRoutes = ["/welcome", "/signup", "/signin"];
-
-export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
-  ],
-};
-
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
+  const storedToken = request.cookies.get("auth_token")?.value;
   const { pathname } = request.nextUrl;
-  const token = request.cookies.get("auth_token")?.value;
 
-  // if (token && publicRoutes.includes(pathname)) {
-  //   return NextResponse.redirect(new URL("/dashboard", request.url));
-  // }
+  const publicPaths = ["/", "/login", "/signup", "/forgot-password", "/signin"];
+  const isPublicPath = publicPaths.includes(pathname);
+  const isDashboardPath = pathname.startsWith("/dashboard");
 
-  // // Protect dashboard routes
-  // if (!token && protectedRoutes.some(route => pathname.startsWith(route))) {
-  //   return NextResponse.redirect(new URL("/welcome", request.url));
-  // }
+
+  if (isDashboardPath && !storedToken) {
+    return NextResponse.redirect(new URL("/signin", request.url));
+  }
+
+
+  if (isPublicPath && storedToken) {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+
+  if (!isPublicPath && !storedToken) {
+    return NextResponse.redirect(new URL("/signin", request.url));
+  }
 
   return NextResponse.next();
-} 
+}
+
+// Configure which paths the middleware should run on
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public folder
+     */
+    "/((?!api|_next/static|_next/image|favicon.ico|public).*)",
+  ],
+}; 

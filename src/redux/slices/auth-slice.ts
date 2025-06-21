@@ -1,24 +1,55 @@
 import { baseQuery } from "@/redux/middleware/base-query";
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { AuthState, SignIn, SignUp , AuthResponse } from "@/redux/slices/data.types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { API_URL } from "@/utils/env";
+import Cookies from "js-cookie";
 
+const initialState: AuthState = {
+  user: null,
+  token: null,
+  isAuthenticated: false,
+  isLoading: false,
+  error: null,
+  status: null,
+  message: null,
+  data: null,
+};
+
+const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {
+    setCredentials: (
+      state,
+      action: PayloadAction<{ user: string; token: string }>
+    ) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isAuthenticated = true;
+    },
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      state.isAuthenticated = false;
+    },
+  },
+});
+
+export const { setCredentials, logout } = authSlice.actions;
 
 export const authApi = createApi({
-  reducerPath: "authApi", 
+  reducerPath: "authApi",
   baseQuery: baseQuery,
-  tagTypes: ["Auth", "User"], 
-  
+  tagTypes: ["Auth", "User"],
   endpoints: (builder) => ({
-    // Sign In
     signIn: builder.mutation<AuthState, SignIn>({
       query: (credentials) => ({
-        url: "/auth/signin",
+        url: `${API_URL}/login`,
         method: "POST",
         body: credentials,
       }),
-      // Invalidate auth-related cache after successful login
       invalidatesTags: ["Auth"],
-      // Transform error response if needed
       transformErrorResponse: (response: AuthResponse) => {
         return {
           status: response.status,
@@ -27,10 +58,9 @@ export const authApi = createApi({
       },
     }),
 
-    // Sign Up
     signUp: builder.mutation<AuthState, SignUp>({
       query: (credentials) => ({
-        url: "/auth/signup",
+        url: `${API_URL}/register`,
         method: "POST",
         body: credentials,
       }),
@@ -43,31 +73,25 @@ export const authApi = createApi({
       },
     }),
 
-    // Sign Out (recommended addition)
-    signOut: builder.mutation<{ message: string }, void>({
+    signOut: builder.mutation<AuthState, void>({
       query: () => ({
-        url: "/auth/signout",
+        url: `${API_URL}/logout`,
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${Cookies.get("auth_token")}`,
+        },
       }),
       invalidatesTags: ["Auth", "User"],
+      transformErrorResponse: (response: { status: number; data: { message: string } }) => {
+        return {
+          status: response.status,
+          message: response.data?.message || "Sign out failed",
+        };
+      },
     }),
 
-    // Get Current User (recommended addition)
-    getCurrentUser: builder.query<AuthState, void>({
-      query: () => "/auth/me",
-      providesTags: ["Auth"],
-    }),
+   
 
-    // Refresh Token (recommended addition)
-    // refreshToken: builder.mutation<{ accessToken: string }, void>({
-    //   query: () => ({
-    //     url: "/auth/refresh",
-    //     method: "POST",
-    //   }),
-    //   invalidatesTags: ["Auth"],
-    // }),
-
-    // Reset Password (common auth feature)
     resetPassword: builder.mutation<{ message: string }, { email: string }>({
       query: (data) => ({
         url: "/auth/reset-password",
@@ -75,16 +99,6 @@ export const authApi = createApi({
         body: data,
       }),
     }),
-
-    // Verify Email (common auth feature)
-    // verifyEmail: builder.mutation<{ message: string }, { token: string }>({
-    //   query: (data) => ({
-    //     url: "/auth/verify-email",
-    //     method: "POST",
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ["Auth"],
-    // }),
   }),
 });
 
@@ -93,12 +107,13 @@ export const {
   useSignInMutation,
   useSignUpMutation,
   useSignOutMutation,
-  useGetCurrentUserQuery,
-//   useRefreshTokenMutation,
+  
   useResetPasswordMutation,
-//   useVerifyEmailMutation,
 } = authApi;
 
-// Export the reducer
-export default authApi.reducer;
+// Export the combined reducer
+export default {
+  auth: authSlice.reducer,
+  [authApi.reducerPath]: authApi.reducer,
+};
 

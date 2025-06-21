@@ -49,7 +49,7 @@ const MButton = React.forwardRef<HTMLButtonElement, ButtonProps & MButtonProps>(
         "bg-success text-success-foreground shadow-xs hover:bg-success/90 focus-visible:ring-success/20 dark:focus-visible:ring-success/40 dark:bg-success/60 rounded-full",
     };
     const postSetClassName = clsx(
-      "active:opacity-70 transition-colors active:[transform:translate3d(0,2px,0)]  cursor-pointer",
+      "active:opacity-70 transition-colors active:[transform:translate3d(0,2px,0)]  cursor-pointer flex items-center justify-center",
       presetStyle[preset || ("primary" as keyof typeof presetStyle)],
       sizeStyle[size || ("sm" as keyof typeof sizeStyle)],
       { "w-full": full },
@@ -64,7 +64,7 @@ const MButton = React.forwardRef<HTMLButtonElement, ButtonProps & MButtonProps>(
         disabled={loading || disabled}
         onClick={onClick}
       >
-        {loading ? <Loader2 className="animate-spin" /> : children}
+        {loading ? <Loader2 className="animate-spin " /> : children}
       </button>
     );
   }

@@ -14,13 +14,31 @@ const baseQuery = async (args: any, api: any, extraOptions: any) => {
   const baseResult = await fetchBaseQuery({
     baseUrl: API_URL,
     prepareHeaders: (headers) => {
+      headers.set('Content-Type', 'application/json');
+      headers.set('Accept', 'application/json');
+      headers.set('X-Requested-With', 'XMLHttpRequest'); 
+      
       if (authToken) {
-        headers.set("authorization", `Bearer ${authToken}`);
+        headers.set("Authorization", `Bearer ${authToken}`);
       }
       return headers;
-    }
+    },
+    credentials: 'include', // Important for CORS
+    mode: 'cors', // Explicitly set CORS mode
   })(args, api, extraOptions);
-  return baseResult;
-}
 
-export default baseQuery;
+  // Handle CORS errors
+  if (baseResult.error?.status === 'FETCH_ERROR') {
+    return {
+      error: {
+        status: 'CORS_ERROR',
+        data: 'Unable to reach the server. Please check your connection.',
+      },
+    };
+  }
+
+  return baseResult;
+};
+
+export { baseQuery };
+

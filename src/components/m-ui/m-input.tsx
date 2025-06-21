@@ -4,6 +4,7 @@ import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 
 interface MInputProps {
+  name?: string;
   label?: string;
   placeholder?: string;
   type?: string;

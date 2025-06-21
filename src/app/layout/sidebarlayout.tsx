@@ -4,10 +4,7 @@ import type React from "react";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import Header from "./header";
 import { AppSidebar } from "@/components/dashboard/AppSidebar";
-// import { useSelector } from "react-redux";
-// import { RootState } from "@/redux/store";
-// import { useEffect } from "react";
-// import { getLocalStorage, setLocalStorage } from "@/utils/storage";
+
 import { ThemeProvider } from "@/provider/ThemProvider";
 
 interface SidebarLayoutProps {
@@ -16,27 +13,6 @@ interface SidebarLayoutProps {
 }
 
 export default function SidebarLayout({ children }: SidebarLayoutProps) {
-  // my code implement
-  // useEffect(() => {
-  //   const initialTheme = getLocalStorage("theme");
-  //   if (initialTheme === "") {
-  //     setLocalStorage("theme", "light");
-  //   } else {
-  //     return;
-  //   }
-  // }, []);
-
-  // const theme = useSelector((state: RootState) => state.changeThemeColor.theme);
-
-  // useEffect(() => {
-  //   const initialTheme = getLocalStorage("theme");
-  //   if (theme || initialTheme === "dark") {
-  //     document.documentElement.classList.add("dark");
-  //   } else {
-  //     document.documentElement.classList.remove("dark");
-  //   }
-  // }, [theme]);
-
   return (
     <ThemeProvider
       attribute="class"

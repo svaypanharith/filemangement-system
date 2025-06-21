@@ -31,15 +31,18 @@ export default function WelcomePage() {
           <div className="flex items-center gap-2">
             <Brain className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
             <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-              File Management System
+              {t("welcome.file_management")}
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <Button variant="ghost">Docs</Button>
-            <Button variant="ghost">Support</Button>
+            <Button variant="ghost" className="cursor-pointer">
+              Docs
+            </Button>
+            <Button variant="ghost" className="cursor-pointer">
+              Support
+            </Button>
             <MButton
               size="sm"
-              variant="outline"
               onClick={() => router.push("/signin")}
               preset="primary"
             >
@@ -48,7 +51,7 @@ export default function WelcomePage() {
             <SwitchLanguage />
             <MButton
               size="sm"
-              onClick={() => router.push("/signup")}
+              onClick={() => router.push("/signin")}
               preset="primary"
             >
               {t("welcome.button")}
@@ -60,14 +63,13 @@ export default function WelcomePage() {
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-16 md:py-24 flex flex-col items-center text-center">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-          Welcome to{" "}
+          {t("welcome.title")}
           <span className="text-indigo-600 dark:text-indigo-400">
-            AI File Management System
+            {t("welcome.title_description")}
           </span>
         </h1>
         <p className="text-xl md:text-2xl font-mono text-slate-600 dark:text-slate-300 max-w-3xl mb-12">
-          This is a file management system that allows you to manage your files
-          with AI
+          {t("welcome.description")}
         </p>
         <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
           <Button size="lg" className="flex-1 gap-2">

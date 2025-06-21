@@ -1,44 +1,48 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { createContext, useContext, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import Cookies from "js-cookie";
+import { useAppDispatch, useAppSelector } from "@/redux/store";
+import {
+  setCredentials,
+  logout as logoutAction,
+} from "@/redux/slices/auth-slice";
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  token: string | undefined;
-  login: (token: string) => void;
+  token: string | null;
+  login: (token: string, user: any) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [token, setToken] = useState<string | undefined>(undefined);
+  const dispatch = useAppDispatch();
   const router = useRouter();
+  const pathname = usePathname();
+  const { isAuthenticated, token } = useAppSelector((state) => state.auth);
 
-  useEffect(() => {
-    const storedToken = Cookies.get("auth_token");
-    if (storedToken) {
-      setToken(storedToken);
-      setIsAuthenticated(true);
-    }
-  }, []);
-
-  const login = (newToken: string) => {
-    Cookies.set("auth_token", newToken);
-    setToken(newToken);
-    setIsAuthenticated(true);
+  const login = (newToken: string, user: any) => {
+    Cookies.set("auth_token", newToken, {
+      expires: 365,
+    });
+    dispatch(setCredentials({ token: newToken, user: user }));
     router.push("/dashboard");
   };
 
   const logout = () => {
     Cookies.remove("auth_token");
-    setToken(undefined);
-    setIsAuthenticated(false);
-    router.push("/signin");
+    dispatch(logoutAction());
+    router.push("/");
   };
+
+  useEffect(() => {
+    if (token && pathname === "/" && isAuthenticated) {
+      router.push("/dashboard");
+    }
+  }, [token, dispatch, isAuthenticated, pathname, router]);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, token, login, logout }}>

@@ -12,15 +12,24 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider } from "react-hook-form";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   email: z.string().email(),
   password: passwordValidation,
 });
 
-type FormSchemaType = z.infer<typeof formSchema>;
+export type FormSchemaType = z.infer<typeof formSchema>;
 
-export default function SignInForm() {
+export const SignInForm = ({
+  onSubmitData,
+  isLoading,
+  onSuccess,
+}: {
+  onSubmitData: (data: FormSchemaType) => void;
+  isLoading?: boolean;
+  onSuccess?: boolean;
+}) => {
   const { t } = useTranslation();
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
@@ -30,13 +39,14 @@ export default function SignInForm() {
     },
   });
 
-  const onSubmit = (data: FormSchemaType) => {
-    // todo intergrate with api
-    try {
-      console.log(data);
-    } catch (error) {
-      console.error(error);
+  useEffect(() => {
+    if (onSuccess) {
+      form.reset();
     }
+  }, [onSuccess]);
+
+  const onSubmit = (data: FormSchemaType) => {
+    onSubmitData(data);
   };
 
   return (
@@ -67,7 +77,9 @@ export default function SignInForm() {
             placeholder={t("signin.email")}
             type="email"
             rounded
-            {...form.register("email")}
+            onChange={(e) => {
+              form.setValue("email", e.target.value);
+            }}
             error={form.formState.errors.email?.message}
           />
           <MInputPassword
@@ -94,8 +106,10 @@ export default function SignInForm() {
           </div>
           <MButton
             type="submit"
+            disabled={isLoading}
             preset="primary"
             size="md"
+            isLoading={isLoading}
             className="w-full rounded-full shadow-lg shadow-gray-200"
           >
             <span>{t("signin.signin_button")}</span>
@@ -104,4 +118,4 @@ export default function SignInForm() {
       </FormProvider>
     </div>
   );
-}
+};

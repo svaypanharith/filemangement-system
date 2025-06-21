@@ -17,9 +17,17 @@ export interface AuthResponse {
 }
 
 export interface AuthState {
-  user: User | null;
+  user: string | null;
   token: string | null;
   isAuthenticated: boolean;
+  isLoading: boolean;
+  error: string | null;
+  status: string | number | boolean | null;
+  message: string | null;
+
+  data: {
+    id: string;
+  } | null;
  
 }
 
@@ -29,9 +37,9 @@ export interface SignIn{
 }
 
 export interface SignUp{
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirm_password: string;
 }

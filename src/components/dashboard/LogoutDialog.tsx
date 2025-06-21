@@ -1,10 +1,11 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import MAlertDialog from "../m-ui/m-alert-dialog";
 import { useRouter } from "next/navigation";
 import Dialog from "../m-ui/m-dialog";
-import { Button } from "../ui/button";
+import MButton from "../m-ui/m-button";
+import { useAuth } from "@/provider/AuthProvider";
+import { useSignOutMutation } from "@/redux/slices/auth-slice";
 
 type LogoutDialogProps = {
   open: boolean;
@@ -15,12 +16,13 @@ type LogoutDialogProps = {
 const LogoutDialog = ({ open, onOpenChange, onSuccess }: LogoutDialogProps) => {
   const { t } = useTranslation("");
   const router = useRouter();
+  const { logout } = useAuth();
+  const [signOut, { isLoading }] = useSignOutMutation();
 
-  const handleLogout = () => {
-    router.push("/welcome");
-    if (onSuccess) {
-      onSuccess();
-    }
+  const handleLogout = async () => {
+    await signOut().unwrap();
+    logout();
+    router.push("/");
   };
 
   return (
@@ -31,12 +33,17 @@ const LogoutDialog = ({ open, onOpenChange, onSuccess }: LogoutDialogProps) => {
       description={t("logout.logout_description")}
       footer={
         <div className="flex justify-end gap-2">
-          <Button variant="outline" onClick={() => onOpenChange?.(false)}>
+          <MButton preset="secondary" onClick={() => onOpenChange?.(false)}>
             {t("logout.cancel")}
-          </Button>
-          <Button variant="destructive" onClick={handleLogout}>
+          </MButton>
+          <MButton
+            preset="danger"
+            onClick={handleLogout}
+            disabled={isLoading}
+            loading={isLoading}
+          >
             {t("logout.logout")}
-          </Button>
+          </MButton>
         </div>
       }
     />
