@@ -6,14 +6,11 @@ import { API_URL } from "@/utils/env";
 import Cookies from "js-cookie";
 
 const initialState: AuthState = {
-  user: null,
-  token: null,
   isAuthenticated: false,
   isLoading: false,
   error: null,
   status: null,
-  message: null,
-  data: null,
+  message: null
 };
 
 const authSlice = createSlice({
@@ -22,15 +19,11 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (
       state,
-      action: PayloadAction<{ user: string; token: string }>
+      action: PayloadAction<void>
     ) => {
-      state.user = action.payload.user;
-      state.token = action.payload.token;
       state.isAuthenticated = true;
     },
     logout: (state) => {
-      state.user = null;
-      state.token = null;
       state.isAuthenticated = false;
     },
   },

@@ -1,10 +1,19 @@
-export interface User { // Just testing not confirmed
+export interface User {
   id: string;
-  name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   avatar: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface UserResponse {
+  data: {
+    user: User;
+  };
+  message: string;
+  status: number;
 }
 
 export interface AuthResponse {
@@ -17,26 +26,19 @@ export interface AuthResponse {
 }
 
 export interface AuthState {
-  user: string | null;
-  token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
   status: string | number | boolean | null;
   message: string | null;
-
-  data: {
-    id: string;
-  } | null;
- 
 }
 
-export interface SignIn{
+export interface SignIn {
   email: string;
   password: string;
 }
 
-export interface SignUp{
+export interface SignUp {
   first_name: string;
   last_name: string;
   email: string;

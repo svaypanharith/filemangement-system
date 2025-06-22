@@ -12,7 +12,7 @@ import {
 interface AuthContextType {
   isAuthenticated: boolean;
   token: string | null;
-  login: (token: string, user: any) => void;
+  login: (token: string, userId: string) => void;
   logout: () => void;
 }
 
@@ -22,15 +22,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
-  const { isAuthenticated, token } = useAppSelector((state) => state.auth);
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
-  const login = (newToken: string, user: any) => {
+  const login = (newToken: string, userId: string) => {
     Cookies.set("auth_token", newToken, {
       expires: 365,
     });
-    dispatch(setCredentials({ token: newToken, user: user }));
+    dispatch(setCredentials())  ;
     router.push("/dashboard");
   };
+
+
+  const token = Cookies.get("auth_token") || null;
 
   const logout = () => {
     Cookies.remove("auth_token");
