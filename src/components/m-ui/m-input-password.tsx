@@ -23,7 +23,7 @@ export const passwordValidation = z
   .string()
   .min(1, password_error_messages.password_required)
   .regex(
-    /^(?=.*[A-Z])(?=.*\d).{6,}$/,
+    /^(?=.*[a-z])(?=.*\d).{6,}$/,
     password_error_messages.password_required_to_be_capital_letter_and_number
   );
 
