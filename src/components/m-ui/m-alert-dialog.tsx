@@ -45,6 +45,7 @@ const MAlertDialog = React.forwardRef<HTMLButtonElement, MAlertDialogProps>(
       default: "bg-white text-black hover:bg-gray-100",
       destructive: "bg-red-500 text-white hover:bg-red-600",
       primary: "bg-primary text-white hover:bg-primary/90",
+      dark: "bg-black text-white hover:bg-black/90",
     };
 
     const sizeStyles = {

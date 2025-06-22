@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import baseQuery from "@/redux/middleware/base-query";
+import { baseQuery } from "@/redux/middleware/base-query";
 import { User } from "@/redux/slices/data.types";
 
 const dataSlice = createApi({
@@ -15,12 +15,13 @@ const dataSlice = createApi({
       }),
       providesTags: ["Profile"],
     }),
-  })
+  }),
 })
 
 export default dataSlice;
 
 export const { 
   useGetProfileQuery, 
-  useLazyGetProfileQuery
+  useLazyGetProfileQuery,
+
 } = dataSlice;

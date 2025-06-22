@@ -14,7 +14,7 @@ import ChangeThemColorDialog from "@/components/setting/ChangeThemColorDialog";
 import ChangePasswordDialog from "@/components/setting/ChangePasswordDialog";
 import UserAccountDialog from "@/components/setting/UserAccountDialog";
 import { useTranslation } from "react-i18next";
-import LogoutDialog from "@/components/dashboard/logout";
+import LogoutDialog from "@/components/dashboard/LogoutDialog";
 
 const CardWrapper = ({
   onClick,
@@ -70,7 +70,7 @@ export default function Setting() {
           <CardWrapper
             title={t("setting.change_password.title")}
             icon={<Lock className="w-5 h-5 text-blue-500" />}
-            description={t("setting.change_password.description")}
+            description={t("setting.change_password_description")}
             onClick={() => setIsOpenChangePassword(true)}
           />
 
@@ -98,7 +98,6 @@ export default function Setting() {
             onClick={() => setIsOpenLogoutDialog(true)}
           />
         </div>
-
         <ChangePasswordDialog
           open={isOpenChangePassword}
           onOpenChange={setIsOpenChangePassword}

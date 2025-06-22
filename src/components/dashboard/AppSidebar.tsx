@@ -1,8 +1,5 @@
 "use client";
 
-import { SideBarContent } from "@/components/dashboard/SideBarContent";
-import AiDropDown from "./AiDropDown";
-import DocumentDropDown from "./DocumentDropDown";
 import { FooterSidebar } from "@/components/dashboard/FooterSidebar";
 import {
   Sidebar,
@@ -11,10 +8,15 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
 } from "@/components/ui/sidebar";
-
-import { data } from "@/components/dashboard/MenuItem";
+import { useTranslation } from "react-i18next";
+import { Separator } from "@/components/ui/separator";
+import SideBarMenu from "../share/SideBarMenu";
+import { MenuData } from "./MenuItem";
 
 export function AppSidebar() {
+  const { t } = useTranslation();
+  const data = MenuData();
+
   return (
     <Sidebar
       className={`w-64
@@ -22,18 +24,17 @@ export function AppSidebar() {
     >
       <SidebarContent className={`flex flex-col justify-between h-full  p-4`}>
         <div>
-          <SidebarGroup className="gap-8">
-            <SidebarGroupLabel className="flex justify-center items-center me-10">
-              <h1 className="text-sm font-bold">File Management</h1>
+          <SidebarGroup className="gap-4">
+            <SidebarGroupLabel className="flex justify-center items-center ">
+              <h1 className="text-xl font-bold">
+                {t("welcome.file_management")}
+              </h1>
             </SidebarGroupLabel>
-            <SidebarGroupContent className="mb-1">
-              <SideBarContent items={data.Dashboard} />
-            </SidebarGroupContent>
-            <SidebarGroupContent className="mb-1">
-              <DocumentDropDown items={data.menuItems} />
-            </SidebarGroupContent>
-            <SidebarGroupContent className="mb-1">
-              <AiDropDown items={data.chatbot} />
+            <Separator />
+            <SidebarGroupContent className="flex flex-col gap-10">
+              <SideBarMenu items={data.Dashboard} />
+              <SideBarMenu items={data.menuItems} />
+              <SideBarMenu items={data.chatbot} collapsible={true} />
             </SidebarGroupContent>
           </SidebarGroup>
         </div>

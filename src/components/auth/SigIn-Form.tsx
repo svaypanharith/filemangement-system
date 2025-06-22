@@ -12,15 +12,24 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider } from "react-hook-form";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   email: z.string().email(),
   password: passwordValidation,
 });
 
-type FormSchemaType = z.infer<typeof formSchema>;
+export type FormSchemaType = z.infer<typeof formSchema>;
 
-export default function SignInForm() {
+export const SignInForm = ({
+  onSubmitData,
+  isLoading,
+  onSuccess,
+}: {
+  onSubmitData: (data: FormSchemaType) => void;
+  isLoading?: boolean;
+  onSuccess?: boolean;
+}) => {
   const { t } = useTranslation();
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
@@ -30,23 +39,29 @@ export default function SignInForm() {
     },
   });
 
+  useEffect(() => {
+    if (onSuccess) {
+      form.reset();
+    }
+  }, [onSuccess]);
+
   const onSubmit = (data: FormSchemaType) => {
-    console.log(data);
+    onSubmitData(data);
   };
 
   return (
-    <div className="flex flex-col bg-white rounded-2xl shadow-lg max-w-[600px] w-full h-full gap-10 p-10 ">
+    <div className="flex flex-col bg-gray-50 rounded-2xl shadow-lg max-w-[600px] w-full h-full gap-10 p-10 ">
       <div className="flex w-full flex-col gap-2">
         <p className="text-2xl font-bold">{t("signin.title")}</p>
         <p className="text-sm text-gray-500">{t("signin.description")}</p>
       </div>
       <MButton
         preset="secondary"
-        size="lg"
+        size="md"
         className="w-full rounded-lg bg-transparent border border-gray-200 flex items-center justify-center gap-2"
       >
         <Image src={googleIcon} alt="google" width={30} height={20} />
-        Continue with Google
+        {t("signin.signin_with_google")}
       </MButton>
       <FormProvider {...form}>
         <form
@@ -58,19 +73,21 @@ export default function SignInForm() {
           </p>
           <MInput
             required
-            label={t("signin.email")}
-            placeholder={t("signin.email")}
+            label={t("signin.label.email")}
+            placeholder={t("signin.label.email")}
             type="email"
             rounded
-            {...form.register("email")}
+            onChange={(e) => {
+              form.setValue("email", e.target.value);
+            }}
             error={form.formState.errors.email?.message}
           />
           <MInputPassword
             {...form.register("password")}
             error={form.formState.errors.password?.message}
             required
-            label={t("signin.password")}
-            placeholder={t("signin.password")}
+            label={t("signin.label.password")}
+            placeholder={t("signin.label.password")}
             onChange={(e) => {
               console.log(e.target.value);
             }}
@@ -80,7 +97,7 @@ export default function SignInForm() {
             <p className="text-sm flex text-gray-500 gap-2">
               {t("signin.dont_have_account")}
               <Link href="/signup" className="text-blue-500">
-                {t("signin.signup")}
+                {t("signin.title")}
               </Link>
             </p>
             <p className="text-sm text-gray-500">
@@ -89,14 +106,16 @@ export default function SignInForm() {
           </div>
           <MButton
             type="submit"
+            disabled={isLoading}
             preset="primary"
-            size="lg"
+            size="md"
+            loading={isLoading}
             className="w-full rounded-full shadow-lg shadow-gray-200"
           >
-            <span>{t("signin.signin_button")}</span>
+            <span>{t("signin.button")}</span>
           </MButton>
         </form>
       </FormProvider>
     </div>
   );
-}
+};

@@ -34,7 +34,7 @@ export default function SwitchLanguage() {
     () => (
       <div>
         <Select value={currentLanguage} onValueChange={handleChangeLanguage}>
-          <SelectTrigger className="cursor-pointer rounded-full shadow-xl">
+          <SelectTrigger className="cursor-pointer rounded-2xl">
             <div className="flex items-center gap-2">
               <SelectValue placeholder="Select a language" />
             </div>

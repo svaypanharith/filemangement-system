@@ -1,6 +1,7 @@
 {
     "welcome": {
-        "title": "Welcome to the File Management System",
+        "title": "Welcome to the",
+        "title_description": "File Management System",
         "description": "This is a file management system that allows you to manage your files and folders.",
         "button": "Get Started",
         "file_management": "File Management"
@@ -10,6 +11,13 @@
         "Khmer": "Khmer"
     },
     "signup": {
+        "signup": "Sign up",
+        "first_name": "First Name",
+        "or_continue_with": "Or continue with",
+        "last_name": "Last Name",
+        "email": "Email",
+        "password": "Password",
+        "confirm_password": "Confirm Password",
         "title": "Create account",
         "signup_with_google": "Sign up with Google",
         "description": "Enter your credentials to create your account!",
@@ -20,9 +28,16 @@
     },
     "signin": {
         "title": "Sign in",
+        "or_continue_with": "Or continue with",
         "signin_with_google": "Sign in with Google",
         "description": "Enter your credentials to sign in!",
-        "button": "Sign in"
+        "button": "Sign in",
+        "dont_have_account": "Don't have an account?",
+        "forgot_password": "Forgot password?",
+        "label": {
+            "email": "Email",
+            "password": "Password"
+        }
     },
     "chatbot": {
         "title": "Chatbot ASK TO AI",
@@ -47,11 +62,24 @@
     "setting": {
         "setting": "Setting",
         "user_account": "User Account",
-        "change_password": "Change Password",
         "logout": "Logout",
         "logout_description": "Logout from your account",
+        "change_password_description": "Change your password",
         "appearance": "Appearance",
         "notifications": "Notifications",
-        "privacy": "Privacy"
+        "privacy": "Privacy",
+        "change_password":{
+            "title":"Change Password",
+            "description":"Change your password",
+            "current_password": "Current Password",
+            "new_password": "New Password",
+            "confirm_password": "Confirm Password",
+            "change_password_button": "Change Password",
+            "cancel_button": "Cancel"
+        },
+        "theme":{
+            "light": "Light",
+            "dark": "Dark"
+        }
     }
 }
