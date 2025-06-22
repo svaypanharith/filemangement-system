@@ -24,14 +24,13 @@ const SignInPage = () => {
     async (data: FormSchemaType) => {
       try {
         const response = await signIn(data).unwrap();
-        console.log("Login Response:", response);
-        if (response.status !== true) {
-          throw new Error(response.message || "Something went wrong");
+        if (response && response.token) {
+          login(response.token);
+          setIsSubmitted(true);
+          toast.success(response.message || "Sign in successful");
+        } else {
+          throw new Error("Sign in failed");
         }
-        login(response.token || "", response.data?.id);
-        setIsSubmitted(true);
-        toast.success(response.message || "Sign in successful");
-        router.push("/dashboard");
       } catch (error: any) {
         toast.error(error.data?.message || "Sign in failed");
       }
