@@ -1,8 +1,7 @@
 {
-
     "switchLanguage": {
-       "English": "ភាសាអង់គ្លេស",
-      "Khmer": "ខេមរះភាសា"
+        "English": "ភាសាអង់គ្លេស",
+        "Khmer": "ខេមរះភាសា"
     },
     "welcome": {
         "file_management": "ប្រព័ន្នគ្រប់គ្រងឯកសារ",
@@ -13,6 +12,14 @@
     },
     "signup": {
         "title": "បង្កើតគណនី",
+        "first_name": "ឈ្មោះដើម",
+        "last_name": "នាមត្រកូល",
+        "email": "អុីមែល",
+        "continue_with_google": "បង្កើតគណនីជាមួយ Google",
+        "password": "ពាក្យសម្ងាត់",
+        "confirm_password": "បញ្ជាក់ពាក្យសម្ងាត់",
+        "create_account": "បង្កើតគណនី",
+        "already_have_account": "មានគណនីរបស់អ្នកមែនទេ?",
         "signup_with_google": "បង្កើតគណនីជាមួយ Google",
         "description": "បង្កើតគណនីដើម្បីបង្កើតគណនីរបស់អ្នក",
         "button": "បង្កើតគណនី",
@@ -40,12 +47,13 @@
         "signin": "ចូលគណនី",
         "signin_button": "ចូលគណនី",
         "or_continue_with": "ឬបង្កើតគណនីជាមួយ"
-      
     },
     "chatbot": {
         "title": "ប្រព័ន្នបច្ចេកទេសបច្ចេកទេស",
         "description": "ស្វ័យនាក់ទៅកាន់ AI",
-        "button": "ស្វ័យនាក់ទៅកាន់ AI"
+        "button": "ស្វ័យនាក់ទៅកាន់ AI",
+        "ask_to_ai": "ស្វ័យនាក់ទៅកាន់ AI",
+        "placeholder": "សួរខ្ញុំគ្រប់រឿង"
     },
     "dashboard": {
         "dashboard": "ផ្ទាំងគ្រប់គ្រង",
@@ -56,7 +64,18 @@
         "total_file_size": "ទំហំឯកសារទាំងអស់",
         "ai_credit": "កុសលបច្ចេកទេស",
         "total_ai_credit": "កុសលបច្ចេកទេសទាំងអស់"
-    }, 
+    },
+    "document": {
+        "document": "ឯកសារ",
+        "description": "ប្រព័ន្នបច្ចេកទេស",
+        "search": "ស្វែងរក",
+        "button": "ប្រព័ន្នបច្ចេកទេស",
+        "placeholder": "សួរខ្ញុំគ្រប់រឿង",
+        "upload_file": "ផ្ទាមទាត់ឯកសារ",
+        "upload_file_description": "ផ្ទាមទាត់ឯកសាររបស់អ្នក",
+        "upload_file_button": "ផ្ទាមទាត់ឯកសារ",
+        "upload_file_placeholder": "ផ្ទាមទាត់ឯកសាររបស់អ្នក"
+    },
     "logout": {
         "logout": "ចាកចេញ",
         "logout_description": "តើអ្នកប្រាកដជាមួយនឹងចាកចេញមែនទេ?",
@@ -70,17 +89,16 @@
         "appearance": "មុនសម្រាប់សម្រាប់",
         "notifications": "ការបរិច្ចាគបច្ចេកទេស",
         "privacy": "ការបរិច្ចាគបច្ចេកទេស",
-        "change_password":{
-            "title":"ផ្លាស់ប្តូរពាក្យសម្ងាត់",
-            "description":"ផ្លាស់ប្តូរពាក្យសម្ងាត់របស់អ្នកដើម្បីរក្សាសុវត្ថិភាពគណនីរបស់អ្នក",
+        "change_password": {
+            "title": "ផ្លាស់ប្តូរពាក្យសម្ងាត់",
+            "description": "ផ្លាស់ប្តូរពាក្យសម្ងាត់របស់អ្នកដើម្បីរក្សាសុវត្ថិភាពគណនីរបស់អ្នក",
             "current_password": "ពាក្យសម្ងាត់បច្ចុប្បន្ន",
             "new_password": "ពាក្យសម្ងាត់ថ្មី",
             "confirm_password": "បញ្ជាក់ពាក្យសម្ងាត់",
             "change_password_button": "ផ្លាស់ប្តូរពាក្យសម្ងាត់",
             "cancel_button": "បោះបង់"
-    
-            },
-        "theme":{
+        },
+        "theme": {
             "light": "ពន្លឺ",
             "dark": "ងងឹត"
         }
