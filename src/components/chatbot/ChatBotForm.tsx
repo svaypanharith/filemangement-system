@@ -7,7 +7,7 @@ import { z } from "zod";
 import { Button } from "../ui/button";
 import { Send } from "lucide-react";
 import { setLocalStorage } from "@/utils/storage";
-
+import { useTranslation } from "react-i18next";
 const formSchema = z.object({
   message: z.string().min(1, "Message is required"),
 });
@@ -15,6 +15,7 @@ const formSchema = z.object({
 type FormSchemaType = z.infer<typeof formSchema>;
 
 export default function ChatBotForm() {
+  const { t } = useTranslation();
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,7 +34,7 @@ export default function ChatBotForm() {
         >
           <Textarea
             className="w-full p-4 pr-16 rounded-2xl resize-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-transparent dark:text-white"
-            placeholder="Ask me anything..."
+            placeholder={t("chatbot.placeholder")}
             {...form.register("message")}
             rows={1}
           />

@@ -9,7 +9,7 @@ import MAlertDialog from "../m-ui/m-alert-dialog";
 import NoteDialog from "./NoteDialog";
 import { getLocalStorage } from "@/utils/storage";
 import MButton from "@/components/m-ui/m-button";
-
+import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import {
   Select,
@@ -80,7 +80,7 @@ export default function Document() {
   const [isopenNoteDialog, setIsopenNoteDialog] = useState(false);
   const [selectedFileName, setSelectedFileName] = useState<string>("");
   const [noteColors, setNoteColors] = useState<Record<string, string>>({});
-
+  const { t } = useTranslation();
   useEffect(() => {
     // Load all note colors from localStorage
     const storedColors: Record<string, string> = {};
@@ -134,7 +134,10 @@ export default function Document() {
           <div className="flex justify-between">
             <div className="flex gap-4 w-1/4 ">
               <div className="relative">
-                <Input className="rounded-2xl shadow-xl" placeholder="Search" />
+                <Input
+                  className="rounded-2xl shadow-xl"
+                  placeholder={t("document.search")}
+                />
                 <Search className="absolute w-4 h-4 right-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
               </div>
               <Select>

@@ -61,7 +61,7 @@ export const SignInForm = ({
         className="w-full rounded-lg bg-transparent border border-gray-200 flex items-center justify-center gap-2"
       >
         <Image src={googleIcon} alt="google" width={30} height={20} />
-        Continue with Google
+        {t("signin.signin_with_google")}
       </MButton>
       <FormProvider {...form}>
         <form

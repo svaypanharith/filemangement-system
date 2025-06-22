@@ -81,7 +81,7 @@ export default function SignUpForm({
           className="w-full rounded-lg bg-transparent border border-gray-200 flex items-center justify-center gap-2"
         >
           <Image src={googleIcon} alt="google" width={30} height={20} />
-          <span>{t("signup.signup_with_google")}</span>
+          <span>{t("signup.continue_with_google")}</span>
         </MButton>
       </div>
 
