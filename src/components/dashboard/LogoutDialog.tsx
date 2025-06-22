@@ -22,7 +22,7 @@ const LogoutDialog = ({ open, onOpenChange, onSuccess }: LogoutDialogProps) => {
   const handleLogout = async () => {
     // await signOut().unwrap();
     // logout()
-
+    logout();
     window.location.href = "/";
     router.push("/");
   };
