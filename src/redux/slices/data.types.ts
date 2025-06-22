@@ -18,6 +18,7 @@ export interface UserResponse {
 
 export interface AuthResponse {
   data: {
+    token: string;
     message: string;
     status: number;
   }
@@ -26,6 +27,9 @@ export interface AuthResponse {
 }
 
 export interface AuthState {
+  data: {
+    token: string;
+  } | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;

@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 
 const initialState: AuthState = {
   isAuthenticated: false,
+  data: null,
   isLoading: false,
   error: null,
   status: null,
@@ -17,10 +18,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setCredentials: (
-      state,
-      action: PayloadAction<void>
-    ) => {
+    setCredentials: (state) => {
       state.isAuthenticated = true;
     },
     logout: (state) => {
@@ -36,7 +34,7 @@ export const authApi = createApi({
   baseQuery: baseQuery,
   tagTypes: ["Auth", "User"],
   endpoints: (builder) => ({
-    signIn: builder.mutation<AuthState, SignIn>({
+    signIn: builder.mutation<{ token: string; user: any; message: string }, SignIn>({
       query: (credentials) => ({
         url: `${API_URL}/login`,
         method: "POST",
