@@ -4,6 +4,7 @@ import MDialog from "../m-ui/m-dialog";
 import MButton from "../m-ui/m-button";
 import NoteForm from "./NoteForm";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 interface NoteDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -18,13 +19,14 @@ export default function NoteDialog({
   initialColor,
 }: NoteDialogProps) {
   const [onSubmit, setOnSubmit] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <MDialog
       onOpenAutoFocus={(e) => e.preventDefault()}
       className="w-full max-w-md gap-4"
-      header={"Note"}
-      description={"Add a note to the document for your document"}
+      header={t("document.note.title")}
+      description={t("document.note.description")}
       content={
         <div className="w-full mx-auto">
           <NoteForm
@@ -47,7 +49,7 @@ export default function NoteDialog({
             size="sm"
             onClick={() => onOpenChange(false)}
           >
-            Cancel
+            {t("document.note.cancel")}
           </MButton>
           <MButton
             preset="primary"
@@ -55,7 +57,7 @@ export default function NoteDialog({
               setOnSubmit(true);
             }}
           >
-            Save
+            {t("document.note.confirm")}
           </MButton>
         </div>
       }

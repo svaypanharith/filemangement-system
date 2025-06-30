@@ -1,6 +1,7 @@
 "use client";
 import MDialog from "@/components/m-ui/m-dialog";
 import EditProfileForm from "./EditProfileForm";
+import { useTranslation } from "react-i18next";
 
 interface EditProfileDialogProps {
   open: boolean;
@@ -11,10 +12,11 @@ export function EditProfileDialog({
   open,
   onOpenChange,
 }: EditProfileDialogProps) {
+  const { t } = useTranslation();
   return (
     <MDialog
-      header="Edit Profile"
-      description="Edit your profile information"
+      header={t("user_account.edit_profile")}
+      description={t("user_account.edit_profile_description")}
       content={
         <EditProfileForm
           onCancel={() => onOpenChange(false)}

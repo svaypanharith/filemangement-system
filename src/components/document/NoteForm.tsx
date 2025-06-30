@@ -4,6 +4,7 @@ import { setLocalStorage } from "@/utils/storage";
 import toast from "react-hot-toast";
 import { Card } from "@/components/ui/card";
 import { Check } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface NoteFormProps {
   fileName: string;
@@ -19,6 +20,7 @@ export default function NoteForm({
   onSubmitSuccess,
 }: NoteFormProps) {
   const [color, setColor] = useState(initialColor || "#3b82f6");
+  const { t } = useTranslation();
 
   const documentColors = [
     "#3b82f6", // Blue
@@ -35,7 +37,7 @@ export default function NoteForm({
     if (onSubmit) {
       console.log(`Saving note-${fileName} with color: ${color}`);
       setLocalStorage(`note-${fileName}`, color || "#000000");
-      toast.success(`Note Color is changed successfully`);
+      toast.success(t("document.note.note_success"));
       setTimeout(() => {
         onSubmitSuccess();
       }, 2000);
@@ -51,10 +53,10 @@ export default function NoteForm({
           <div
             className="w-3 h-3 rounded-full shadow-sm"
             style={{ backgroundColor: color }}
-          ></div>
+          ></div> 
           <div>
             <h4 className="font-semibold text-gray-500 text-sm">
-              Document Note
+              {t("document.note.document_note")}
             </h4>
             <p className="text-xs text-gray-500 truncate max-w-[200px]">
               {fileName}
@@ -80,7 +82,7 @@ export default function NoteForm({
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-gray-700">
-              Color Theme
+              {t("document.note.color_theme")}
             </span>
           </div>
 

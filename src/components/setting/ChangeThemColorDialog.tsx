@@ -31,35 +31,6 @@ export default function ChangeThemColorDialog({
     return resolvedTheme === "dark" ? "dark" : "light";
   });
 
-  // my code implement
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   if (switchTheme) {
-  //     dispatch(setTheme(true));
-  //     setSelectedColor("dark");
-  //     setLocalStorage("theme", "dark");
-  //   } else {
-  //     dispatch(setTheme(false));
-  //     setSelectedColor("light");
-  //     setLocalStorage("theme", "light");
-  //   }
-  // }, [switchTheme]);
-
-  // const handleChangeTheme = useCallback(() => {
-  //   setSwitchTheme(!switchTheme);
-  //   if (switchTheme) {
-  //     toast.success("Theme changed to light");
-  //   } else {
-  //     toast.success("Theme changed to dark", {
-  //       style: {
-  //         background: "#000",
-  //         color: "#fff",
-  //       },
-  //     });
-  //   }
-  // }, [switchTheme]);
-
   const { t } = useTranslation();
 
   const handleThemeChange = useCallback(
@@ -159,7 +130,6 @@ export default function ChangeThemColorDialog({
                     ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
                     : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
                 }`}
-                // onClick={() => handleThemeChange(theme.id === "dark")}
               >
                 <div
                   className={`w-full h-16 rounded-md bg-gradient-to-br ${theme.color} mb-2`}

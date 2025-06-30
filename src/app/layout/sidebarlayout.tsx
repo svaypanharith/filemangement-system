@@ -15,7 +15,7 @@ export default function SidebarLayout({ children }: SidebarLayoutProps) {
   return (
     <ThemeProvider
       attribute="class"
-      defaultTheme="system"
+      defaultTheme="light"
       enableSystem
       disableTransitionOnChange
     >

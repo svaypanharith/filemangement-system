@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import MButton from "../m-ui/m-button";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { useTranslation } from "react-i18next";
 interface EditProfileFormProps {
   onCancel: () => void;
   onSave: () => void;
@@ -22,6 +22,7 @@ export default function EditProfileForm({
   onCancel,
   onSave,
 }: EditProfileFormProps) {
+  const { t } = useTranslation();
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -42,18 +43,18 @@ export default function EditProfileForm({
           className="flex flex-col gap-4 w-full"
         >
           <MInput
-            label="Name"
+            label={t("user_account.name")}
             type="text"
-            placeholder="Name"
+            placeholder={t("user_account.name")}
             error={form.formState.errors.name?.message}
             onChange={(e) => {
               form.setValue("name", e.target.value);
             }}
           />
           <MInput
-            label="Email"
+            label={t("user_account.email")}
             type="email"
-            placeholder="Email"
+            placeholder={t("user_account.email")}
             error={form.formState.errors.email?.message}
             onChange={(e) => {
               form.setValue("email", e.target.value);
@@ -61,10 +62,10 @@ export default function EditProfileForm({
           />
           <div className="flex justify-end gap-2">
             <MButton preset="secondary" size="sm" onClick={onCancel}>
-              Cancel
+              {t("user_account.cancel")}
             </MButton>
             <MButton preset="primary" size="sm" type="submit">
-              Save
+              {t("user_account.save")}
             </MButton>
           </div>
         </form>

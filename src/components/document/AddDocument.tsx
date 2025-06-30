@@ -1,9 +1,10 @@
 "use client";
 
-import { Folder, Upload } from "lucide-react";
+import { Upload } from "lucide-react";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { Input } from "../ui/input";
+import { useTranslation } from "react-i18next";
 
 interface AddDocumentProps {
   onUploadComplete?: () => void;
@@ -11,6 +12,7 @@ interface AddDocumentProps {
 
 export default function AddDocument({ onUploadComplete }: AddDocumentProps) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const { t } = useTranslation();
 
   // read file as base64
   const readFileAsBase64 = (file: File): Promise<string> => {
@@ -115,14 +117,14 @@ export default function AddDocument({ onUploadComplete }: AddDocumentProps) {
           ) : (
             <div className="flex flex-col items-center gap-2 w-full">
               <p className="text-lg font-bold text-blue-800 text-center break-words max-w-full">
-                Upload Source
+                {t("document.upload_source")}
               </p>
               <p className="text-sm text-gray-500 text-center">
-                Drag and drop or choose file to upload
+                {t("document.upload_source_description")}
               </p>
               <p className="text-sm text-gray-500 text-center">
-                Supported file types: PDF, DOCX, TXT, CSV, XLSX, PPTX, RTF, ODT,
-                ODS
+                {t("document.supported_file_types")}: PDF, DOCX, TXT, CSV,
+                XLSX, PPTX, RTF, ODT, ODS
               </p>
             </div>
           )}

@@ -2,15 +2,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import AddDocument from "@/components/document/AddDocument";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { FileIcon, Search } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Trash, Pen } from "lucide-react";
+import { Trash, Pen , Folder } from "lucide-react";
 import MAlertDialog from "../m-ui/m-alert-dialog";
 import NoteDialog from "./NoteDialog";
 import { getLocalStorage } from "@/utils/storage";
 import MButton from "@/components/m-ui/m-button";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { setSidebarTrigger } from "@/redux/slices/sidebartrigger-slice";
 import {
   Select,
   SelectContent,
@@ -37,6 +39,8 @@ const DocumentService = {
     }
     return [];
   },
+  
+
 
   openFile: async (file: StoredFile) => {
     try {
@@ -81,6 +85,12 @@ export default function Document() {
   const [selectedFileName, setSelectedFileName] = useState<string>("");
   const [noteColors, setNoteColors] = useState<Record<string, string>>({});
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(setSidebarTrigger({ text: t("document.document"), iconName: "folder" }));
+  }, [t, dispatch]);
+
   useEffect(() => {
     // Load all note colors from localStorage
     const storedColors: Record<string, string> = {};
@@ -142,12 +152,12 @@ export default function Document() {
               </div>
               <Select>
                 <SelectTrigger className="rounded-2xl shadow-xl">
-                  <SelectValue placeholder="Filter" />
+                  <SelectValue placeholder={t("document.filter")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">last modified</SelectItem>
-                  <SelectItem value="all">file size</SelectItem>
-                  <SelectItem value="all">file name</SelectItem>
+                  <SelectItem value="all">{t("document.last_modified")}</SelectItem>
+                  <SelectItem value="all">{t("document.file_size")}</SelectItem>
+                  <SelectItem value="all">{t("document.file_name")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -156,7 +166,7 @@ export default function Document() {
           <div className="grid grid-cols-4 gap-4">
             {files.length === 0 ? (
               <div className=" col-span-6 flex justify-center items-center py-8">
-                <span className="text-gray-500">No files yet</span>
+                <span className="text-gray-500">{t("document.no_file_yet")}</span>
               </div>
             ) : (
               files.map((file) => (
@@ -192,7 +202,7 @@ export default function Document() {
                           setSelectedFileName(file.name);
                         }}
                       >
-                        Note
+                        {t("document.note_button")}
                       </MButton>
                     </div>
                   </CardContent>
@@ -214,10 +224,10 @@ export default function Document() {
         preset="destructive"
         open={isopenDeleteDialog}
         onOpenChange={setIsopenDeleteDialog}
-        title="Delete Document"
-        description="Are you sure you want to delete this document?"
-        cancelText="Cancel"
-        confirmText="Delete"
+        title={t("document.delete_document")}
+        description={t("document.delete_document_description")}
+        cancelText={t("document.delete_document_cancel")}
+        confirmText={t("document.delete_document_confirm")}
         onConfirm={handleDelete}
       />
       <NoteDialog

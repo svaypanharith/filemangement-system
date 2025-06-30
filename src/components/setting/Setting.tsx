@@ -7,14 +7,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useMemo } from "react";
-import { Sun, Shield, User, Lock, LogOut } from "lucide-react";
+import { useEffect, useMemo } from "react";
+import { Sun, Shield, User, Lock, LogOut, Settings } from "lucide-react";
 import { useState } from "react";
 import ChangeThemColorDialog from "@/components/setting/ChangeThemColorDialog";
 import ChangePasswordDialog from "@/components/setting/ChangePasswordDialog";
 import UserAccountDialog from "@/components/setting/UserAccountDialog";
 import { useTranslation } from "react-i18next";
 import LogoutDialog from "@/components/dashboard/LogoutDialog";
+import { useDispatch } from "react-redux";
+import { setSidebarTrigger } from "@/redux/slices/sidebartrigger-slice";
 
 const CardWrapper = ({
   onClick,
@@ -54,6 +56,10 @@ export default function Setting() {
   const [isOpenChangeThemeColorDialog, setIsOpenChangeThemeColorDialog] =
     useState(false);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setSidebarTrigger({ text: t("setting.setting"), iconName: "settings" }));
+  }, [t, dispatch]);
   return useMemo(
     () => (
       <>
@@ -62,7 +68,7 @@ export default function Setting() {
           <CardWrapper
             title={t("setting.user_account")}
             icon={<User className="w-5 h-5 text-blue-500" />}
-            description="Manage your account settings"
+            description={t("setting.user_account")}
             onClick={() => setIsOpenUserAccountDialog(true)}
           />
 
@@ -70,7 +76,7 @@ export default function Setting() {
           <CardWrapper
             title={t("setting.change_password.title")}
             icon={<Lock className="w-5 h-5 text-blue-500" />}
-            description={t("setting.change_password_description")}
+            description={t("setting.change_password.description")}
             onClick={() => setIsOpenChangePassword(true)}
           />
 

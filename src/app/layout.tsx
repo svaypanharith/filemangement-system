@@ -29,13 +29,20 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body className={`${poppins.variable} font-poppins antialiased`}>
-        <ClientProvider>
-          <I18nProvider>
-            <LoadLanguageProvider>
-              <AuthProvider>{children}</AuthProvider>
-            </LoadLanguageProvider>
-          </I18nProvider>
-        </ClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <ClientProvider>
+            <I18nProvider>
+              <LoadLanguageProvider>
+                <AuthProvider>{children}</AuthProvider>
+              </LoadLanguageProvider>
+            </I18nProvider>
+          </ClientProvider>
+        </ThemeProvider>
 
         <SnackBarAppToaster />
       </body>

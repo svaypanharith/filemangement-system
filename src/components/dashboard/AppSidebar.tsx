@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import { Separator } from "@/components/ui/separator";
 import SideBarMenu from "../share/SideBarMenu";
 import { MenuData } from "./MenuItem";
+import { useGetChatMutation } from "@/redux/slices/data-slice";
 
 export function AppSidebar() {
   const { t } = useTranslation();

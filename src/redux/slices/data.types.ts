@@ -49,3 +49,23 @@ export interface SignUp {
   password: string;
   confirm_password: string;
 }
+
+export interface ChatRequest {
+  user_id: string;
+  user_message: string;
+  start_session: boolean;
+  status: string;
+}
+
+export interface ChatResponseData {
+  data: {
+    user_message: string;
+    ai_response: string;
+    session_id: string;
+    created_at: string;
+    updated_at: string;
+    status: string;
+    id: number;
+    user_id: string;
+  }
+}
