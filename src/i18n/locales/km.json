@@ -1,106 +1,165 @@
 {
-    "switchLanguage": {
-        "English": "ភាសាអង់គ្លេស",
-        "Khmer": "ខេមរះភាសា"
+  "switchLanguage": {
+    "English": "ភាសាអង់គ្លេស",
+    "Khmer": "ខេមរះភាសា"
+  },
+  "welcome": {
+    "file_management": "ប្រព័ន្នគ្រប់គ្រងឯកសារ",
+    "title_description": "ប្រព័ន្នបច្ចេកទេស",
+    "description": "ជាបច្ចេកទេសដែលអនុញ្ញាតឱ្យអ្នករក្សាទុកប្រព័ន្ធបច្ចេកទេសរបស់អ្នក",
+    "button": "តោះ​!​ចាប់ផ្តើម"
+  },
+  "signup": {
+    "title": "បង្កើតគណនី",
+    "username": "ឈ្មោះអ្នកប្រើប្រាស់",
+    "first_name": "ឈ្មោះដើម",
+    "last_name": "នាមត្រកូល",
+    "email": "អុីមែល",
+    "continue_with_google": "បង្កើតគណនីជាមួយ Google",
+    "password": "ពាក្យសម្ងាត់",
+    "confirm_password": "បញ្ជាក់ពាក្យសម្ងាត់",
+    "create_account": "បង្កើតគណនី",
+    "already_have_account": "មានគណនីរបស់អ្នកមែនទេ?",
+    "signup_with_google": "បង្កើតគណនីជាមួយ Google",
+    "description": "បង្កើតគណនីដើម្បីបង្កើតគណនីរបស់អ្នក",
+    "button": "បង្កើតគណនី",
+    "common": {
+      "or": "ឬ"
     },
-    "welcome": {
-        "file_management": "ប្រព័ន្នគ្រប់គ្រងឯកសារ",
-        "title": "ស្វាគមន៍មកកាន់",
-        "title_description": "ប្រព័ន្នបច្ចេកទេស",
-        "description": "ជាបច្ចេកទេសដែលអនុញ្ញាតឱ្យអ្នករក្សាទុកប្រព័ន្ធបច្ចេកទេសរបស់អ្នក",
-        "button": "តោះ​!​ចាប់ផ្តើម"
-    },
-    "signup": {
-        "title": "បង្កើតគណនី",
-        "first_name": "ឈ្មោះដើម",
-        "last_name": "នាមត្រកូល",
-        "email": "អុីមែល",
-        "continue_with_google": "បង្កើតគណនីជាមួយ Google",
-        "password": "ពាក្យសម្ងាត់",
-        "confirm_password": "បញ្ជាក់ពាក្យសម្ងាត់",
-        "create_account": "បង្កើតគណនី",
-        "already_have_account": "មានគណនីរបស់អ្នកមែនទេ?",
-        "signup_with_google": "បង្កើតគណនីជាមួយ Google",
-        "description": "បង្កើតគណនីដើម្បីបង្កើតគណនីរបស់អ្នក",
-        "button": "បង្កើតគណនី",
-        "common": {
-            "or": "ឬ"
-        },
-        "or_continue_with": "ឬបង្កើតគណនីជាមួយ",
-        "name": "ឈ្មោះ",
-        "email": "អុីមែល",
-        "password": "ពាក្យសម្ងាត់",
-        "confirm_password": "បញ្ជាក់ពាក្យសម្ងាត់",
-        "create_account": "បង្កើតគណនី",
-        "already_have_account": "មានគណនីរបស់អ្នកមែនទេ?"
-    },
-    "signin": {
-        "title": "ចូលគណនី",
-        "signin_with_google": "ចូលគណនីជាមួយ Google",
-        "description": "ចូលគណនីដើម្បីចូលគណនីរបស់អ្នក",
-        "button": "ចូលគណនី",
-        "email": "អុីមែល",
-        "password": "ពាក្យសម្ងាត់",
-        "forgot_password": "ត្រឡប់ពាក្យសម្ងាត់?",
-        "signup": "បង្កើតគណនី",
-        "dont_have_account": "មានគណនីរបស់អ្នកមែនទេ?",
-        "signin": "ចូលគណនី",
-        "signin_button": "ចូលគណនី",
-        "or_continue_with": "ឬបង្កើតគណនីជាមួយ"
-    },
-    "chatbot": {
-        "title": "ប្រព័ន្នបច្ចេកទេសបច្ចេកទេស",
-        "description": "ស្វ័យនាក់ទៅកាន់ AI",
-        "button": "ស្វ័យនាក់ទៅកាន់ AI",
-        "ask_to_ai": "ស្វ័យនាក់ទៅកាន់ AI",
-        "placeholder": "សួរខ្ញុំគ្រប់រឿង"
-    },
-    "dashboard": {
-        "dashboard": "ផ្ទាំងគ្រប់គ្រង",
-        "document": "ឯកសារ",
-        "chatbot": "ប្រព័ន្នAI",
-        "folder": "ផ្ទាំងគ្រប់គ្រង",
-        "total_document": "ចំនួនឯកសារទាំងអស់",
-        "total_file_size": "ទំហំឯកសារទាំងអស់",
-        "ai_credit": "កុសលបច្ចេកទេស",
-        "total_ai_credit": "កុសលបច្ចេកទេសទាំងអស់"
-    },
-    "document": {
-        "document": "ឯកសារ",
-        "description": "ប្រព័ន្នបច្ចេកទេស",
-        "search": "ស្វែងរក",
-        "button": "ប្រព័ន្នបច្ចេកទេស",
-        "placeholder": "សួរខ្ញុំគ្រប់រឿង",
-        "upload_file": "ផ្ទាមទាត់ឯកសារ",
-        "upload_file_description": "ផ្ទាមទាត់ឯកសាររបស់អ្នក",
-        "upload_file_button": "ផ្ទាមទាត់ឯកសារ",
-        "upload_file_placeholder": "ផ្ទាមទាត់ឯកសាររបស់អ្នក"
-    },
-    "logout": {
-        "logout": "ចាកចេញ",
-        "logout_description": "តើអ្នកប្រាកដជាមួយនឹងចាកចេញមែនទេ?",
-        "cancel": "បោះបង់"
-    },
-    "setting": {
-        "setting": "ការកំណត់",
-        "user_account": "គណនីអ្នកប្រើប្រាស់",
-        "logout": "ចាកចេញ",
-        "logout_description": "តើអ្នកប្រាកដជាមួយនឹងចាកចេញមែនទេ?",
-        "appearance": "មុនសម្រាប់សម្រាប់",
-        "notifications": "ការបរិច្ចាគបច្ចេកទេស",
-        "privacy": "ការបរិច្ចាគបច្ចេកទេស",
-        "change_password": {
-            "title": "ផ្លាស់ប្តូរពាក្យសម្ងាត់",
-            "description": "ផ្លាស់ប្តូរពាក្យសម្ងាត់របស់អ្នកដើម្បីរក្សាសុវត្ថិភាពគណនីរបស់អ្នក",
-            "current_password": "ពាក្យសម្ងាត់បច្ចុប្បន្ន",
-            "new_password": "ពាក្យសម្ងាត់ថ្មី",
-            "confirm_password": "បញ្ជាក់ពាក្យសម្ងាត់",
-            "change_password_button": "ផ្លាស់ប្តូរពាក្យសម្ងាត់",
-            "cancel_button": "បោះបង់"
-        },
-        "theme": {
-            "light": "ពន្លឺ",
-            "dark": "ងងឹត"
-        }
+    "or_continue_with": "ឬបង្កើតគណនីជាមួយ",
+    "name": "ឈ្មោះ",
+    "email": "អុីមែល",
+    "password": "ពាក្យសម្ងាត់",
+    "confirm_password": "បញ្ជាក់ពាក្យសម្ងាត់",
+    "create_account": "បង្កើតគណនី",
+    "already_have_account": "មានគណនីរបស់អ្នកមែនទេ?"
+  },
+  "signin": {
+    "title": "ចូលគណនី",
+    "signin_with_google": "ចូលគណនីជាមួយ Google",
+    "description": "ចូលគណនីដើម្បីចូលគណនីរបស់អ្នក",
+    "button": "ចូលគណនី",
+    "email": "អុីមែល",
+    "password": "ពាក្យសម្ងាត់",
+    "forgot_password": "ត្រឡប់ពាក្យសម្ងាត់?",
+    "signup": "បង្កើតគណនី",
+    "dont_have_account": "មានគណនីរបស់អ្នកមែនទេ?",
+    "signin": "ចូលគណនី",
+    "signin_button": "ចូលគណនី",
+    "or_continue_with": "ឬបង្កើតគណនីជាមួយ"
+  },
+  "chatbot": {
+    "title": "ប្រព័ន្នបច្ចេកទេស",
+    "description": "សួរទៅ AI",
+    "button": "សួរទៅ AI",
+    "ask_to_ai": "សួរទៅ AI",
+    "placeholder": "សួរខ្ញុំគ្រប់រឿង",
+    "copy": "ចម្លង",
+    "copied": "បានចម្លង!",
+    "copy_message": "សារត្រូវបានចម្លងទៅកាន់ clipboard"
+  },
+  "dashboard": {
+    "dashboard": "ផ្ទាំងគ្រប់គ្រង",
+    "document": "ឯកសារ",
+    "chatbot": "ប្រព័ន្នAI",
+    "folder": "ផ្ទាំងគ្រប់គ្រង",
+    "total_document": "ចំនួនឯកសារទាំងអស់",
+    "total_file_size": "ទំហំឯកសារទាំងអស់",
+    "ai_credit": "កុសលបច្ចេកទេស",
+    "total_ai_credit": "កុសលបច្ចេកទេសទាំងអស់"
+  },
+  "user_account": {
+    "manage_account": "គ្រប់គ្រងគណនី",
+    "last_name": "នាមត្រកូល",
+    "phone": "លេខទូរសព្ទ",
+    "account_overview": "ទិដ្ឋភាពទូទៅនៃគណនី",
+    "logout": "ចាកចេញ",
+    "logout_description": "ចាកចេញពីគណនីរបស់អ្នក",
+    "change_password": "ផ្លាស់ប្តូរពាក្យសម្ងាត់",
+    "change_password_description": "ផ្លាស់ប្តូរពាក្យសម្ងាត់របស់អ្នក",
+    "change_password_button": "ផ្លាស់ប្តូរពាក្យសម្ងាត់",
+    "notifications": "ការបរិច្ចាគបច្ចេកទេស",
+    "privacy": "ការបរិច្ចាគបច្ចេកទេស",
+    "edit_profile": "កែប្រែគណនី",
+    "user_name": "ឈ្មោះអ្នកប្រើប្រាស់",
+    "user_email": "អុីមែលអ្នកប្រើប្រាស់",
+    "member_since": "កាលបរិច្ឆេទ",
+    "edit_profile_description": "ការកែប្រែគណនីរបស់អ្នក",
+    "name": "ឈ្មោះ",
+    "email": "អុីមែល",
+    "cancel": "បោះបង់",
+    "save": "រក្សាទុក",
+    "edit_profile_success": "កែប្រែគណនីជោគជ័យ"
+  },
+  "document": {
+    "no_file_yet": "មិនមានឯកសារទេ",
+    "edit_document_description": "កែប្រែឯកសារ",
+    "edit_document": "កែប្រែឯកសារ",
+    "delete_document": "លុបឯកសារ",
+    "last_modified": "ចាប់ពីពេលដែលបង្កើត",
+    "file_size": "ទំហំឯកសារ",
+    "file_name": "ឈ្មោះឯកសារ",
+    "delete_document_description": "តើអ្នកប្រាកដជាមួយនឹងលុបឯកសារមែនទេ?",
+    "delete_document_button": "លុបឯកសារ",
+    "delete_document_cancel": "បោះបង់",
+    "delete_document_confirm": "លុបឯកសារ",
+    "last_modified_description": "ចាប់ពីពេលដែលបង្កើត",
+    "document": "ឯកសារ",
+    "filter": "ចង្អុល",
+    "edit_button": "កែប្រែ",
+    "description": "ប្រព័ន្នបច្ចេកទេស",
+    "search": "ស្វែងរក",
+    "button": "ប្រព័ន្នបច្ចេកទេស",
+    "placeholder": "សួរខ្ញុំគ្រប់រឿង",
+    "upload_file": "ផ្ទាមទាត់ឯកសារ",
+    "upload_file_description": "ផ្ទាមទាត់ឯកសាររបស់អ្នក",
+    "upload_file_button": "ផ្ទាមទាត់ឯកសារ",
+    "upload_file_placeholder": "ផ្ទាមទាត់ឯកសាររបស់អ្នក",
+    "upload_source": "បញ្ចូលឯកសារ",
+    "upload_source_description": "ផ្ទាមទាត់ឯកសាររបស់អ្នក",
+    "supported_file_types": "ប្រភេទឯកសារដែលបានចូលរួម",
+    "note": {
+      "document_note": "ចំណាំឯកសារ",
+      "title": "ចំណាំ",
+      "description": "ការបង្កើតសំណើសម្រាប់ឯកសារ",
+      "button": "បង្កើតសំណើសម្រាប់ឯកសារ",
+      "cancel": "បោះបង់",
+      "confirm": "បង្កើតសំណើសម្រាប់ឯកសារ",
+      "color_theme": "ពណ៌",
+      "note_success": "បង្កើតចំណាំជោគជ័យ",
+      "reset": "ត្រឡប់"
     }
+  },
+  "logout": {
+    "logout": "ចាកចេញ",
+    "logout_description": "តើអ្នកប្រាកដជាមួយនឹងចាកចេញមែនទេ?",
+    "cancel": "បោះបង់"
+  },
+  "setting": {
+    "manage_account": "គ្រប់គ្រងគណនី",
+    "setting": "ការកំណត់",
+    "user_account": "គណនីអ្នកប្រើប្រាស់",
+    "logout": "ចាកចេញ",
+    "logout_description": "តើអ្នកប្រាកដជាមួយនឹងចាកចេញមែនទេ?",
+    "appearance": "មុនសម្រាប់សម្រាប់",
+    "notifications": "ការបរិច្ចាគបច្ចេកទេស",
+    "privacy": "ការបរិច្ចាគបច្ចេកទេស",
+    "change_password": {
+      "title": "ផ្លាស់ប្តូរពាក្យសម្ងាត់",
+      "description": "ផ្លាស់ប្តូរពាក្យសម្ងាត់របស់អ្នកដើម្បីរក្សាសុវត្ថិភាពគណនីរបស់អ្នក",
+      "current_password": "ពាក្យសម្ងាត់បច្ចុប្បន្ន",
+      "new_password": "ពាក្យសម្ងាត់ថ្មី",
+      "confirm_password": "បញ្ជាក់ពាក្យសម្ងាត់",
+      "change_password_button": "ផ្លាស់ប្តូរពាក្យសម្ងាត់",
+      "cancel_button": "បោះបង់"
+    },
+    "theme": {
+      "title": "ផ្លាស់ប្តូរពណ៌",
+      "description": "ផ្លាស់ប្តូរពណ៌របស់អ្នក",
+      "light": "ពន្លឺ",
+      "dark": "ងងឹត",
+      "appearance_mode": "មុនសម្រាប់សម្រាប់",
+      "appearance_mode_description": "ជ្រើសរើសមុនសម្រាប់សម្រាប់របស់អ្នក"
+    }
+  }
 }

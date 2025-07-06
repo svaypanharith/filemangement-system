@@ -20,7 +20,6 @@ export default function ChangeThemColorDialog({
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // After mounting, we have access to the theme
   useEffect(() => setMounted(true), []);
 
   const [switchTheme, setSwitchTheme] = useState(
@@ -30,35 +29,6 @@ export default function ChangeThemColorDialog({
   const [selectedColor, setSelectedColor] = useState(() => {
     return resolvedTheme === "dark" ? "dark" : "light";
   });
-
-  // my code implement
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   if (switchTheme) {
-  //     dispatch(setTheme(true));
-  //     setSelectedColor("dark");
-  //     setLocalStorage("theme", "dark");
-  //   } else {
-  //     dispatch(setTheme(false));
-  //     setSelectedColor("light");
-  //     setLocalStorage("theme", "light");
-  //   }
-  // }, [switchTheme]);
-
-  // const handleChangeTheme = useCallback(() => {
-  //   setSwitchTheme(!switchTheme);
-  //   if (switchTheme) {
-  //     toast.success("Theme changed to light");
-  //   } else {
-  //     toast.success("Theme changed to dark", {
-  //       style: {
-  //         background: "#000",
-  //         color: "#fff",
-  //       },
-  //     });
-  //   }
-  // }, [switchTheme]);
 
   const { t } = useTranslation();
 
@@ -117,10 +87,10 @@ export default function ChangeThemColorDialog({
           </div>
           <div>
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Change Theme Color
+              {t("setting.theme.title")}
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Customize your dashboard appearance
+              {t("setting.theme.description")}
             </p>
           </div>
         </div>
@@ -136,10 +106,10 @@ export default function ChangeThemColorDialog({
               )}
               <div>
                 <h3 className="font-medium text-gray-900 dark:text-gray-100">
-                  Appearance Mode
+                  {t("setting.theme.appearance_mode")}
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Choose between light and dark theme
+                  {t("setting.theme.appearance_mode_description")}
                 </p>
               </div>
             </div>
@@ -159,7 +129,6 @@ export default function ChangeThemColorDialog({
                     ? "border-blue-500 bg-blue-50 dark:bg-blue-950"
                     : "border-gray-200 dark:border-gray-700 hover:border-gray-300"
                 }`}
-                // onClick={() => handleThemeChange(theme.id === "dark")}
               >
                 <div
                   className={`w-full h-16 rounded-md bg-gradient-to-br ${theme.color} mb-2`}

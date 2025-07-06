@@ -7,22 +7,38 @@ import { Button } from "@/components/ui/button";
 import MButton from "@/components/m-ui/m-button";
 import { Separator } from "@/components/ui/separator";
 import { User, Mail, Calendar, MoreVertical, Edit } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { useGetProfileInfoQuery } from "@/redux/slices/data-slice";
+import { User as UserType } from "../setting/EditProfileDialog";
+import { useEffect } from "react";
 
 interface UserAccountDetailProps {
   onOpenEditProfileDialog: () => void;
+  onGetProfileInfo: (user: UserType) => void;
 }
 
 export default function UserAccountDetail({
   onOpenEditProfileDialog,
+  onGetProfileInfo,
 }: UserAccountDetailProps) {
-  return (
+  const { t } = useTranslation();
+  // Use cached profile data
+  const { data: profile } = useGetProfileInfoQuery(undefined, {
+    refetchOnMountOrArgChange: false
+  });
+  useEffect(() => {
+    if (profile) {
+      onGetProfileInfo(profile.user as UserType);
+    }
+  }, [profile]);
+  return (  
     <>
       <div className="w-full mx-auto">
         <Card className="border-0 shadow-xl max-w-md  flex flex-col gap-4 from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-800/50">
           <CardHeader className="pb-4">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl font-semibold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-                Account Overview
+                {t("user_account.account_overview")}
               </CardTitle>
               <Button
                 variant="ghost"
@@ -41,13 +57,13 @@ export default function UserAccountDetail({
               </Avatar>
               <div className="flex flex-col">
                 <div className="flex items-center gap-6">
-                  <p className="text-lg font-semibold">Panharith</p>
+                  <p className="text-lg font-semibold">{profile?.user.first_name}</p>
                   <Badge className="text-xs bg-blue-500 rounded-full text-white">
                     Pro
                   </Badge>
                 </div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  svaypanharith@gmail.com
+                  {profile?.user.email}
                 </p>
               </div>
             </div>
@@ -60,9 +76,9 @@ export default function UserAccountDetail({
                   <User className="h-4 w-4 text-blue-500 " />
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm font-semibold">Username </p>
+                  <p className="text-sm font-semibold">{t("user_account.user_name")} </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    svaypanharith
+                    {profile?.user.first_name}
                   </p>
                 </div>
               </div>
@@ -71,9 +87,9 @@ export default function UserAccountDetail({
                   <Mail className="h-4 w-4 text-blue-500 " />
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm font-semibold">Email </p>
+                  <p className="text-sm font-semibold">{t("user_account.user_email")} </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    svaypanharith@gmail.com
+                    {profile?.user.email}
                   </p>
                 </div>
               </div>
@@ -83,9 +99,9 @@ export default function UserAccountDetail({
                   <Calendar className="h-4 w-4 text-blue-500 " />
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm font-semibold">Member since </p>
+                  <p className="text-sm font-semibold">{t("user_account.member_since")} </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    2024-01-01
+                    {new Date(profile?.user.created_at).toLocaleDateString()}
                   </p>
                 </div>
               </div>
@@ -101,7 +117,7 @@ export default function UserAccountDetail({
                 className="w-full flex items-center justify-center gap-2"
               >
                 <Edit className="h-4 w-4" />
-                Edit Profile
+                {t("user_account.edit_profile")}
               </MButton>
             </div>
           </CardContent>

@@ -5,15 +5,19 @@ import { useForm } from "react-hook-form";
 import MButton from "../m-ui/m-button";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { useTranslation } from "react-i18next";
+import { User } from "./EditProfileDialog";
 interface EditProfileFormProps {
   onCancel: () => void;
-  onSave: () => void;
+  onSave: (data: FormSchemaType) => void;
+  initialData: User;
+  isLoading: boolean;
 }
 
 const formSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email address"),
+  first_name: z.string().min(1, "First name is required"),
+  last_name: z.string().min(1, "Last name is required"),
+  username: z.string().min(1, "Username is required"),
 });
 
 type FormSchemaType = z.infer<typeof formSchema>;
@@ -21,19 +25,21 @@ type FormSchemaType = z.infer<typeof formSchema>;
 export default function EditProfileForm({
   onCancel,
   onSave,
+  initialData,
+  isLoading,
 }: EditProfileFormProps) {
+  const { t } = useTranslation();
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
+      first_name: initialData.first_name,
+      last_name: initialData.last_name,
+      username: initialData.username,
     },
   });
   const onSubmit = (data: FormSchemaType) => {
-    console.log(data);
-    onSave();
+    onSave(data);
   };
-
   return (
     <div className="flex flex-col gap-4 w-full">
       <FormProvider {...form}>
@@ -42,29 +48,46 @@ export default function EditProfileForm({
           className="flex flex-col gap-4 w-full"
         >
           <MInput
-            label="Name"
+            label={t("user_account.name")}
             type="text"
-            placeholder="Name"
-            error={form.formState.errors.name?.message}
+            placeholder={initialData.first_name}
+            defaultValue={initialData.first_name}
+            error={form.formState.errors.first_name?.message}
             onChange={(e) => {
-              form.setValue("name", e.target.value);
+              form.setValue("first_name", e.target.value);
             }}
           />
           <MInput
-            label="Email"
-            type="email"
-            placeholder="Email"
-            error={form.formState.errors.email?.message}
+            defaultValue={initialData.last_name}
+            label={t("user_account.last_name")}
+            type="text"
+            placeholder={initialData.last_name}
+            error={form.formState.errors.last_name?.message}
             onChange={(e) => {
-              form.setValue("email", e.target.value);
+              form.setValue("last_name", e.target.value);
+            }}
+          />
+          <MInput
+            defaultValue={initialData.username}
+            label={t("user_account.user_name")}
+            type="text"
+            placeholder={initialData.username}
+            error={form.formState.errors.username?.message}
+            onChange={(e) => {
+              form.setValue("username", e.target.value);
             }}
           />
           <div className="flex justify-end gap-2">
             <MButton preset="secondary" size="sm" onClick={onCancel}>
-              Cancel
+              {t("user_account.cancel")}
             </MButton>
-            <MButton preset="primary" size="sm" type="submit">
-              Save
+            <MButton
+              preset="primary"
+              size="sm"
+              type="submit"
+              loading={isLoading}
+            >
+              {t("user_account.save")}
             </MButton>
           </div>
         </form>

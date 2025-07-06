@@ -10,6 +10,8 @@ import MButton from "@/components/m-ui/m-button";
 
 interface ChangePasswordFormProps {
   onOpenChange: (open: boolean) => void;
+  onSave: (data: FormSchemaType) => void;
+  isLoading: boolean;
 }
 
 const password_error_messages = {
@@ -37,6 +39,8 @@ type FormSchemaType = z.infer<typeof formSchema>;
 
 export default function ChangePasswordForm({
   onOpenChange,
+  onSave,
+  isLoading,
 }: ChangePasswordFormProps) {
   const { t } = useTranslation();
   const form = useForm<FormSchemaType>({
@@ -49,7 +53,7 @@ export default function ChangePasswordForm({
   });
 
   const onSubmit = (data: FormSchemaType) => {
-    console.log("data", data);
+    onSave(data);
   };
 
   return (
@@ -87,6 +91,7 @@ export default function ChangePasswordForm({
               {t("setting.change_password.cancel_button")}
             </MButton>
             <MButton
+              loading={isLoading}
               preset="primary"
               size="sm"
               type="submit"

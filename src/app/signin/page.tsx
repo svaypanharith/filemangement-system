@@ -24,13 +24,12 @@ const SignInPage = () => {
     async (data: FormSchemaType) => {
       try {
         const response = await signIn(data).unwrap();
-        if (response && response.token) {
-          login(response.token);
-          setIsSubmitted(true);
-          toast.success(response.message || "Sign in successful");
-        } else {
-          throw new Error("Sign in failed");
+        if (response.status !== 200) {
+          throw new Error(response.message || "Sign in failed");
         }
+        toast.success(response.message || "Sign in successful");
+        login(response.access_token || "");
+        setIsSubmitted(true);
       } catch (error: any) {
         toast.error(error.data?.message || "Sign in failed");
       }

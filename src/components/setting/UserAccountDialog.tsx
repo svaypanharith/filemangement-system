@@ -3,7 +3,7 @@
 import MDialog from "@/components/m-ui/m-dialog";
 import UserAccountDetail from "@/components/profiles/UserAccountDetail";
 import { useTranslation } from "react-i18next";
-import { EditProfileDialog } from "./EditProfileDialog";
+import { EditProfileDialog, User } from "./EditProfileDialog";
 import { useState } from "react";
 interface UserAccountDialogProps {
   open: boolean;
@@ -16,6 +16,7 @@ export default function UserAccountDialog({
 }: UserAccountDialogProps) {
   const { t } = useTranslation();
   const [openEditProfileDialog, setOpenEditProfileDialog] = useState(false);
+  const [initialData, setInitialData] = useState<User | null>(null);
   return (
     <>
       <MDialog
@@ -24,6 +25,9 @@ export default function UserAccountDialog({
         content={
           <div className="w-full mx-auto">
             <UserAccountDetail
+              onGetProfileInfo={(user) => {
+                setInitialData(user);
+              }}
               onOpenEditProfileDialog={() => {
                 setOpenEditProfileDialog(true);
                 onOpenChange(false);
@@ -35,6 +39,12 @@ export default function UserAccountDialog({
         onOpenChange={onOpenChange}
       />
       <EditProfileDialog
+        initialData={initialData || {
+          id: "",
+          username: "",
+          first_name: "",
+          last_name: "",
+        }}
         open={openEditProfileDialog}
         onOpenChange={setOpenEditProfileDialog}
       />

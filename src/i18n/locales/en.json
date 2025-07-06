@@ -1,85 +1,155 @@
 {
-    "welcome": {
-        "title": "Welcome to the",
-        "title_description": "File Management System",
-        "description": "This is a file management system that allows you to manage your files and folders.",
-        "button": "Get Started",
-        "file_management": "File Management"
-    },
-    "switchLanguage": {
-        "English": "English",
-        "Khmer": "Khmer"
-    },
-    "signup": {
-        "signup": "Sign up",
-        "first_name": "First Name",
-        "or_continue_with": "Or continue with",
-        "last_name": "Last Name",
-        "email": "Email",
-        "password": "Password",
-        "confirm_password": "Confirm Password",
-        "title": "Create account",
-        "signup_with_google": "Sign up with Google",
-        "description": "Enter your credentials to create your account!",
-        "button": "Create account",
-        "common": {
-            "or": "Or"
-        }
-    },
-    "signin": {
-        "title": "Sign in",
-        "or_continue_with": "Or continue with",
-        "signin_with_google": "Sign in with Google",
-        "description": "Enter your credentials to sign in!",
-        "button": "Sign in",
-        "dont_have_account": "Don't have an account?",
-        "forgot_password": "Forgot password?",
-        "label": {
-            "email": "Email",
-            "password": "Password"
-        }
-    },
-    "chatbot": {
-        "title": "Chatbot ASK TO AI",
-        "description": "Ask to AI",
-        "button": "Ask to AI"
-    },
-    "dashboard": {
-        "dashboard": "Dashboard",
-        "document": "Document",
-        "chatbot": "Chatbot",
-        "folder": "Folder",
-        "total_document": "Total Document",
-        "total_file_size": "Total File Size",
-        "ai_credit": "AI Credit",
-        "total_ai_credit": "Total AI Credit"
-    },
-    "logout": {
-        "logout": "Logout",
-        "logout_description": "Are you sure you want to logout?",
-        "cancel": "Cancel"
-    },
-    "setting": {
-        "setting": "Setting",
-        "user_account": "User Account",
-        "logout": "Logout",
-        "logout_description": "Logout from your account",
-        "change_password_description": "Change your password",
-        "appearance": "Appearance",
-        "notifications": "Notifications",
-        "privacy": "Privacy",
-        "change_password":{
-            "title":"Change Password",
-            "description":"Change your password",
-            "current_password": "Current Password",
-            "new_password": "New Password",
-            "confirm_password": "Confirm Password",
-            "change_password_button": "Change Password",
-            "cancel_button": "Cancel"
-        },
-        "theme":{
-            "light": "Light",
-            "dark": "Dark"
-        }
+  "welcome": {
+    "title": "Welcome to the",
+    "title_description": "File Management System",
+    "description": "This is a file management system that allows you to manage your files and folders.",
+    "button": "Get Started",
+    "file_management": "File Management"
+  },
+  "switchLanguage": {
+    "English": "English",
+    "Khmer": "Khmer"
+  },
+  "signup": {
+    "signup": "Sign up",
+    "username": "Username",
+    "first_name": "First Name",
+    "or_continue_with": "Or continue with",
+    "last_name": "Last Name",
+    "email": "Email",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "title": "Create account",
+    "signup_with_google": "Sign up with Google",
+    "description": "Enter your credentials to create your account!",
+    "button": "Create account",
+    "common": {
+      "or": "Or"
     }
+  },
+  "signin": {
+    "title": "Sign in",
+    "or_continue_with": "Or continue with",
+    "signin_with_google": "Sign in with Google",
+    "description": "Enter your credentials to sign in!",
+    "button": "Sign in",
+    "dont_have_account": "Don't have an account?",
+    "forgot_password": "Forgot password?",
+    "label": {
+      "email": "Email",
+      "password": "Password"
+    }
+  },
+  "chatbot": {
+    "title": "Chatbot ASK TO AI",
+    "description": "Ask to AI",
+    "button": "Ask to AI",
+    "ask_to_ai": "Ask to AI",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "copy_message": "Message copied to clipboard"
+  },
+  "dashboard": {
+    "dashboard": "Dashboard",
+    "document": "Document",
+    "chatbot": "Chatbot",
+    "folder": "Folder",
+    "total_document": "Total Document",
+    "total_file_size": "Total File Size",
+    "ai_credit": "AI Credit",
+    "total_ai_credit": "Total AI Credit"
+  },
+  "document": {
+    "edit_document": "Edit Document",
+    "edit_document_description": "Edit the document",
+    "document": "Document",
+    "description": "Document",
+    "last_modified": "Last ModifiXed",
+    "file_size": "File Size",
+    "file_name": "File Name",
+    "no_file_yet": "No file yet",
+    "filter": "Filter",
+    "search": "Search",
+    "upload_source": "Upload Source",
+    "supported_file_types": "Supported File Types",
+    "upload_file_description": "Upload a file to the document for your document",
+    "upload_file_button": "Upload File",
+    "upload_file_placeholder": "Upload a file to the document for your document",
+    "upload_source_description": "Upload a source to the document for your document",
+    "upload_source_button": "Upload Source",
+    "upload_source_placeholder": "Upload a source to the document for your document",
+    "edit_button": "Edit",
+    "document_source": "Document Source",
+    "upload_file": "Upload File",
+    "last_modified_description": "Last Modified",
+    "button": "Document",
+    "placeholder": "Search document",
+    "delete_document": "Delete",
+    "delete_document_description": "Are you sure you want to delete this document?",
+    "delete_document_button": "Delete",
+    "delete_document_cancel": "Cancel",
+    "delete_document_confirm": "Delete",
+    "note": {
+      "document_note": "Document Note",
+      "title": "Note",
+      "description": "Add a note to the document for your document",
+      "button": "Add Note",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "color_theme": "Color Theme",
+      "reset": "Reset"
+    }
+  },
+  "logout": {
+    "logout": "Logout",
+    "logout_description": "Are you sure you want to logout?",
+    "cancel": "Cancel"
+  },
+  "user_account": {
+    "account_overview": "Account Overview",
+    "logout": "Logout",
+    "user_name": "Username",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "phone": "Phone",
+    "logout_description": "Logout from your account",
+    "change_password": "Change Password",
+    "change_password_description": "Change your password",
+    "change_password_button": "Change Password",
+    "cancel_button": "Cancel",
+    "appearance": "Appearance",
+    "notifications": "Notifications",
+    "privacy": "Privacy",
+    "edit_profile": "Edit Profile",
+    "save": "Save",
+    "name": "Name",
+    "user_email": "Email",
+    "cancel": "Cancel",
+    "member_since": "Member Since",
+    "edit_profile_description": "Edit your profile information"
+  },
+
+  "setting": {
+    "setting": "Setting",
+    "user_account": "User Account",
+    "logout": "Logout",
+    "logout_description": "Logout from your account",
+    "change_password_description": "Change your password",
+    "appearance": "Appearance",
+    "notifications": "Notifications",
+    "privacy": "Privacy",
+    "change_password": {
+      "title": "Change Password",
+      "description": "Change your password",
+      "current_password": "Current Password",
+      "new_password": "New Password",
+      "confirm_password": "Confirm Password",
+      "change_password_button": "Change Password",
+      "cancel_button": "Cancel"
+    },
+    "theme": {
+      "light": "Light",
+      "dark": "Dark"
+    }
+  }
 }
