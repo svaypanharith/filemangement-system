@@ -5,12 +5,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SwitchLanguage from "@/components/share/SwitchLanguage";
 import { MSidebarTrigger } from "@/components/m-ui/m-sidebar-trigger";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { RootState} from "@/redux/store";
 import { Sparkles, Settings, Folder, MessageCircle, LayoutDashboard } from "lucide-react";
 
+import { useGetProfileInfoQuery } from "@/redux/slices/data-slice";
 export default function Header() {
   const getIconComponent = (iconName?: string) => {
-    console.log("iconName", iconName);
     switch (iconName) {
       case "sparkles":
         return <Sparkles className="w-6 h-6 text-purple-600" />;
@@ -26,6 +26,8 @@ export default function Header() {
         return null;
     }
   };
+  const { data: profile } = useGetProfileInfoQuery();
+
   const { text, iconName } = useSelector((state: RootState) => state.sidebarTriggerText);
   const icon = getIconComponent(iconName);
   return (
@@ -35,7 +37,7 @@ export default function Header() {
       </div>
       <div className="flex items-center gap-4">
         <SwitchLanguage />
-        <span>Svay Panharith123</span>
+        <span>{profile?.user.email}</span> 
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>CN</AvatarFallback>

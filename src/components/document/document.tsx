@@ -1,18 +1,20 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import AddDocument from "@/components/document/AddDocument";
 import { Input } from "@/components/ui/input";
-import { FileIcon, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useState, useEffect } from "react";
-import { Trash, Pen , Folder } from "lucide-react";
+import { Trash } from "lucide-react";
 import MAlertDialog from "../m-ui/m-alert-dialog";
-import NoteDialog from "./NoteDialog";
 import { getLocalStorage } from "@/utils/storage";
 import MButton from "@/components/m-ui/m-button";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setSidebarTrigger } from "@/redux/slices/sidebartrigger-slice";
+import { useCallback, useMemo } from "react";
+import { useUploadFileDocumentMutation } from "@/redux/slices/data-slice";
+import { useDeleteDocumentMutation } from "@/redux/slices/data-slice";
+import { Pencil } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -20,6 +22,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import AddDocumentForm from "@/components/document/AddDocumentForm";
+import { useGetDocumentsQuery } from "@/redux/slices/data-slice";
+import {  DocumentType } from "@/redux/slices/data.types";
+import EditDialog from "./EditDialog";
 
 interface StoredFile {
   name: string;
@@ -32,24 +38,19 @@ interface StoredFile {
 
 const DocumentService = {
   getFiles: async (): Promise<StoredFile[]> => {
-    // For now, get from localStorage
     const storedFiles = localStorage.getItem("selectedFiles");
     if (storedFiles) {
       return JSON.parse(storedFiles);
     }
     return [];
   },
-  
-
 
   openFile: async (file: StoredFile) => {
     try {
-      // If we have a URL (from API), use it directly
       if (file.url) {
         window.open(file.url, "_blank");
         return;
       }
-      //  handle local storage file `selectedFiles`
       const storedFiles = localStorage.getItem("selectedFiles");
       if (storedFiles) {
         const filesData = JSON.parse(storedFiles) as StoredFile[];
@@ -83,12 +84,26 @@ export default function Document() {
   const [isopenDeleteDialog, setIsopenDeleteDialog] = useState(false);
   const [isopenNoteDialog, setIsopenNoteDialog] = useState(false);
   const [selectedFileName, setSelectedFileName] = useState<string>("");
+  const [settingNote, setSettingNote] = useState<string>("");
+  const [settingColorCode, setSettingColorCode] = useState<string>("");
+  const [settingTags, setSettingTags] = useState<string>("");
+
   const [noteColors, setNoteColors] = useState<Record<string, string>>({});
+  const [uploadFileDocument, { isLoading: isUploading }] =
+    useUploadFileDocumentMutation();
+  const [deleteDocument] = useDeleteDocumentMutation();
+
   const { t } = useTranslation();
+
+  const { data: documentsResponse, isLoading: isLoadingDocuments } =
+    useGetDocumentsQuery();
+  const documents =
+    (documentsResponse?.documents as unknown as DocumentType[]) || [];
   const dispatch = useDispatch();
-  
   useEffect(() => {
-    dispatch(setSidebarTrigger({ text: t("document.document"), iconName: "folder" }));
+    dispatch(
+      setSidebarTrigger({ text: t("document.document"), iconName: "folder" })
+    );
   }, [t, dispatch]);
 
   useEffect(() => {
@@ -104,7 +119,6 @@ export default function Document() {
   }, [files]);
 
   useEffect(() => {
-    // todo intergrate with api
     try {
       const storedFiles = localStorage.getItem("selectedFiles");
       if (storedFiles) {
@@ -123,119 +137,191 @@ export default function Document() {
     }
   }, []);
 
+  const onSubmitFile = useCallback(
+    async (files: File[]) => {
+      try {
+        if (!files || files.length === 0) {
+          toast.error("No files selected");
+          return;
+        }
+        const formData = new FormData();
+        files.forEach((file) => {
+          formData.append("files", file);
+        });
+        const response = await uploadFileDocument(formData).unwrap();
+        if (response) {
+          toast.success("Files uploaded successfully");
+        }
+      } catch (error) {
+        console.error("Upload error:", error);
+        toast.error("Error uploading files");
+      }
+    },
+    [uploadFileDocument]
+  );
+
   const handleFileOpen = async (file: StoredFile) => {
     await DocumentService.openFile(file);
   };
 
-  const handleDelete = () => {
-    try {
-      // todo intergrate with api
-      toast.success("Document deleted successfully");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return (
-    <>
-      <div className="flex flex-col gap-8">
-        <AddDocument />
-        <div className="flex flex-col gap-8 border-2 border-gray-200 p-8  shadow-xl rounded-2xl">
-          <div className="flex justify-between">
-            <div className="flex gap-4 w-1/4 ">
-              <div className="relative">
-                <Input
-                  className="rounded-2xl shadow-xl"
-                  placeholder={t("document.search")}
-                />
-                <Search className="absolute w-4 h-4 right-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
+  const onDeleteDocument = useCallback(
+    async (id: string) => {
+      try {
+        const response = await deleteDocument({ id: id }).unwrap();
+        if (response) {
+          toast.success("Document deleted successfully");
+        }
+        setIsopenDeleteDialog(false);
+      } catch (error) {
+        console.error(error);
+        toast.error("Error deleting document");
+      }
+    },
+    [deleteDocument]
+  );
+ 
+  return useMemo(
+    () => (
+      <>
+        <div className="flex flex-col gap-8">
+          <AddDocumentForm
+            onSubmit={onSubmitFile}
+            isLoading={isUploading}
+            documents={documents}
+          />
+          <div className="flex flex-col gap-8 border-2 border-gray-200 p-8  shadow-xl rounded-2xl">
+            <div className="flex justify-between">
+              <div className="flex gap-4 w-1/4 ">
+                <div className="relative">
+                  <Input
+                    className="rounded-2xl shadow-xl"
+                    placeholder={t("document.search")}
+                  />
+                  <Search className="absolute w-4 h-4 right-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                </div>
+                <Select>
+                  <SelectTrigger className="rounded-2xl shadow-xl">
+                    <SelectValue placeholder={t("document.filter")} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="last_modified">
+                      {t("document.last_modified")}
+                    </SelectItem>
+                    <SelectItem value="file_size">
+                      {t("document.file_size")}
+                    </SelectItem>
+                    <SelectItem value="file_name">
+                      {t("document.file_name")}
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-              <Select>
-                <SelectTrigger className="rounded-2xl shadow-xl">
-                  <SelectValue placeholder={t("document.filter")} />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">{t("document.last_modified")}</SelectItem>
-                  <SelectItem value="all">{t("document.file_size")}</SelectItem>
-                  <SelectItem value="all">{t("document.file_name")}</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
-          </div>
 
-          <div className="grid grid-cols-4 gap-4">
-            {files.length === 0 ? (
-              <div className=" col-span-6 flex justify-center items-center py-8">
-                <span className="text-gray-500">{t("document.no_file_yet")}</span>
-              </div>
-            ) : (
-              files.map((file) => (
-                <Card
-                  key={file.name}
-                  className="rounded-2xl w-full h-auto shadow-md relative cursor-pointer hover:shadow-lg transition-shadow"
-                  style={{
-                    backgroundColor: noteColors[file.name] || "#ffffff",
-                  }}
-                >
-                  <CardHeader>
-                    <CardTitle
-                      className="text-sm truncate"
-                      onClick={() =>
-                        handleFileOpen(file as unknown as StoredFile)
-                      }
-                    >
-                      {file.name}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-col gap-6 ">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-gray-500 flex items-center gap-2">
-                          last modified:{" "}
-                          {new Date(file.lastModified).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <MButton
-                        className="bg-green-300 hover:bg-green-400 w-fit"
-                        onClick={() => {
-                          setIsopenNoteDialog(true);
-                          setSelectedFileName(file.name);
-                        }}
-                      >
-                        {t("document.note_button")}
-                      </MButton>
-                    </div>
-                  </CardContent>
-                  <div
-                    className="absolute top-2 z-10 right-2 cursor-pointer"
-                    onClick={(e) => {
-                      setIsopenDeleteDialog(true);
+            <div className="grid grid-cols-4 gap-4">
+              {isLoadingDocuments ? (
+                <div className="col-span-6 flex justify-center items-center py-8">
+                  <span className="text-gray-500">Loading documents...</span>
+                </div>
+              ) : !documents || documents.length === 0 ? (
+                <div className="col-span-6 flex justify-center items-center py-8">
+                  <span className="text-gray-500">
+                    {t("document.no_file_yet")}
+                  </span>
+                </div>
+              ) : (
+                documents.map((doc: any) => (
+                  <Card
+                    key={doc.id}
+                    className="rounded-2xl w-full h-auto shadow-md relative cursor-pointer hover:shadow-lg transition-shadow"
+                    style={{
+                      backgroundColor: doc.color_code || "#ffffff",
                     }}
                   >
-                    <Trash className="w-4 h-4 text-red-500" />
-                  </div>
-                </Card>
-              ))
-            )}
+                    <CardHeader>
+                      <CardTitle
+                        className="text-sm truncate"
+                        onClick={() =>
+                          handleFileOpen(doc as unknown as StoredFile)
+                        }
+                      >
+                        {doc.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-col gap-6 ">
+                        <div className="flex flex-col gap-2">
+                          <span className="text-sm flex justify-between text-gray-500 flex items-center gap-2">
+                            {t("document.last_modified_description")}:{" "}
+                            {new Date(doc.created_at).toLocaleDateString()}
+                          </span>
+                          <span className="text-sm text-gray-500 flex gap-2">
+                            {doc.tags}
+                          </span>
+                        </div>
+                        <MButton
+                          className="bg-gray-500 hover:bg-gray-600 w-fit flex items-center gap-2"
+                          onClick={() => {
+                            setIsopenNoteDialog(true);
+                            setSettingNote(doc.title);
+                            setSettingColorCode(doc.color_code);
+                            setSettingTags(doc.tags);
+                            setSelectedFileName(doc.id);
+                          }}
+                        >
+                          <Pencil className="w-4 h-4" />
+                          {t("document.edit_button")}
+                        </MButton>
+                      </div>
+                    </CardContent>
+                    <div
+                      className="absolute top-2 z-10 right-2 cursor-pointer"
+                      onClick={(e) => {
+                        setSelectedFileName(doc.id);
+                        setIsopenDeleteDialog(true);
+                      }}
+                    >
+                      <Trash className="w-4 h-4 text-red-500" />
+                    </div>
+                  </Card>
+                ))
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <MAlertDialog
-        preset="destructive"
-        open={isopenDeleteDialog}
-        onOpenChange={setIsopenDeleteDialog}
-        title={t("document.delete_document")}
-        description={t("document.delete_document_description")}
-        cancelText={t("document.delete_document_cancel")}
-        confirmText={t("document.delete_document_confirm")}
-        onConfirm={handleDelete}
-      />
-      <NoteDialog
-        open={isopenNoteDialog}
-        onOpenChange={setIsopenNoteDialog}
-        fileName={selectedFileName}
-        initialColor={noteColors[selectedFileName]}
-      />
-    </>
+        <MAlertDialog
+          preset="destructive"
+          open={isopenDeleteDialog}
+          onOpenChange={setIsopenDeleteDialog}
+          title={t("document.delete_document")}
+          description={t("document.delete_document_description")}
+          cancelText={t("document.delete_document_cancel")}
+          confirmText={t("document.delete_document_confirm")}
+          onConfirm={() => onDeleteDocument(selectedFileName)}
+        />
+        <EditDialog
+          initialData={{
+            id: selectedFileName,
+            title: settingNote,
+            tags: settingTags,
+            color_code: settingColorCode,
+          }}
+          open={isopenNoteDialog}
+          onOpenChange={setIsopenNoteDialog}
+          fileName={selectedFileName}
+          initialColor={noteColors[selectedFileName]}
+        />
+      </>
+    ),
+    [
+      documents,
+      isLoadingDocuments,
+      isUploading,
+      isopenDeleteDialog,
+      isopenNoteDialog,
+      selectedFileName,
+      noteColors,
+      t,
+    ]
   );
 }

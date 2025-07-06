@@ -5,12 +5,20 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { useTranslation } from "react-i18next";
+import LoadingAnimation from "../share/loadinganimation";
+import { Document } from "@/redux/slices/data.types";
 
 interface AddDocumentProps {
-  onUploadComplete?: () => void;
+  onSubmit?: (files: File[]) => void;
+  isLoading?: boolean;
+  documents?: Document[];
 }
 
-export default function AddDocument({ onUploadComplete }: AddDocumentProps) {
+export default function AddDocumentForm({
+  onSubmit,
+  isLoading,
+  documents,
+}: AddDocumentProps) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const { t } = useTranslation();
 
@@ -35,35 +43,14 @@ export default function AddDocument({ onUploadComplete }: AddDocumentProps) {
   const onSubmitFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     if (files.length > 0) {
-      // setSelectedFiles(files);
       try {
-        const existingFiles = JSON.parse(
-          localStorage.getItem("selectedFiles") || "[]"
-        );
-        // setSelectedFiles(files);
-        if (existingFiles.find((file: any) => file.name === files[0].name)) {
+        const existingFiles = documents || [];
+        if (existingFiles.find((file: any) => file.title === files[0].name)) {
           toast.error("File already exists");
           return;
         }
         setSelectedFiles(files);
-        const newFiles = await Promise.all(
-          files.map(async (file) => {
-            const content = await readFileAsBase64(file);
-            const fileData = {
-              name: file.name,
-              size: file.size,
-              type: file.type,
-              lastModified: file.lastModified,
-              content: content,
-            };
-            return fileData;
-          })
-        );
-
-        const updatedFiles = [...existingFiles, ...newFiles];
-        localStorage.setItem("selectedFiles", JSON.stringify(updatedFiles));
-        toast.success("Files uploaded successfully");
-        onUploadComplete?.();
+        onSubmit?.(files);
       } catch (error) {
         console.error("Error processing files:", error);
         toast.error("Error uploading files");
@@ -98,11 +85,13 @@ export default function AddDocument({ onUploadComplete }: AddDocumentProps) {
                 type="file"
                 className="hidden"
                 onChange={onSubmitFile}
-                accept=".pdf,.doc,.docx,.txt,.csv,.xlsx,.pptx,.rtf,.odt,.ods"
+                accept=".pdf"
                 multiple
               />
             </label>
           </div>
+          {isLoading && <LoadingAnimation />}
+          {/* // the name file is need to respone from api */}
           {selectedFiles.length > 0 ? (
             <div className="flex flex-col gap-2 w-full">
               {selectedFiles.map((file, index) => (
@@ -110,6 +99,7 @@ export default function AddDocument({ onUploadComplete }: AddDocumentProps) {
                   key={index}
                   className="text-lg font-bold text-black text-center break-words max-w-full"
                 >
+                  selected file:
                   {file.name}
                 </p>
               ))}
@@ -123,8 +113,7 @@ export default function AddDocument({ onUploadComplete }: AddDocumentProps) {
                 {t("document.upload_source_description")}
               </p>
               <p className="text-sm text-gray-500 text-center">
-                {t("document.supported_file_types")}: PDF, DOCX, TXT, CSV,
-                XLSX, PPTX, RTF, ODT, ODS
+                {t("document.supported_file_types")}: PDF
               </p>
             </div>
           )}

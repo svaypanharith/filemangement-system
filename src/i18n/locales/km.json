@@ -5,13 +5,13 @@
   },
   "welcome": {
     "file_management": "ប្រព័ន្នគ្រប់គ្រងឯកសារ",
-    "title": "ស្វាគមន៍មកកាន់",
     "title_description": "ប្រព័ន្នបច្ចេកទេស",
     "description": "ជាបច្ចេកទេសដែលអនុញ្ញាតឱ្យអ្នករក្សាទុកប្រព័ន្ធបច្ចេកទេសរបស់អ្នក",
     "button": "តោះ​!​ចាប់ផ្តើម"
   },
   "signup": {
     "title": "បង្កើតគណនី",
+    "username": "ឈ្មោះអ្នកប្រើប្រាស់",
     "first_name": "ឈ្មោះដើម",
     "last_name": "នាមត្រកូល",
     "email": "អុីមែល",
@@ -70,6 +70,8 @@
   },
   "user_account": {
     "manage_account": "គ្រប់គ្រងគណនី",
+    "last_name": "នាមត្រកូល",
+    "phone": "លេខទូរសព្ទ",
     "account_overview": "ទិដ្ឋភាពទូទៅនៃគណនី",
     "logout": "ចាកចេញ",
     "logout_description": "ចាកចេញពីគណនីរបស់អ្នក",
@@ -86,10 +88,13 @@
     "name": "ឈ្មោះ",
     "email": "អុីមែល",
     "cancel": "បោះបង់",
-    "save": "រក្សាទុក"
+    "save": "រក្សាទុក",
+    "edit_profile_success": "កែប្រែគណនីជោគជ័យ"
   },
   "document": {
     "no_file_yet": "មិនមានឯកសារទេ",
+    "edit_document_description": "កែប្រែឯកសារ",
+    "edit_document": "កែប្រែឯកសារ",
     "delete_document": "លុបឯកសារ",
     "last_modified": "ចាប់ពីពេលដែលបង្កើត",
     "file_size": "ទំហំឯកសារ",
@@ -98,9 +103,10 @@
     "delete_document_button": "លុបឯកសារ",
     "delete_document_cancel": "បោះបង់",
     "delete_document_confirm": "លុបឯកសារ",
+    "last_modified_description": "ចាប់ពីពេលដែលបង្កើត",
     "document": "ឯកសារ",
     "filter": "ចង្អុល",
-    "note_button": "ចំណាំ",
+    "edit_button": "កែប្រែ",
     "description": "ប្រព័ន្នបច្ចេកទេស",
     "search": "ស្វែងរក",
     "button": "ប្រព័ន្នបច្ចេកទេស",
@@ -120,7 +126,8 @@
       "cancel": "បោះបង់",
       "confirm": "បង្កើតសំណើសម្រាប់ឯកសារ",
       "color_theme": "ពណ៌",
-      "note_success": "បង្កើតចំណាំជោគជ័យ"
+      "note_success": "បង្កើតចំណាំជោគជ័យ",
+      "reset": "ត្រឡប់"
     }
   },
   "logout": {
@@ -147,8 +154,12 @@
       "cancel_button": "បោះបង់"
     },
     "theme": {
+      "title": "ផ្លាស់ប្តូរពណ៌",
+      "description": "ផ្លាស់ប្តូរពណ៌របស់អ្នក",
       "light": "ពន្លឺ",
-      "dark": "ងងឹត"
+      "dark": "ងងឹត",
+      "appearance_mode": "មុនសម្រាប់សម្រាប់",
+      "appearance_mode_description": "ជ្រើសរើសមុនសម្រាប់សម្រាប់របស់អ្នក"
     }
   }
 }

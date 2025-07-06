@@ -20,7 +20,6 @@ export default function ChangeThemColorDialog({
   const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // After mounting, we have access to the theme
   useEffect(() => setMounted(true), []);
 
   const [switchTheme, setSwitchTheme] = useState(
@@ -88,10 +87,10 @@ export default function ChangeThemColorDialog({
           </div>
           <div>
             <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-              Change Theme Color
+              {t("setting.theme.title")}
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Customize your dashboard appearance
+              {t("setting.theme.description")}
             </p>
           </div>
         </div>
@@ -107,10 +106,10 @@ export default function ChangeThemColorDialog({
               )}
               <div>
                 <h3 className="font-medium text-gray-900 dark:text-gray-100">
-                  Appearance Mode
+                  {t("setting.theme.appearance_mode")}
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Choose between light and dark theme
+                  {t("setting.theme.appearance_mode_description")}
                 </p>
               </div>
             </div>

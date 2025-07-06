@@ -4,10 +4,6 @@ import { createContext, useContext, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Cookies from "js-cookie";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import {
-  setCredentials,
-  logout as logoutAction,
-} from "@/redux/slices/auth-slice";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -28,15 +24,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     Cookies.set("auth_token", newToken, {
       expires: 365,
     });
-    dispatch(setCredentials());
     router.push("/dashboard");
   };
 
   const token = Cookies.get("auth_token") || null;
-
   const logout = () => {
     Cookies.remove("auth_token");
-    dispatch(logoutAction());
     router.push("/");
   };
   useEffect(() => {

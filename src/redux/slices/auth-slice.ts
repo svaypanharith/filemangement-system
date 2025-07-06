@@ -1,9 +1,12 @@
 import { baseQuery } from "@/redux/middleware/base-query";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { AuthState, SignIn, SignUp , AuthResponse } from "@/redux/slices/data.types";
+import { AuthState, SignIn, SignUp , AuthResponse, user } from "@/redux/slices/data.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { API_URL } from "@/utils/env";
 import Cookies from "js-cookie";
+import dataApi from "./data-slice";
+
+
 
 const initialState: AuthState = {
   isAuthenticated: false,
@@ -11,7 +14,8 @@ const initialState: AuthState = {
   isLoading: false,
   error: null,
   status: null,
-  message: null
+  message: null,
+  access_token: "",
 };
 
 const authSlice = createSlice({
@@ -21,22 +25,25 @@ const authSlice = createSlice({
     setCredentials: (state) => {
       state.isAuthenticated = true;
     },
+    setUser: (state, action: PayloadAction<user>) => {
+      state.data = action.payload;
+    },
     logout: (state) => {
       state.isAuthenticated = false;
     },
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, setUser } = authSlice.actions;
 
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: baseQuery,
   tagTypes: ["Auth", "User"],
   endpoints: (builder) => ({
-    signIn: builder.mutation<{ token: string; user: any; message: string }, SignIn>({
+    signIn: builder.mutation<{ access_token: string; message: string; status: number; data?: { user: user } }, SignIn>({
       query: (credentials) => ({
-        url: `${API_URL}/login`,
+        url: `${API_URL}/auth/login`,
         method: "POST",
         body: credentials,
       }),
@@ -44,16 +51,18 @@ export const authApi = createApi({
       transformErrorResponse: (response: AuthResponse) => {
         return {
           status: response.status,
-          message: response.data?.message || "Sign in failed",
+          data: response.data?.user,
+          message: response.message || "Sign in failed",
         };
       },
     }),
 
     signUp: builder.mutation<AuthState, SignUp>({
       query: (credentials) => ({
-        url: `${API_URL}/register`,
+        url: `${API_URL}/auth/register`,
         method: "POST",
         body: credentials,
+        
       }),
       invalidatesTags: ["Auth"],
       transformErrorResponse: (response: { status: number; data: { message: string } }) => {
@@ -66,7 +75,7 @@ export const authApi = createApi({
 
     signOut: builder.mutation<AuthState, void>({
       query: () => ({
-        url: `${API_URL}/logout`,
+        url: `${API_URL}/auth/logout`,
         method: "POST",
         headers: {
           Authorization: `Bearer ${Cookies.get("auth_token")}`,
@@ -97,7 +106,6 @@ export const {
   useSignInMutation,
   useSignUpMutation,
   useSignOutMutation,
-  
   useResetPasswordMutation,
 } = authApi;
 

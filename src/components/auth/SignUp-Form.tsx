@@ -24,14 +24,15 @@ const formSchema = z
     first_name: z.string().min(1, "First name is required"),
     last_name: z.string().min(1, "Last name is required"),
     email: z.string().email("Invalid email address"),
+    username: z.string().min(1, "Username is required"),
     password: passwordValidation,
-    confirm_password: z
+    password_confirmation: z
       .string()
       .min(1, password_error_messages.confirm_password_required),
   })
-  .refine(({ password, confirm_password }) => password === confirm_password, {
+  .refine(({ password, password_confirmation }) => password === password_confirmation, {
     message: password_error_messages.passwords_doesnt_match,
-    path: ["confirm_password"],
+    path: ["password_confirmation"],
   });
 
 type FormSchemaType = z.infer<typeof formSchema>;
@@ -52,12 +53,12 @@ export default function SignUpForm({
     defaultValues: {
       first_name: "",
       last_name: "",
+      username: "",
       email: "",
       password: "",
-      confirm_password: "",
+      password_confirmation: "",
     },
   });
-
   useEffect(() => {
     if (onSuccess) {
       form.reset();
@@ -69,27 +70,27 @@ export default function SignUpForm({
   };
 
   return (
-    <div className="flex flex-col bg-gray-50 rounded-2xl shadow-xl max-w-[600px] w-full items-center justify-center p-6">
-      <div className="flex w-full flex-col gap-4">
+    <div className="flex flex-col bg-gray-50 rounded-2xl shadow-xl max-w-[600px] w-full items-center justify-center p-6 gap-4">
+     <div className="flex w-full flex-col gap-4">
         <div className="flex w-full flex-col gap-2">
           <p className="text-2xl font-bold font-roboto">{t("signup.title")}</p>
           <p className="text-sm text-gray-500">{t("signup.description")}</p>
         </div>
-        <MButton
+        {/* <MButton
           preset="secondary"
           size="sm"
           className="w-full rounded-lg bg-transparent border border-gray-200 flex items-center justify-center gap-2"
         >
           <Image src={googleIcon} alt="google" width={30} height={20} />
           <span>{t("signup.continue_with_google")}</span>
-        </MButton>
-      </div>
+        </MButton> */}
+      </div> 
 
-      <div className="flex w-1/2 justify-center items-center gap-4 my-4 px-4">
+      {/* <div className="flex w-1/2 justify-center items-center gap-4 my-4 px-4">
         <Separator className="w-1/2" />
         <span className="text-sm text-gray-500">{t("signup.common.or")}</span>
         <Separator className="w-1/2" />
-      </div>
+      </div> */}
 
       <FormProvider {...form}>
         <form
@@ -97,9 +98,10 @@ export default function SignUpForm({
           className="w-full gap-4"
         >
           <div className="flex w-full flex-col gap-4">
-            <p className="text-sm text-gray-500">
+            {/* <p className="text-sm text-gray-500">
               {t("signup.or_continue_with")}
-            </p>
+            </p> */}
+            
             <MInput
               required
               error={form.formState.errors.first_name?.message}
@@ -122,6 +124,15 @@ export default function SignUpForm({
             />
             <MInput
               required
+              error={form.formState.errors.username?.message}
+              onChange={(e) => {
+                form.setValue("username", e.target.value);
+              }}
+              label={t("signup.username")}
+              placeholder={t("signup.username")}
+            />
+            <MInput
+              required
               error={form.formState.errors.email?.message}
               onChange={(e) => {
                 form.setValue("email", e.target.value);
@@ -140,8 +151,8 @@ export default function SignUpForm({
             />
             <MInputPassword
               required
-              error={form.formState.errors.confirm_password?.message}
-              {...form.register("confirm_password")}
+              error={form.formState.errors.password_confirmation?.message}
+              {...form.register("password_confirmation")}
               label={t("signup.confirm_password")}
               placeholder={t("signup.confirm_password")}
             />
@@ -149,7 +160,7 @@ export default function SignUpForm({
               loading={isLoading}
               type="submit"
               preset="primary"
-              size="md"
+              size="lg"
               className="w-full rounded-full shadow-lg shadow-gray-200"
               disabled={isLoading}
             >

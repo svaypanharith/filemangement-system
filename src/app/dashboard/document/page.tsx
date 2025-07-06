@@ -1,7 +1,6 @@
 "use client";
 
-import { Folder } from "lucide-react";
-import Document from "@/components/document/document";
+import Document from "@/components/document/Document";
 import { useTranslation } from "react-i18next";
 export default function DocumentPage() {
   const { t } = useTranslation();

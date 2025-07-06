@@ -12,6 +12,8 @@ interface MInputProps {
   required?: boolean;
   rounded?: boolean;
   error?: string;
+  defaultValue?: string;
+  value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -24,6 +26,8 @@ export default function MInput({
   required,
   rounded,
   error,
+  defaultValue,
+  value,
 }: MInputProps) {
   console.log("type", type);
   return (
@@ -38,6 +42,8 @@ export default function MInput({
           "h-15  shadow-sm border border-gray-200",
           rounded && "rounded-lg"
         )}
+        defaultValue={defaultValue}
+        value={value}
         placeholder={placeholder}
         type={type}
         onChange={onChange}

@@ -20,13 +20,12 @@ export default function SignupPage() {
     async (data: any) => {
       try {
         const response = await signUp(data).unwrap();
-        if (response.status !== true) {
+        if (response.status !== 200) {
           throw new Error(response.message || "Something went wrong");
         }
-        login(response.token || "", response.data?.id);
+        login(response.access_token || "");
         toast.success(response.message || "Account created successfully!");
         setIsSubmitted(true);
-        router.push("/dashboard");
       } catch (error) {
         console.error(error);
       }
@@ -40,6 +39,7 @@ export default function SignupPage() {
         onSubmit={onSubmit}
         isLoading={isLoading}
         onSuccess={isSubmitted}
+
       />
     </Base>
   );

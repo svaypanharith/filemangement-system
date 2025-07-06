@@ -1,35 +1,46 @@
-export interface User {
+export interface user {
+  user: {
   id: string;
   first_name: string;
   last_name: string;
   email: string;
-  avatar: string;
-  createdAt: string;
-  updatedAt: string;
+  access_token: string;
+  username: string;
+  created_at: string;
+  updated_at: string;
+  }
+}
+
+export interface DocumentType {
+  documents: {
+    id: string;
+    color_code: string;
+    tags: string;
+    title: string;
+    created_at: string;
+    updated_at: string;
+  }[]
 }
 
 export interface UserResponse {
-  data: {
-    user: User;
-  };
+  user: user;
   message: string;
   status: number;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface AuthResponse {
   data: {
-    token: string;
-    message: string;
-    status: number;
+    user: user;
   }
   message: string;
   status: number;
 }
 
 export interface AuthState {
-  data: {
-    token: string;
-  } | null;
+  data: user | null;
+  access_token: string;
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
@@ -43,11 +54,12 @@ export interface SignIn {
 }
 
 export interface SignUp {
+  username: string;
   first_name: string;
   last_name: string;
   email: string;
   password: string;
-  confirm_password: string;
+  password_confirmation: string;
 }
 
 export interface ChatRequest {

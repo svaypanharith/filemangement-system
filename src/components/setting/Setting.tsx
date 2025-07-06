@@ -82,9 +82,9 @@ export default function Setting() {
 
           {/* Appearance Settings */}
           <CardWrapper
-            title={"Theme"}
+            title={t("setting.theme.title")}
             icon={<Sun className="w-5 h-5 text-yellow-500" />}
-            description="Change the theme of the app"
+            description={t("setting.theme.description")}
             onClick={() => setIsOpenChangeThemeColorDialog(true)}
           />
 
