@@ -2,28 +2,28 @@
 
 import MDialog from "../m-ui/m-dialog";
 import { useTranslation } from "react-i18next";
-import EditForm from "./EditForm";
-import { NoteFormDataType } from "./EditForm";
+import EditDocumentForm from "./EditDocumnetForm";
+import { EditDocumentFormDataType } from "./EditDocumnetForm";
 import { useUpdateDocumentMutation } from "@/redux/slices/data-slice";
 import { useCallback } from "react";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
 
-interface NoteDialogProps {
+interface EditDocumentDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   fileName: string;
   initialColor?: string;
-  initialData: NoteFormDataType;
+  initialData: EditDocumentFormDataType;
 }
 
-export default function EditDialog({
+export default function EditDocumentDialog({
   open,
   onOpenChange,
   initialData,
-}: NoteDialogProps) {
+}: EditDocumentDialogProps) {
   const { t } = useTranslation();
   const [updateDocument] = useUpdateDocumentMutation();
-  const onSubmitData = useCallback(async (data: NoteFormDataType ) => {
+  const onSubmitData = useCallback(async (data: EditDocumentFormDataType ) => {
     try {
       const response = await updateDocument({
         id: data.id,
@@ -48,7 +48,7 @@ export default function EditDialog({
       description={t("document.edit_document_description")}
       content={
         <div className="w-full mx-auto">
-          <EditForm
+          <EditDocumentForm 
             onCancel={() => {
               onOpenChange(false);
             }}
@@ -60,7 +60,7 @@ export default function EditDialog({
         </div>
       }
       open={open}
-      onOpenChange={onOpenChange}
+      onOpenChange={onOpenChange}  
     />
   );
 }

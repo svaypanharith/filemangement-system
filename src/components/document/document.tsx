@@ -25,7 +25,7 @@ import {
 import AddDocumentForm from "@/components/document/AddDocumentForm";
 import { useGetDocumentsQuery } from "@/redux/slices/data-slice";
 import {  DocumentType } from "@/redux/slices/data.types";
-import EditDialog from "./EditDialog";
+import EditDocumentDialog from "./EditDocimentDialog";
 
 interface StoredFile {
   name: string;
@@ -187,7 +187,7 @@ export default function Document() {
           <AddDocumentForm
             onSubmit={onSubmitFile}
             isLoading={isUploading}
-            documents={documents}
+            documents={documents as unknown as Document[]}
           />
           <div className="flex flex-col gap-8 border-2 border-gray-200 p-8  shadow-xl rounded-2xl">
             <div className="flex justify-between">
@@ -299,7 +299,7 @@ export default function Document() {
           confirmText={t("document.delete_document_confirm")}
           onConfirm={() => onDeleteDocument(selectedFileName)}
         />
-        <EditDialog
+        <EditDocumentDialog
           initialData={{
             id: selectedFileName,
             title: settingNote,

@@ -9,24 +9,24 @@ import { useTranslation } from "react-i18next";
 import MInput from "../m-ui/m-input";
 import MButton from "../m-ui/m-button";
 
-export interface NoteFormDataType {
+export interface EditDocumentFormDataType {
   id: string;
   title: string;
   tags: string;
   color_code: string;
 }
 
-interface NoteFormProps {
-  initialData: NoteFormDataType;
-  onSubmitData: (data: NoteFormDataType) => void;
+interface EditDocumentFormProps {
+  initialData: EditDocumentFormDataType;
+  onSubmitData: (data: EditDocumentFormDataType) => void;
   onCancel: () => void;
 }
 
-export default function EditForm({
+export default function EditDocumentForm({
   initialData,
   onSubmitData,
   onCancel,
-}: NoteFormProps) {
+}: EditDocumentFormProps) {
   const [color, setColor] = useState(initialData.color_code || "#ffffff");
   const { t } = useTranslation();
   const documentColors = [
@@ -163,7 +163,7 @@ export default function EditForm({
               size="sm"
               type="submit"
             >
-              {t("document.note.save")}
+              {t("document.save")}
             </MButton>
           </div>
         </div>

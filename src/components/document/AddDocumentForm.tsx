@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { useTranslation } from "react-i18next";
 import LoadingAnimation from "../share/loadinganimation";
-import { Document } from "@/redux/slices/data.types";
+// import { Document } from "@/redux/slices/data.types";
 
 interface AddDocumentProps {
   onSubmit?: (files: File[]) => void;
