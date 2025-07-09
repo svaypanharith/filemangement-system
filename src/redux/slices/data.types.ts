@@ -11,6 +11,36 @@ export interface user {
   }
 }
 
+interface statisticconfig {
+  timerange: string;
+  document: number;
+}
+
+export interface dailyaggregate {
+  dailyDocumentCount: statisticconfig[]
+}
+
+export interface weeklyaggregate {
+  weeklyDocumentCount: statisticconfig[]
+}
+
+export interface monthlyaggregate {
+  monthlyDocumentCount: statisticconfig[]
+}
+
+export interface yearlyaggregate {
+  yearlyDocumentCount: statisticconfig[]
+}
+
+export interface documentaggregate {
+  totalDocuments: number;
+  totalFileSize: number;
+}
+
+export interface statistic {
+  total_document: number;
+}
+
 export interface DocumentType {
   documents: {
     id: string;

@@ -4,8 +4,9 @@ import EditProfileForm from "./EditProfileForm";
 import { useTranslation } from "react-i18next";
 
 import { useUpdateProfileMutation } from "@/redux/slices/data-slice";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
+import ImageCropUpload from "../share/crop-image";
 
 export interface User {
   id: string;
@@ -27,6 +28,8 @@ export function EditProfileDialog({
 }: EditProfileDialogProps) {
   const { t } = useTranslation();
   const [updateProfileMutation, { isLoading }] = useUpdateProfileMutation();
+  const [openImageCropUpload, setOpenImageCropUpload] = useState(false);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
   const handleUpdateProfile = useCallback(
     (data: { first_name: string; last_name: string; username: string }) => {
       try {
@@ -46,26 +49,47 @@ export function EditProfileDialog({
     [updateProfileMutation, onOpenChange]
   );
   return (
+    <>
     <MDialog
       header={t("user_account.edit_profile")}
       description={t("user_account.edit_profile_description")}
       content={
         <EditProfileForm
+          onImageCropUpload={(imageSrc) => {
+            setImageSrc(imageSrc);
+          }}
+          onOpenImageCropUpload={() => {
+            onOpenChange(false);
+            setOpenImageCropUpload(true);
+          }}
           isLoading={isLoading}
           initialData={initialData}
-          onCancel={() => onOpenChange(false)}
+          onOpenChange={onOpenChange}
+
           onSave={(data) => {
             handleUpdateProfile({
               first_name: data.first_name,
               last_name: data.last_name,
               username: data.username,
             });
-            onOpenChange(false);
           }}
         />
       }
       open={open}
       onOpenChange={onOpenChange}
     />
+    <ImageCropUpload
+        imageSrc={imageSrc || ""}
+        onCropComplete={(croppedImage) => {
+          setImageSrc(URL.createObjectURL(croppedImage));
+        }}
+        onClose={() => {
+          setOpenImageCropUpload(false);
+          onOpenChange(true);
+        }}
+        open={openImageCropUpload}
+        setOpen={setOpenImageCropUpload}
+      />
+    </>
   );
 }

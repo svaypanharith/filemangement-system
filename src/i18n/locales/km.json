@@ -15,6 +15,7 @@
     "first_name": "ឈ្មោះដើម",
     "last_name": "នាមត្រកូល",
     "email": "អុីមែល",
+
     "continue_with_google": "បង្កើតគណនីជាមួយ Google",
     "password": "ពាក្យសម្ងាត់",
     "confirm_password": "បញ្ជាក់ពាក្យសម្ងាត់",
@@ -65,8 +66,19 @@
     "folder": "ផ្ទាំងគ្រប់គ្រង",
     "total_document": "ចំនួនឯកសារទាំងអស់",
     "total_file_size": "ទំហំឯកសារទាំងអស់",
-    "ai_credit": "កុសលបច្ចេកទេស",
-    "total_ai_credit": "កុសលបច្ចេកទេសទាំងអស់"
+    "ai_credit": "Credit AI",
+    "document_transaction": "លំហូឯកសារ",
+    "ai_used_credit": "Credit AI បានប្រើ",
+    "total_ai_credit": "កុសលបច្ចេកទេសទាំងអស់",
+    "statistics": {
+      "title": "ស្ថិតិ",
+      "daily": "ថ្ងៃ",
+      "weekly": "សប្តាហ៍",
+      "monthly": "ខែ",
+      "yearly": "ឆ្នាំ",
+      "description": "ស្ថិតិរបស់អ្នក"
+      
+    }
   },
   "user_account": {
     "manage_account": "គ្រប់គ្រងគណនី",
@@ -74,6 +86,7 @@
     "phone": "លេខទូរសព្ទ",
     "account_overview": "ទិដ្ឋភាពទូទៅនៃគណនី",
     "logout": "ចាកចេញ",
+    "upload_image": "ដាក់រូបភាព",
     "logout_description": "ចាកចេញពីគណនីរបស់អ្នក",
     "change_password": "ផ្លាស់ប្តូរពាក្យសម្ងាត់",
     "change_password_description": "ផ្លាស់ប្តូរពាក្យសម្ងាត់របស់អ្នក",

@@ -58,7 +58,9 @@ export default function Setting() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setSidebarTrigger({ text: t("setting.setting"), iconName: "settings" }));
+    dispatch(
+      setSidebarTrigger({ text: t("setting.setting"), iconName: "settings" })
+    );
   }, [t, dispatch]);
   return useMemo(
     () => (
@@ -86,14 +88,6 @@ export default function Setting() {
             icon={<Sun className="w-5 h-5 text-yellow-500" />}
             description={t("setting.theme.description")}
             onClick={() => setIsOpenChangeThemeColorDialog(true)}
-          />
-
-          {/* Privacy Settings */}
-          <CardWrapper
-            title={t("setting.privacy")}
-            icon={<Shield className="w-5 h-5 text-blue-500" />}
-            description="Manage your privacy settings"
-            onClick={() => {}}
           />
 
           {/* logout */}

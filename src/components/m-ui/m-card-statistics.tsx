@@ -7,32 +7,38 @@ interface MCardProps {
   title: string;
   value: number;
   icon: React.ReactNode;
+  unit?: string;
 }
 
-export default function MCardStatistics({ title, value, icon }: MCardProps) {
+export default function MCardStatistics({
+  title,
+  value,
+  icon,
+  unit,
+}: MCardProps) {
   const AnimationNumber = ({ value }: { value: number }) => {
     const [displayValue, setDisplayValue] = useState(0);
 
-    useEffect(() => {
-      let startValue = 0;
-      const duration = 1000;
-      const steps = 25;
-      const increment = value / steps;
-      let currentStep = 0;
+    // useEffect(() => {
+    //   let startValue = 0;
+    //   const duration = 1000;
+    //   const steps = 25;
+    //   const increment = value / steps;
+    //   let currentStep = 0;
 
-      const timer = setInterval(() => {
-        currentStep++;
-        startValue += increment;
+    //   const timer = setInterval(() => {
+    //     currentStep++;
+    //     startValue += increment;
 
-        if (currentStep === steps) {
-          setDisplayValue(value);
-          clearInterval(timer);
-        } else {
-          setDisplayValue(Math.floor(startValue));
-        }
-      }, duration / steps);
-      return () => clearInterval(timer);
-    }, [value]);
+    //     if (currentStep === steps) {
+    //       setDisplayValue(value);
+    //       clearInterval(timer);
+    //     } else {
+    //       setDisplayValue(Math.floor(startValue));
+    //     }
+    //   }, duration / steps);
+    //   return () => clearInterval(timer);
+    // }, [value]);
 
     return displayValue;
   };
@@ -46,8 +52,13 @@ export default function MCardStatistics({ title, value, icon }: MCardProps) {
       <CardContent>
         <div className="flex items-center justify-between">
           <p className="text-4xl font-bold text-primary flex items-center gap-6">
-            <AnimationNumber value={value} />
-            {value > 0 && <TrendingUp className="text-green-500" />}
+            {value}
+            {unit ? (
+              <span className="text-muted-foreground text-sm">{unit}</span>
+            ) : (
+              <TrendingUp className="text-green-500" />
+            )}
+            
           </p>
           <div className="rounded-full bg-blue-500/10 p-3">{icon}</div>
         </div>

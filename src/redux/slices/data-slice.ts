@@ -1,11 +1,17 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-
 import { baseQuery } from "@/redux/middleware/base-query";
+
+
 import {
   user,
   DocumentType,
   ChatResponseData,
   ChatRequest,
+  documentaggregate,
+  dailyaggregate,
+  weeklyaggregate,
+  monthlyaggregate,
+  yearlyaggregate,
 } from "@/redux/slices/data.types";
 import { API_URL } from "@/utils/env";
 
@@ -121,6 +127,49 @@ const dataSlice = createApi({
         body: data,
       }),
     }),
+    // get statistic
+    getDocumentAggregate: builder.query<documentaggregate, void>({
+      query: () => ({
+        url: `${API_URL}/documents/aggregate `,
+        method: "GET",
+      }),
+    }),
+
+    getFileSizeAggregate: builder.query<documentaggregate, void>({
+      query: () => ({
+        url: `${API_URL}/documents/aggregate/file-size`,
+        method: "GET",
+      }),
+    }),
+
+    getDailyAggregate: builder.query<dailyaggregate, void>({
+      query: () => ({
+        url: `${API_URL}/documents/daily-count `,
+        method: "GET",
+      }),
+    }),
+     
+    getWeeklyAggregate: builder.query<weeklyaggregate, void>({
+      query: () => ({
+        url: `${API_URL}/documents/weekly-count `,
+        method: "GET",
+      }),
+    }),
+
+    getMonthlyAggregate: builder.query<monthlyaggregate, void>({
+      query: () => ({
+        url: `${API_URL}/documents/monthly-count `,
+        method: "GET",
+      }),
+    }),
+
+    getYearlyAggregate: builder.query<yearlyaggregate, void>({
+      query: () => ({
+        url: `${API_URL}/documents/yearly-count `,
+        method: "GET",
+      }),
+    }),
+    
   }),
 });
 
@@ -135,4 +184,10 @@ export const {
   useDeleteDocumentMutation,
   useGetChatMutation,
   useUpdateDocumentMutation,
+  useGetDocumentAggregateQuery,
+  useGetFileSizeAggregateQuery,
+  useGetDailyAggregateQuery,
+  useGetWeeklyAggregateQuery,
+  useGetMonthlyAggregateQuery,
+  useGetYearlyAggregateQuery, 
 } = dataSlice;

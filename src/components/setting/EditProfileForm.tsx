@@ -7,13 +7,18 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
 import { User } from "./EditProfileDialog";
+import { User as UserIcon } from "lucide-react";
+import Image from "next/image";
+import { Input } from "../ui/input";
+import { useState } from "react";
 interface EditProfileFormProps {
-  onCancel: () => void;
+  onOpenChange: (open: boolean) => void;
   onSave: (data: FormSchemaType) => void;
+  onImageCropUpload: (imageSrc: string) => void;
   initialData: User;
   isLoading: boolean;
+  onOpenImageCropUpload: (open: boolean) => void;
 }
-
 const formSchema = z.object({
   first_name: z.string().min(1, "First name is required"),
   last_name: z.string().min(1, "Last name is required"),
@@ -23,12 +28,16 @@ const formSchema = z.object({
 type FormSchemaType = z.infer<typeof formSchema>;
 
 export default function EditProfileForm({
-  onCancel,
+  onOpenChange,
   onSave,
   initialData,
   isLoading,
+  onOpenImageCropUpload,
+  onImageCropUpload,
 }: EditProfileFormProps) {
   const { t } = useTranslation();
+  const [openImageCropUpload, setOpenImageCropUpload] = useState(false);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,8 +49,31 @@ export default function EditProfileForm({
   const onSubmit = (data: FormSchemaType) => {
     onSave(data);
   };
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImageSrc(reader.result as string);
+        onImageCropUpload(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+      onOpenImageCropUpload(true);
+    }
+  };
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex flex-col gap-4 w-full justify-center items-center">
+      <div className="flex items-center gap-4 flex-col">
+      <label htmlFor="image-upload" className="bg-gray-100 w-24 h-24 flex items-center text-center justify-center rounded-full p-2 cursor-pointer" onClick={() => {
+      }}>
+        <Input type="file" className="hidden" id="image-upload" onChange={handleImageUpload} />
+        {imageSrc ? <Image src={imageSrc} 
+          fill
+          objectFit="cover"
+         alt="profile" className="rounded-full" /> : <UserIcon className="h-8 w-8 text-blue-500 " />}
+      </label>
+      <span className="text-sm font-semibold text-blue-500">{t("user_account.upload_image")}</span>
+      </div>
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -78,7 +110,7 @@ export default function EditProfileForm({
             }}
           />
           <div className="flex justify-end gap-2">
-            <MButton preset="secondary" size="sm" onClick={onCancel}>
+            <MButton preset="secondary" size="sm" type="button" onClick={() => onOpenChange(false)}>
               {t("user_account.cancel")}
             </MButton>
             <MButton
@@ -92,6 +124,7 @@ export default function EditProfileForm({
           </div>
         </form>
       </FormProvider>
+
     </div>
   );
 }

@@ -57,7 +57,20 @@
     "total_document": "Total Document",
     "total_file_size": "Total File Size",
     "ai_credit": "AI Credit",
-    "total_ai_credit": "Total AI Credit"
+    "total_ai_credit": "Total AI Credit",
+    "ai_used_credit": "AI Used Credit",
+    "document_transaction": "Document Transaction",
+    "statistics": {
+      "title": "Statistics",
+      "description": "Statistics",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "monthly": "Monthly",
+      "yearly": "Yearly",
+      "document_transaction": "Document Transaction",
+      "ai_used_credit": "AI Used Credit",
+      "total_ai_credit": "Total AI Credit"
+    }
   },
   "document": {
     "edit_document": "Edit Document",
@@ -89,6 +102,7 @@
     "delete_document_button": "Delete",
     "delete_document_cancel": "Cancel",
     "delete_document_confirm": "Delete",
+    "document_transaction": "Document Transaction",
     "note": {
       "document_note": "Document Note",
       "title": "Note",
@@ -112,6 +126,7 @@
     "first_name": "First Name",
     "last_name": "Last Name",
     "phone": "Phone",
+    "upload_image": "Upload Image",
     "logout_description": "Logout from your account",
     "change_password": "Change Password",
     "change_password_description": "Change your password",
@@ -138,6 +153,7 @@
     "appearance": "Appearance",
     "notifications": "Notifications",
     "privacy": "Privacy",
+
     "change_password": {
       "title": "Change Password",
       "description": "Change your password",

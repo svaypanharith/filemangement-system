@@ -1,12 +1,9 @@
 "use client";
-
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
-
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -16,12 +13,12 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { TrendingUp } from "lucide-react";
 
 interface BarChartData {
-  month: string;
-  value: number;
+  timerange: string;
+  document: number;
 }
+
 interface BarChartProps {
   data?: BarChartData[];
   config: ChartConfig;
@@ -29,64 +26,89 @@ interface BarChartProps {
   color?: string;
   radius?: number;
   fill?: string;
+  title?: string;
 }
 
 export default function BarChartComponent({
   data,
   config,
-  dataKey,
-  color,
-  radius,
-  fill,
+  color = "#3b82f6",
+  title,
 }: BarChartProps) {
+ 
   return (
-    <Card className="w-full shadow-xl">
-      <CardHeader>
-        <CardTitle> Chart Document</CardTitle>
-        <CardDescription>
-          <span className="text-sm text-muted-foreground">
-            {new Date().toLocaleDateString("en-US", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })}
-          </span>
+    <Card className="w-full max-w-4xl mx-auto shadow-lg border-0 bg-white">
+      <CardHeader className="text-left">
+        <CardTitle className="text-lg font-semibold text-gray-800">
+          {title}
+        </CardTitle>
+        <CardDescription className="text-sm text-gray-500 mt-1">
+          {new Date().toLocaleDateString("en-US", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <ChartContainer config={config} className="w-full">
-          <BarChart
-            accessibilityLayer
-            data={data}
-            margin={{
-              top: 20,
-              right: 0,
-              left: 0,
-              bottom: 5,
-            }}
+      <CardContent className="p-0">
+        <div className="w-full">
+          <ChartContainer 
+            config={config} 
+            className="w-full"
           >
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
+              <BarChart
+                data={data}
+                margin={{
+                  top: 10,
+                  right: 40,
+                }}
+              >
+                <CartesianGrid 
+                  strokeDasharray="3 3" 
+                  stroke="#e5e7eb"
+                  vertical={false}
+                />
+               <XAxis
+              dataKey="timerange"
               tickLine={false}
-              tickMargin={20}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickMargin={8}
+              tick={{
+                fontSize:12,
+                fontWeight: "medium",
+                fill: "#6b7280",
+              }}
+              textAnchor="end"
+              interval="preserveEnd"
+              tickFormatter={(value) => value.toString()}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent indicator="dashed" />}
+<YAxis
+              tickLine={false}
+              axisLine={false}
+              tickMargin={10}
+              tick={{
+                fontSize: 12,
+                fontWeight: "medium",
+                fill: "#6b7280",
+              }}
+              allowDecimals={false}
+              tickFormatter={(value) => Math.round(value).toLocaleString()}
+              interval={0}
             />
-            <Bar
-              dataKey={dataKey}
-              fill={color}
-              radius={radius}
-              barSize={50}
-              calcMode="linear"
-            />
-          </BarChart>
-        </ChartContainer>
+                <ChartTooltip
+                  cursor={{ fill: "rgba(59, 130, 246, 0.1)" }}
+                  content={<ChartTooltipContent indicator="dashed" />}
+                />
+                <Bar
+                  dataKey="document"
+                  fill={color}
+                  radius={10}
+                  maxBarSize={30}
+                />
+              </BarChart>
+          </ChartContainer>
+        </div>
       </CardContent>
-  </Card>
+    </Card>
   );
 }

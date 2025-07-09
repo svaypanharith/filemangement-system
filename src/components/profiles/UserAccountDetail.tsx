@@ -22,16 +22,15 @@ export default function UserAccountDetail({
   onGetProfileInfo,
 }: UserAccountDetailProps) {
   const { t } = useTranslation();
-  // Use cached profile data
   const { data: profile } = useGetProfileInfoQuery(undefined, {
-    refetchOnMountOrArgChange: false
+    refetchOnMountOrArgChange: false,
   });
   useEffect(() => {
     if (profile) {
       onGetProfileInfo(profile.user as UserType);
     }
   }, [profile]);
-  return (  
+  return (
     <>
       <div className="w-full mx-auto">
         <Card className="border-0 shadow-xl max-w-md  flex flex-col gap-4 from-white to-gray-50/50 dark:from-gray-900 dark:to-gray-800/50">
@@ -51,13 +50,16 @@ export default function UserAccountDetail({
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-4">
-              <Avatar className="h-12 w-12">
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
+                <div className="bg-gray-100 w-12 h-12 flex items-center justify-center rounded-full p-2">
+                   <p className="text-lg font-semibold">
+                    {profile?.user.first_name.slice(0, 1).toUpperCase()}
+                   </p> 
+                </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-6">
-                  <p className="text-lg font-semibold">{profile?.user.first_name}</p>
+                  <p className="text-lg font-semibold">
+                    {profile?.user.first_name}
+                  </p>
                   <Badge className="text-xs bg-blue-500 rounded-full text-white">
                     Pro
                   </Badge>
@@ -76,7 +78,9 @@ export default function UserAccountDetail({
                   <User className="h-4 w-4 text-blue-500 " />
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm font-semibold">{t("user_account.user_name")} </p>
+                  <p className="text-sm font-semibold">
+                    {t("user_account.user_name")}{" "}
+                  </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     {profile?.user.first_name}
                   </p>
@@ -87,7 +91,9 @@ export default function UserAccountDetail({
                   <Mail className="h-4 w-4 text-blue-500 " />
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm font-semibold">{t("user_account.user_email")} </p>
+                  <p className="text-sm font-semibold">
+                    {t("user_account.user_email")}{" "}
+                  </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     {profile?.user.email}
                   </p>
@@ -99,9 +105,13 @@ export default function UserAccountDetail({
                   <Calendar className="h-4 w-4 text-blue-500 " />
                 </div>
                 <div className="flex flex-col">
-                  <p className="text-sm font-semibold">{t("user_account.member_since")} </p>
+                  <p className="text-sm font-semibold">
+                    {t("user_account.member_since")}{" "}
+                  </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    {new Date(profile?.user.created_at).toLocaleDateString()}
+                    {new Date(
+                      profile?.user.created_at || ""
+                    ).toLocaleDateString()}
                   </p>
                 </div>
               </div>
