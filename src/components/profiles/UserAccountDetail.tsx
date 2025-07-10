@@ -1,7 +1,6 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import MButton from "@/components/m-ui/m-button";
@@ -11,6 +10,8 @@ import { useTranslation } from "react-i18next";
 import { useGetProfileInfoQuery } from "@/redux/slices/data-slice";
 import { User as UserType } from "../setting/EditProfileDialog";
 import { useEffect } from "react";
+import { getLocalStorage } from "@/utils/storage";
+import Image from "next/image";
 
 interface UserAccountDetailProps {
   onOpenEditProfileDialog: () => void;
@@ -30,6 +31,20 @@ export default function UserAccountDetail({
       onGetProfileInfo(profile.user as UserType);
     }
   }, [profile]);
+
+  let image = "";
+  const userImageRaw = getLocalStorage(`user_image_${profile?.user.id}`);
+  if (userImageRaw) {
+    try {
+      const parsed =
+        typeof userImageRaw === "string"
+          ? JSON.parse(userImageRaw)
+          : userImageRaw;
+      image = parsed?.imageDataUrl || "";
+    } catch {
+      image = "";
+    }
+  }
   return (
     <>
       <div className="w-full mx-auto">
@@ -50,11 +65,21 @@ export default function UserAccountDetail({
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-4">
+              {userImageRaw ? (
+                <Image
+                  src={image || ""}
+                  alt="profile"
+                  width={36}
+                  height={36}
+                  className="rounded-full"
+                />
+              ) : (
                 <div className="bg-gray-100 w-12 h-12 flex items-center justify-center rounded-full p-2">
-                   <p className="text-lg font-semibold">
+                  <p className="text-lg font-semibold">
                     {profile?.user.first_name.slice(0, 1).toUpperCase()}
-                   </p> 
+                  </p>
                 </div>
+              )}
               <div className="flex flex-col">
                 <div className="flex items-center gap-6">
                   <p className="text-lg font-semibold">

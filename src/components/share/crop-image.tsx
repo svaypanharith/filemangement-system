@@ -3,14 +3,17 @@
 import React from "react";
 import { useState } from "react";
 import Cropper from "react-easy-crop";
+import { setLocalStorage } from "@/utils/storage";
 
 import MDialog from "../m-ui/m-dialog";
 import MButton from "../m-ui/m-button";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 interface ImageCropUploadProps {
   imageSrc: string;
-  onCropComplete: (croppedImage: File) => void;
+  userid:string;
+  onCropComplete: (imageDataUrl?: string) => void;
   onClose: () => void;
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -28,10 +31,10 @@ export default function ImageCropUpload({
   linkName,
   type,
   path,
+  userid
 }: ImageCropUploadProps) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
-  console.log("imageSrc", imageSrc);
   // const { uploadImage, isuploading } = useFileUpload({ path });
 
   interface CroppedAreaPixels {
@@ -46,7 +49,7 @@ export default function ImageCropUpload({
   const handleCropComplete = (_: unknown, croppedAreaPixels: CroppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
-
+  const { t } = useTranslation();
   const generateCroppedImage = async () => {
     const image = new Image();
     image.src = imageSrc;
@@ -86,13 +89,23 @@ export default function ImageCropUpload({
       { type: "image/jpeg" }
     );
 
-    console.log("croppedImageFile", croppedImageFile);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const imageDataUrl = reader.result as string;
 
-    // const result = await uploadImage(croppedImageFile);
-    // if (!result) {
-    //   return;
-    // }
-    onCropComplete(croppedImageFile);
+      const userImageData = {
+        userId: userid,
+        imageDataUrl: imageDataUrl,
+        fileName: croppedImageFile.name,
+        fileType: croppedImageFile.type,
+        timestamp: Date.now()
+      };
+      onCropComplete(imageDataUrl)
+      setLocalStorage(`user_image_${userid}`, JSON.stringify(userImageData));
+      toast.success(t("user_account.crope_image_success"));
+    };
+    reader.readAsDataURL(croppedImageFile);
+
     onClose();
   };
 

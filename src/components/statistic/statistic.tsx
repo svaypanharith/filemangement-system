@@ -15,6 +15,7 @@ import {
 
 } from "@/redux/slices/data-slice";
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 interface BarChartData {
   timerange: string;
@@ -29,6 +30,8 @@ export function Statistic() {
   const { data: weeklyAggregate } = useGetWeeklyAggregateQuery();
   const { data: monthlyAggregate } = useGetMonthlyAggregateQuery();
   const { data: yearlyAggregate } = useGetYearlyAggregateQuery();
+  const { resolvedTheme } = useTheme();
+
 const [data, setData] = useState<BarChartData[]>([]);
   const [isSelected, setIsSelected] = useState<string>("daily");
 
@@ -99,18 +102,18 @@ const [data, setData] = useState<BarChartData[]>([]);
         />
       </div>
 
-      <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
+      <div className={`rounded-2xl p-8 shadow-xl border border-gray-100 ${resolvedTheme === "dark" ? "bg-black" : "bg-white"}`}>
         <div className="mb-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-2">
-             Monitor your document and AI usage
+            {t("dashboard.statistics.monitor")}
           </h2>
           <p className="text-sm text-gray-600">
-            Track your document and AI usage patterns
+            {t("dashboard.statistics.track_your_document")}
           </p>
         </div>
 
         <Tabs defaultValue={isSelected} className="w-full flex flex-col gap-4">
-          <TabsList className="grid w-full grid-cols-4 cursor-pointer bg-gray-100 p-1 rounded-xl">
+          <TabsList className={`grid w-full grid-cols-4 cursor-pointer ${resolvedTheme === "dark" ? "bg-black" : "bg-gray-100"} p-1 rounded-xl`}>
             {tabs.map((tab) => (
               <TabsTrigger
                 key={tab.value}
@@ -124,8 +127,8 @@ const [data, setData] = useState<BarChartData[]>([]);
           </TabsList>
           <TabsContent value={isSelected} className="mt-8 w-full">
             <div className="flex flex-row gap-4 w-full ">
-              <div className="bg-gradient-to-br w-full from-blue-50 to-blue-100   
-              rounded-2xl p-6 border border-blue-200">
+              <div className={`${resolvedTheme === "dark" ? "bg-black" : "bg-gradient-to-br w-full from-blue-50 to-blue-100"}   
+              rounded-2xl p-6 border border-blue-200 w-full`}>
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-blue-600 rounded-lg">
                     <File className="text-white h-5 w-5" />
@@ -142,8 +145,8 @@ const [data, setData] = useState<BarChartData[]>([]);
                   radius={8}
                   title={t("dashboard.document_transaction")}
                 />
-              </div>
-              <div className="bg-gradient-to-br w-full from-purple-50 to-purple-100 rounded-2xl p-6 border border-purple-200">
+                </div>
+                <div className={`${resolvedTheme === "dark" ? "bg-black" : "bg-gradient-to-br w-full from-purple-50 to-purple-100"} rounded-2xl p-6 border border-purple-200 w-full`}>
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-purple-600 rounded-lg">
                     <Sparkles className="text-white h-5 w-5" />

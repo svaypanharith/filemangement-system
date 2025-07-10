@@ -76,32 +76,13 @@ export default function SignUpForm({
           <p className="text-2xl font-bold font-roboto">{t("signup.title")}</p>
           <p className="text-sm text-gray-500">{t("signup.description")}</p>
         </div>
-        {/* <MButton
-          preset="secondary"
-          size="sm"
-          className="w-full rounded-lg bg-transparent border border-gray-200 flex items-center justify-center gap-2"
-        >
-          <Image src={googleIcon} alt="google" width={30} height={20} />
-          <span>{t("signup.continue_with_google")}</span>
-        </MButton> */}
       </div> 
-
-      {/* <div className="flex w-1/2 justify-center items-center gap-4 my-4 px-4">
-        <Separator className="w-1/2" />
-        <span className="text-sm text-gray-500">{t("signup.common.or")}</span>
-        <Separator className="w-1/2" />
-      </div> */}
-
       <FormProvider {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmitForm)}
           className="w-full gap-4"
         >
           <div className="flex w-full flex-col gap-4">
-            {/* <p className="text-sm text-gray-500">
-              {t("signup.or_continue_with")}
-            </p> */}
-            
             <MInput
               required
               error={form.formState.errors.first_name?.message}

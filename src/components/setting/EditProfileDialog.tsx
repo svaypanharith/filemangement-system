@@ -30,6 +30,7 @@ export function EditProfileDialog({
   const [updateProfileMutation, { isLoading }] = useUpdateProfileMutation();
   const [openImageCropUpload, setOpenImageCropUpload] = useState(false);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  console.log("imageSrc pass to crop image", imageSrc);
   const handleUpdateProfile = useCallback(
     (data: { first_name: string; last_name: string; username: string }) => {
       try {
@@ -55,6 +56,7 @@ export function EditProfileDialog({
       description={t("user_account.edit_profile_description")}
       content={
         <EditProfileForm
+          imageurl={imageSrc || ""}
           onImageCropUpload={(imageSrc) => {
             setImageSrc(imageSrc);
           }}
@@ -79,9 +81,10 @@ export function EditProfileDialog({
       onOpenChange={onOpenChange}
     />
     <ImageCropUpload
+       userid={initialData.id}
         imageSrc={imageSrc || ""}
-        onCropComplete={(croppedImage) => {
-          setImageSrc(URL.createObjectURL(croppedImage));
+        onCropComplete={(imageDataUrl) => {
+          setImageSrc(imageDataUrl || "");
         }}
         onClose={() => {
           setOpenImageCropUpload(false);

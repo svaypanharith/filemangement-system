@@ -1,392 +1,243 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SwitchLanguage from "@/components/share/SwitchLanguage";
 import { useRouter } from "next/navigation";
 import MButton from "@/components/m-ui/m-button";
 import { useTranslation } from "react-i18next";
 import {
-  FileText,
-  Upload,
-  FolderPlus,
-  Search,
-  Shield,
   Brain,
   Zap,
+  Palette,
+  Sparkles,
+  FileText,
+  Shield,
+  Users,
+  ArrowRight,
+  Upload,
 } from "lucide-react";
 
-export default function WelcomePage() {
-  const [searchQuery, setSearchQuery] = useState("");
+export default function Home() {
   const router = useRouter();
   const { t } = useTranslation();
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
-      {/* Header Section */}
-      <header className="border-b bg-white dark:bg-slate-950 shadow-sm">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <Brain className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
-            <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
-              {t("welcome.file_management")}
-            </span>
-          </div>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" className="cursor-pointer">
-              Docs
-            </Button>
-            <Button variant="ghost" className="cursor-pointer">
-              Support
-            </Button>
-            <MButton
-              size="sm"
-              onClick={() => router.push("/signin")}
-              preset="primary"
-            >
-              {t("signin.button")}
-            </MButton>
-            <SwitchLanguage />
-            <MButton
-              size="sm"
-              onClick={() => router.push("/signin")}
-              preset="primary"
-            >
-              {t("welcome.button")}
-            </MButton>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      {/* Header */}
+      <header className="relative z-10">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg">
+                <Brain className="h-8 w-8 text-white" />
+              </div>
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                {t("welcome.file_management")}
+              </h1>
+            </div>
+            <div className="flex items-center gap-4">
+              <SwitchLanguage />
+              <MButton
+                size="sm"
+                className="cursor-pointer"
+                onClick={() => router.push("/signin")}
+                preset="primary"
+              >
+                {t("signin.button")}
+              </MButton>
+            </div>
           </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16 md:py-24 flex flex-col items-center text-center">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-          {t("welcome.title")}
-          <span className="text-indigo-600 dark:text-indigo-400">
-            {t("welcome.title_description")}
-          </span>
-        </h1>
-        <p className="text-xl md:text-2xl font-mono text-slate-600 dark:text-slate-300 max-w-3xl mb-12">
-          {t("welcome.description")}
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md">
-          <Button size="lg" className="flex-1 gap-2">
-            <FolderPlus className="h-5 w-5" />
-            Create New Folder
-          </Button>
-          <Button size="lg" variant="outline" className="flex-1 gap-2">
-            <Upload className="h-5 w-5" />
-            Upload Files
-          </Button>
-        </div>
-      </section>
-
-      {/* Search Section */}
-      <section className="container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
-          <Input
-            className="pl-10 py-6 text-lg"
-            placeholder="Search files, folders or content..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+      <section className="relative overflow-hidden">
+        <div className="container mx-auto px-4 py-20">
+          <div className="text-center max-w-4xl mx-auto">
+            <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
+              <Sparkles className="h-4 w-4" />
+              {t("welcome.ai_powered")}
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              {t("welcome.title")}
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> {t("welcome.title_description")}</span>
+            </h1>
+            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+              {t("welcome.description")}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <Button size="lg" className="bg-gradient-to-r cursor-pointer from-blue-600 to-purple-600 
+              hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 text-lg font-semibold"
+              onClick={() => router.push("/signup")}
+              >
+                {t("welcome.button")}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">
-          Powerful AI Features
-        </h2>
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              {t("welcome.powerful_features")}
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              {t("welcome.features_description")}
+            </p>
+          </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <Card>
-            <CardHeader>
-              <div className="w-12 h-12 rounded-lg bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center mb-4">
-                <Brain className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
-              </div>
-              <CardTitle>Smart Categorization</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-slate-600 dark:text-slate-300">
-                AI automatically categorizes your files based on content, making
-                organization effortless.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Feature Card 1 */}
+            <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+              <CardHeader className="pb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Brain className="h-6 w-6 text-white" />
+                </div>
+                <CardTitle className="text-xl font-semibold text-gray-900">
+                  {t("welcome.smart_categorization")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 leading-relaxed">
+                  {t("welcome.smart_categorization_desc")}
+                </p>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader>
-              <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900 flex items-center justify-center mb-4">
-                <Search className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-              </div>
-              <CardTitle>Content Search</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-slate-600 dark:text-slate-300">
-                Search inside documents, images, and even videos with our
-                advanced AI search capabilities.
-              </p>
-            </CardContent>
-          </Card>
+            {/* Feature Card 2 */}
+            <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+              <CardHeader className="pb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Zap className="h-6 w-6 text-white" />
+                </div>
+                <CardTitle className="text-xl font-semibold text-gray-900">
+                  {t("welcome.lightning_search")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 leading-relaxed">
+                  {t("welcome.lightning_search_desc")}
+                </p>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader>
-              <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center mb-4">
-                <FileText className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-              </div>
-              <CardTitle>Document Analysis</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-slate-600 dark:text-slate-300">
-                Extract insights, summarize content, and identify key
-                information from your documents.
-              </p>
-            </CardContent>
-          </Card>
+            {/* Feature Card 3 */}
+            <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+              <CardHeader className="pb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Shield className="h-6 w-6 text-white" />
+                </div>
+                <CardTitle className="text-xl font-semibold text-gray-900">
+                  {t("welcome.secure_storage")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 leading-relaxed">
+                  {t("welcome.secure_storage_desc")}
+                </p>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader>
-              <div className="w-12 h-12 rounded-lg bg-green-100 dark:bg-green-900 flex items-center justify-center mb-4">
-                <Zap className="h-6 w-6 text-green-600 dark:text-green-400" />
-              </div>
-              <CardTitle>Automation</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-slate-600 dark:text-slate-300">
-                Create workflows that automatically process, route, and act on
-                files based on their content.
-              </p>
-            </CardContent>
-          </Card>
+            {/* Feature Card 4 */}
+            <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+              <CardHeader className="pb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Users className="h-6 w-6 text-white" />
+                </div>
+                <CardTitle className="text-xl font-semibold text-gray-900">
+                  {t("welcome.team_collaboration")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 leading-relaxed">
+                  {t("welcome.team_collaboration_desc")}
+                </p>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader>
-              <div className="w-12 h-12 rounded-lg bg-amber-100 dark:bg-amber-900 flex items-center justify-center mb-4">
-                <Shield className="h-6 w-6 text-amber-600 dark:text-amber-400" />
-              </div>
-              <CardTitle>Secure Storage</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-slate-600 dark:text-slate-300">
-                End-to-end encryption and advanced access controls keep your
-                sensitive files protected.
-              </p>
-            </CardContent>
-          </Card>
+            {/* Feature Card 5 */}
+            <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+              <CardHeader className="pb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-pink-500 to-pink-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <Palette className="h-6 w-6 text-white" />
+                </div>
+                <CardTitle className="text-xl font-semibold text-gray-900">
+                  {t("welcome.custom_themes")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 leading-relaxed">
+                  {t("welcome.custom_themes_desc")}
+                </p>
+              </CardContent>
+            </Card>
 
-          <Card>
-            <CardHeader>
-              <div className="w-12 h-12 rounded-lg bg-rose-100 dark:bg-rose-900 flex items-center justify-center mb-4">
-                <FileText className="h-6 w-6 text-rose-600 dark:text-rose-400" />
-              </div>
-              <CardTitle>Version Control</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-slate-600 dark:text-slate-300">
-                Track changes, revert to previous versions, and collaborate with
-                confidence.
-              </p>
-            </CardContent>
-          </Card>
+            {/* Feature Card 6 */}
+            <Card className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg">
+              <CardHeader className="pb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <FileText className="h-6 w-6 text-white" />
+                </div>
+                <CardTitle className="text-xl font-semibold text-gray-900">
+                  {t("welcome.smart_analytics")}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 leading-relaxed">
+                  {t("welcome.smart_analytics_desc")}
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
-      {/* Dashboard Preview */}
-      <section className="container mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-8">
-          Try Our Interface
-        </h2>
-        <p className="text-lg text-center text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-12">
-          Experience our intuitive dashboard with intelligent file management
-          capabilities
-        </p>
-
-        <Tabs defaultValue="files" className="max-w-4xl mx-auto">
-          <TabsList className="grid grid-cols-3 mb-8">
-            <TabsTrigger value="files">My Files</TabsTrigger>
-            <TabsTrigger value="recent">Recent</TabsTrigger>
-            <TabsTrigger value="shared">Shared</TabsTrigger>
-          </TabsList>
-
-          <TabsContent
-            value="files"
-            className="border rounded-lg bg-white dark:bg-slate-950 p-6"
-          >
-            <div className="space-y-4">
-              {[
-                "Annual Report.pdf",
-                "Project Proposal.docx",
-                "Financial Analysis.xlsx",
-                "Meeting Notes.md",
-              ].map((file, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-3 border rounded-md hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <FileText className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-                    <span>{file}</span>
-                  </div>
-                  <Button variant="ghost" size="sm">
-                    Open
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent
-            value="recent"
-            className="border rounded-lg bg-white dark:bg-slate-950 p-6"
-          >
-            <div className="space-y-4">
-              {[
-                "Marketing Strategy.pptx",
-                "Customer Data.csv",
-                "Product Roadmap.pdf",
-              ].map((file, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-3 border rounded-md hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <FileText className="h-5 w-5 text-purple-600 dark:text-purple-400" />
-                    <span>{file}</span>
-                  </div>
-                  <Button variant="ghost" size="sm">
-                    Open
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </TabsContent>
-
-          <TabsContent
-            value="shared"
-            className="border rounded-lg bg-white dark:bg-slate-950 p-6"
-          >
-            <div className="space-y-4">
-              {[
-                "Team Budget.xlsx",
-                "Project Timeline.pdf",
-                "Research Notes.docx",
-              ].map((file, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-3 border rounded-md hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors cursor-pointer"
-                >
-                  <div className="flex items-center gap-3">
-                    <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                    <span>{file}</span>
-                  </div>
-                  <Button variant="ghost" size="sm">
-                    Open
-                  </Button>
-                </div>
-              ))}
-            </div>
-          </TabsContent>
-        </Tabs>
-      </section>
-
       {/* CTA Section */}
-      <section className="bg-indigo-600 dark:bg-indigo-800 py-16">
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-white mb-6">
-            Ready to transform your file management?
+          <h2 className="text-4xl font-bold text-white mb-4">
+            {t("welcome.ready_to_transform")}
           </h2>
-          <p className="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
-            Join thousands of users who have streamlined their workflow with our
-            AI-powered system.
+          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+            {t("welcome.join_thousands")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary">
-              Start Free Trial
+            <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold">
+              {t("welcome.start_free_trial")}
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="bg-transparent text-white border-white hover:bg-indigo-700"
-            >
-              Schedule Demo
+            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-blue-600 px-8 py-3 text-lg font-semibold">
+              {t("welcome.learn_more")}
             </Button>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 text-slate-300 py-12">
+      <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Brain className="h-6 w-6 text-indigo-400" />
-                <span className="text-xl font-bold text-white">
-                  file management system
-                </span>
+          <div className="text-center">
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="p-2 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg">
+                <Brain className="h-6 w-6 text-white" />
               </div>
-              <p className="mb-4">
-                Intelligent file management for the modern workspace.
-              </p>
-              <p>© 2025 FileNexus AI. All rights reserved.</p>
+              <h3 className="text-xl font-bold">{t("welcome.file_management")}</h3>
             </div>
-
-            <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Product</h3>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Features
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Pricing
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Security
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Enterprise
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-semibold text-white mb-4">
-                Resources
-              </h3>
-              <ul className="space-y-2">
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Tutorials
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white">
-                    Contact Support
-                  </a>
-                </li>
-              </ul>
+            <p className="text-gray-400 mb-6">
+              {t("welcome.intelligent_file_management")}
+            </p>
+            <div className="flex items-center justify-center gap-6 text-sm text-gray-400">
+              <span>© 2024 {t("welcome.file_management")}. {t("welcome.all_rights_reserved")}</span>
+              <span>•</span>
+              <span>{t("welcome.privacy_policy")}</span>
+              <span>•</span>
+              <span>{t("welcome.terms_of_service")}</span>
             </div>
           </div>
         </div>

@@ -18,8 +18,7 @@ const baseQuery = async (args: any, api: any, extraOptions: any) => {
         headers.set('Content-Type', 'application/json');
       }
       headers.set('Accept', 'application/json');
-      headers.set('X-Requested-With', 'XMLHttpRequest'); 
-      
+      headers.set('X-Requested-With', 'XMLHttpRequest');
       if (authToken) {
         headers.set("Authorization", `Bearer ${authToken}`);
       }

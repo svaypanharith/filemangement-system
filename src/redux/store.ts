@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import changeThemeColorReducer from "@/redux/slices/theme-slice";
+import userProfileReducer from "@/redux/slices/userprofileslice";
 import authReducers, { authApi } from "@/redux/slices/auth-slice";
 import dataSlice from "@/redux/slices/data-slice";
 import { sidebarTriggerSlice } from "@/redux/slices/sidebartrigger-slice";
@@ -10,6 +11,7 @@ export const store = configureStore({
     changeThemeColor: changeThemeColorReducer,
     sidebarTriggerText: sidebarTriggerSlice.reducer,
     ...authReducers,
+    userProfile: userProfileReducer,
     [dataSlice.reducerPath]: dataSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

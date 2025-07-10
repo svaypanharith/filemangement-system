@@ -6,7 +6,6 @@ import { useState } from "react";
 import { Input } from "../ui/input";
 import { useTranslation } from "react-i18next";
 import LoadingAnimation from "../share/loadinganimation";
-// import { Document } from "@/redux/slices/data.types";
 
 interface AddDocumentProps {
   onSubmit?: (files: File[]) => void;
@@ -46,7 +45,7 @@ export default function AddDocumentForm({
       try {
         const existingFiles = documents || [];
         if (existingFiles.find((file: any) => file.title === files[0].name)) {
-          toast.error("File already exists");
+          toast.error(t("document.already_exists"));
           return;
         }
         setSelectedFiles(files);

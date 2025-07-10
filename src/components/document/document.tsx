@@ -139,6 +139,7 @@ export default function Document() {
 
   const onSubmitFile = useCallback(
     async (files: File[]) => {
+      console.log("files", files);
       try {
         if (!files || files.length === 0) {
           toast.error("No files selected");
@@ -150,7 +151,7 @@ export default function Document() {
         });
         const response = await uploadFileDocument(formData).unwrap();
         if (response) {
-          toast.success("Files uploaded successfully");
+          toast.success(t("document.add_document_success"));
         }
       } catch (error) {
         console.error("Upload error:", error);

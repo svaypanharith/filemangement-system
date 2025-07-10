@@ -1,5 +1,6 @@
 "use client";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from "recharts";
+import { useTheme } from "next-themes";
 import {
   Card,
   CardContent,
@@ -35,9 +36,9 @@ export default function BarChartComponent({
   color = "#3b82f6",
   title,
 }: BarChartProps) {
- 
+ const { resolvedTheme } = useTheme();  
   return (
-    <Card className="w-full max-w-4xl mx-auto shadow-lg border-0 bg-white">
+    <Card className={`w-full max-w-4xl mx-auto shadow-lg border-0 ${resolvedTheme === "dark" ? "bg-black" : "bg-white"}`}>
       <CardHeader className="text-left">
         <CardTitle className="text-lg font-semibold text-gray-800">
           {title}

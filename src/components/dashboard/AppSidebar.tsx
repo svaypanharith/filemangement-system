@@ -31,7 +31,7 @@ export function AppSidebar() {
               </h1>
             </SidebarGroupLabel>
             <Separator />
-            <SidebarGroupContent className="flex flex-col gap-10">
+            <SidebarGroupContent className="flex flex-col gap-8">
               <SideBarMenu items={data.Dashboard} />
               <SideBarMenu items={data.menuItems} />
               <SideBarMenu items={data.chatbot} collapsible={true} />

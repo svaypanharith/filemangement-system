@@ -20,12 +20,7 @@ const LogoutDialog = ({ open, onOpenChange, onSuccess }: LogoutDialogProps) => {
 
   const handleLogout = async () => {
     try {
-     const response = await signOut().unwrap();
-     if(response.status !== 200){
-      throw new Error(response.message || "Logout failed");
-     }
       logout();
-      console.log("response", response);
       window.location.href = "/";
     } catch (error: any) {
       console.error("Logout error:", error);

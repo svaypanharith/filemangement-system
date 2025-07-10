@@ -12,7 +12,6 @@ import { useAuth } from "@/provider/AuthProvider";
 export default function SignupPage() {
   const { t } = useTranslation();
   const [signUp, { isLoading }] = useSignUpMutation();
-  const router = useRouter();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { login } = useAuth();
 
@@ -24,7 +23,7 @@ export default function SignupPage() {
           throw new Error(response.message || "Something went wrong");
         }
         login(response.access_token || "");
-        toast.success(response.message || "Account created successfully!");
+        toast.success(response.message || t("signup.signup_success"));
         setIsSubmitted(true);
       } catch (error) {
         console.error(error);
