@@ -15,13 +15,13 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "../ui/collapsible";
-import { getLocalStorage } from "@/utils/storage";
-import { useEffect, useState } from "react";
-import { setLocalStorage } from "@/utils/storage";
+import { useGetUserSessionsQuery } from "@/redux/slices/data-slice";
 
 interface SideBarMenuProps {
   items: MenuItem[];
   collapsible?: boolean;
+  onSessionSelect?: (id: number) => void;
+  selectedSessionId?: number | null;
 }
 
 interface MenuItem {
@@ -34,23 +34,16 @@ interface MenuItem {
 export default function SideBarMenu({
   items,
   collapsible = false,
+  onSessionSelect,
+  selectedSessionId,
 }: SideBarMenuProps) {
   const pathname = usePathname();
-  const chatHistory = getLocalStorage("chat_history");
-  const [chatHistoryItems, setChatHistoryItems] = useState<any[]>([]);
-  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
-  useEffect(() => {
-    if (chatHistory) {
-      const chatHistoryItems = JSON.parse(chatHistory);
-      setChatHistoryItems(chatHistoryItems);
-    }
-  }, [chatHistory]);
+  const { data: sessionsData, isLoading } = useGetUserSessionsQuery();
 
-  useEffect(() => {
-    if (selectedSessionId) {
-      setLocalStorage("selected_session_id", selectedSessionId);
-    }
-  }, [selectedSessionId]);
+  const handleSessionClick = (sessionId: number) => {
+    console.log("Session clicked:", sessionId);
+    onSessionSelect?.(sessionId);
+  };
 
   return (
     <SidebarGroup>
@@ -62,11 +55,7 @@ export default function SideBarMenu({
           return (
             <SidebarMenuItem key={item.title}>
               {collapsible ? (
-                <Collapsible
-                  key={item.title}
-                  defaultOpen={item.isActive}
-                  className="group/collapsible"
-                >
+                <Collapsible key={item.title} defaultOpen={item.isActive} className="group/collapsible">
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton
                       tooltip={item.title}
@@ -95,29 +84,31 @@ export default function SideBarMenu({
                       <ChevronRight className="ml-auto transition-all duration-200 group-data-[state=open]/collapsible:rotate-90 text-gray-500" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
-
                   <CollapsibleContent className="flex flex-col gap-2 mt-3 overflow-y-auto max-h-[400px]">
-                    {chatHistoryItems.map((data) => (
-                      <div key={data.session_id} className="group relative">
+                    {isLoading && <div className="text-sm text-gray-500 p-2">Loading sessions...</div>}
+                    {sessionsData?.sessions && sessionsData.sessions.length > 0 ? (
+                      sessionsData.sessions.map((session) => (
                         <div
-                          onClick={() => {
-                            setSelectedSessionId(data.session_id);
-                          }}
-                          className="flex items-start gap-3 p-2
-                           cursor-pointer"
+                          key={session.id}
+                          className={`group relative ${selectedSessionId === session.id ? "bg-blue-100 dark:bg-blue-900" : ""}`}
+                          onClick={() => handleSessionClick(session.id)}
                         >
-                          <div className="flex-shrink-0 mt-0.5">
-                            <MessageSquare className="w-4 h-4 text-gray-400 group-hover:text-blue-500 transition-colors duration-200" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm truncate max-w-[300px]">
-                              {data.user_message}
-                            </p>
+                          <div className="flex items-start gap-3 p-2 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg">
+                            <div className="flex-shrink-0 mt-0.5">
+                              <MessageSquare className="w-4 h-4 text-gray-400 group-hover:text-blue-500" />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm truncate max-w-[300px]">
+                                {session.session_title || "Untitled Session"}
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                                {new Date(session.created_at).toLocaleDateString()}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                    {chatHistoryItems.length === 0 && (
+                      ))
+                    ) : (
                       <div className="flex flex-col items-center justify-center py-8 text-center">
                         <MessageSquare className="w-8 h-8 text-gray-300 mb-2" />
                         <p className="text-sm text-gray-500 dark:text-gray-400">
