@@ -2,25 +2,26 @@
 
 import { Upload } from "lucide-react";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Input } from "../ui/input";
 import { useTranslation } from "react-i18next";
 import LoadingAnimation from "../share/loadinganimation";
-import { Document } from "@/redux/slices/data.types";
+import { DocumentType } from "@/redux/slices/data.types";
+import { useUploadFileDocumentMutation } from "@/redux/slices/data-slice";
+
 
 interface AddDocumentProps {
-  onSubmit?: (files: File[]) => void;
   isLoading?: boolean;
-  documents?: Document[];
+  documents?: DocumentType[];
 }
 
 export default function AddDocumentForm({
-  onSubmit,
   isLoading,
   documents,
 }: AddDocumentProps) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const { t } = useTranslation();
+  const [uploadFileDocument] = useUploadFileDocumentMutation();
 
   // read file as base64
   const readFileAsBase64 = (file: File): Promise<string> => {
@@ -40,8 +41,42 @@ export default function AddDocumentForm({
     });
   };
 
-  const onSubmitFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onSubmitFile = useCallback(
+    async (files: File[]) => {
+      try {
+        if (!files || files.length === 0) {
+          toast.error("No files selected");
+          return;
+        }
+        
+        files.forEach((file, index) => {
+          if (!file.name || file.size === 0) {
+            console.error(`Invalid file at index ${index}:`, file);
+            toast.error(`Invalid file: ${file.name}`);
+            return;
+          }
+        });
+        
+        const formData = new FormData();
+        files.forEach((file) => {
+          formData.append("files[]", file);
+        });
+        
+        const response = await uploadFileDocument(formData).unwrap();
+        if (response) {
+          toast.success("Files uploaded successfully");
+        }
+      } catch (error) {
+        console.error("Upload error:", error);
+        toast.error("Error uploading files");
+      }
+    },
+    [uploadFileDocument]
+  );
+
+  const handleFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
+    
     if (files.length > 0) {
       try {
         const existingFiles = documents || [];
@@ -50,9 +85,31 @@ export default function AddDocumentForm({
           return;
         }
         setSelectedFiles(files);
-        onSubmit?.(files);
+        await onSubmitFile(files);
       } catch (error) {
         console.error("Error processing files:", error);
+        toast.error("Error uploading files");
+      }
+    }
+  };
+
+  const handleFileDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const files = Array.from(e.dataTransfer.files);
+    
+    
+    if (files.length > 0) {
+      try {
+        const existingFiles = documents || [];
+        if (existingFiles.find((file: any) => file.title === files[0].name)) {
+          toast.error("File already exists");
+          return;
+        }
+        setSelectedFiles(files);
+        await onSubmitFile(files);
+      } catch (error) {
+        console.error("Error processing dropped files:", error);
         toast.error("Error uploading files");
       }
     }
@@ -65,16 +122,7 @@ export default function AddDocumentForm({
         e.preventDefault();
         e.stopPropagation();
       }}
-      onDrop={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const files = Array.from(e.dataTransfer.files);
-        if (files.length > 0) {
-          onSubmitFile({
-            target: { files: e.dataTransfer.files },
-          } as any);
-        }
-      }}
+      onDrop={handleFileDrop}
     >
       <div className="flex flex-col gap-2 items-center justify-center">
         <div className="flex flex-col items-center gap-6 w-full max-w-md">
@@ -84,7 +132,7 @@ export default function AddDocumentForm({
               <Input
                 type="file"
                 className="hidden"
-                onChange={onSubmitFile}
+                onChange={handleFileInputChange}
                 accept=".pdf"
                 multiple
               />
