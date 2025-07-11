@@ -1,6 +1,6 @@
 "use client";
 
-import Document from "@/components/document/Document";
+import Document from "@/components/document/document";
 import { useTranslation } from "react-i18next";
 export default function DocumentPage() {
   const { t } = useTranslation();

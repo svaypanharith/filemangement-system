@@ -25,7 +25,7 @@ const baseQuery = async (args: any, api: any, extraOptions: any) => {
       }
       return headers;
     },
-    credentials: 'omit', 
+    credentials: 'include', 
     mode: 'cors', 
   })(args, api, extraOptions);
   if (baseResult.error?.status === 'FETCH_ERROR') {

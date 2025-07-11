@@ -1,22 +1,35 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useGetChatMutation } from "@/redux/slices/data-slice";
-import { setLocalStorage, getLocalStorage } from "@/utils/storage";
+import { useGetChatMutation, useAskQuestionMutation, useGetSessionQueriesQuery } from "@/redux/slices/data-slice";
 import { Chat } from "@/components/ui/chat";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { setSidebarTrigger } from "@/redux/slices/sidebartrigger-slice";
 import { Message } from "@/components/ui/chat-message";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export function ChatBot() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const sessionId = searchParams.get('session');
+  
   const [getChat, { isLoading: isLoadingChat }] = useGetChatMutation();
+  const [askQuestion, { isLoading: isLoadingQuestion }] = useAskQuestionMutation();
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [currentSessionId, setCurrentSessionId] = useState<number | null>(sessionId ? parseInt(sessionId) : null);
+  
   const user_id = "1";
+
+  const { data: sessionQueriesData, isLoading: isLoadingSessionQueries } = useGetSessionQueriesQuery(
+    { session_id: Number(sessionId) },
+    { skip: !sessionId || isNaN(Number(sessionId)) }
+  );
+
   useEffect(() => {
     dispatch(
       setSidebarTrigger({ text: t("chatbot.ask_to_ai"), iconName: "sparkles" })
@@ -24,45 +37,40 @@ export function ChatBot() {
   }, [dispatch, t]);
 
   useEffect(() => {
-    const chatHistoryStorage = getLocalStorage("chat_history");
-    if (!chatHistoryStorage) return;
-
-    try {
-      const chatHistory = JSON.parse(chatHistoryStorage);
-      if (Array.isArray(chatHistory) && chatHistory.length > 0) {
-        const historyMessages: Message[] = chatHistory.flatMap(
-          (item: any, index: number) => [
+    if (sessionId && sessionQueriesData && !isNaN(Number(sessionId))) {
+      setCurrentSessionId(Number(sessionId));
+      if (sessionQueriesData.queries?.length) {
+        const sessionMessages: Message[] = sessionQueriesData.queries.flatMap(
+          (query, index) => [
             {
-              id: `user-${item.session_id}-${index}`,
-              role: "user" as const,
-              content: item.user_message,
-              createdAt: new Date(item.timestamp),
+              id: `user-${query.session_id}-${index}`,
+              role: "user",
+              content: query.question,
+              createdAt: new Date(query.created_at),
             },
             {
-              id: `assistant-${item.session_id}-${index}`,
-              role: "assistant" as const,
-              content: item.ai_response,
-              createdAt: new Date(item.timestamp),
+              id: `assistant-${query.session_id}-${index}`,
+              role: "assistant",
+              content: query.answer || "No response available",
+              createdAt: new Date(query.created_at),
             },
           ]
         );
-        setMessages(historyMessages);
+        setMessages(sessionMessages);
+      } else {
+        setMessages([]);
       }
-    } catch (error) {
-      console.error("Error parsing chat history:", error);
+    } else {
+      setCurrentSessionId(null);
+      setMessages([]);
     }
-  }, []);
-
-  // Handle new messages from props
+  }, [sessionId, sessionQueriesData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
   };
 
-  const handleSubmit = async (
-    event?: { preventDefault?: () => void },
-    options?: { experimental_attachments?: FileList }
-  ) => {
+  const handleSubmit = async (event?: { preventDefault?: () => void }) => {
     event?.preventDefault?.();
     if (!inputValue.trim()) return;
 
@@ -76,44 +84,43 @@ export function ChatBot() {
     setIsGenerating(true);
 
     try {
-      const response = await getChat({
-        user_id,
-        user_message: inputValue,
-        start_session: true,
-        status: "pending",
-      });
+      let response;
+      let newSessionId = currentSessionId;
 
-      const aiResponse = response.data?.data.ai_response as string;
+      if (currentSessionId) {
+        response = await askQuestion({
+          question: inputValue,
+          session_id: currentSessionId,
+        });
+      } else {
+        response = await askQuestion({
+          question: inputValue,
+        });
+        newSessionId = response.data?.session_id || null;
+        if (newSessionId) {
+          setCurrentSessionId(newSessionId);
+          router.replace(`/dashboard/chatbot?session=${newSessionId}`);
+        }
+      }
+
       const assistantMessage: Message = {
         id: `assistant-${Date.now()}`,
         role: "assistant",
-        content: aiResponse,
+        content: response.data?.answer || "No response available",
         createdAt: new Date(),
       };
       setMessages((prev) => [...prev, assistantMessage]);
-
-      // Save to localStorage
-      const existingHistory = getLocalStorage("chat_history") || "[]";
-      let chatHistory = [];
-      try {
-        chatHistory = JSON.parse(existingHistory);
-      } catch (error) {
-        console.error("Error parsing existing chat history:", error);
-        chatHistory = [];
-      }
-
-      const newConversation = {
-        user_message: inputValue,
-        ai_response: aiResponse,
-        timestamp: new Date().toISOString(),
-        session_id: response.data?.data.session_id || Date.now().toString(),
-      };
-      chatHistory.push(newConversation);
-      setLocalStorage("chat_history", JSON.stringify(chatHistory));
-
       setInputValue("");
     } catch (error) {
-      console.error("Error in chat submission:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `error-${Date.now()}`,
+          role: "assistant",
+          content: "Sorry, there was an error processing your request. Please try again.",
+          createdAt: new Date(),
+        },
+      ]);
     } finally {
       setIsGenerating(false);
     }
@@ -130,12 +137,12 @@ export function ChatBot() {
     setIsGenerating(false);
   };
 
-  const isLoading = isLoadingChat || isGenerating;
+  const isLoading = isLoadingChat || isLoadingQuestion || isGenerating || isLoadingSessionQueries;
 
   return (
     <Chat
       suggestions={[]}
-      label="Hi, I'm your AI assistant. How can I help you today?"
+      label={currentSessionId ? "Continue your conversation..." : "Hi, I'm your AI assistant. How can I help you today?"}
       className="grow"
       messages={messages}
       handleSubmit={handleSubmit}
