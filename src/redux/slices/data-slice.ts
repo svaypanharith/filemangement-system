@@ -12,13 +12,19 @@ import {
   weeklyaggregate,
   monthlyaggregate,
   yearlyaggregate,
+  QueryRequest,
+  QueryResponse,
+  SessionQueriesResponse,
+  UserSessionsResponse,
+  EndSessionRequest,
+  EndSessionResponse,
 } from "@/redux/slices/data.types";
 import { API_URL } from "@/utils/env";
 
 const dataSlice = createApi({
   reducerPath: "data",
   baseQuery: baseQuery,
-  tagTypes: ["Data", "Profile"],
+  tagTypes: ["Data", "Profile", "Query", "Session"],
   endpoints: (builder) => ({
     getChat: builder.mutation<ChatResponseData, ChatRequest>({
       query: (data) => ({
@@ -76,7 +82,6 @@ const dataSlice = createApi({
     uploadFileDocument: builder.mutation<
       {
         message: string;
-        status: number | string;
       },
       FormData
     >({
@@ -126,6 +131,44 @@ const dataSlice = createApi({
         method: "PUT",
         body: data,
       }),
+    }),
+
+    // Ask a question to AI
+    askQuestion: builder.mutation<QueryResponse, QueryRequest>({
+      query: (data) => ({
+        url: `${API_URL}/ask`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Query", "Session"],
+    }),
+
+    // Get user sessions
+    getUserSessions: builder.query<UserSessionsResponse, void>({
+      query: () => ({
+        url: `${API_URL}/sessions`,
+        method: "GET",
+      }),
+      providesTags: ["Session"],
+    }),
+
+    // Get session queries
+    getSessionQueries: builder.query<SessionQueriesResponse, { session_id: number }>({
+      query: ({ session_id }) => ({
+        url: `${API_URL}/sessions/queries?session_id=${session_id}`,
+        method: "GET",
+      }),
+      providesTags: ["Query"],
+    }),
+
+    // End session
+    endSession: builder.mutation<EndSessionResponse, EndSessionRequest>({
+      query: (data) => ({
+        url: `${API_URL}/sessions/end`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Session"],
     }),
     // get statistic
     getDocumentAggregate: builder.query<documentaggregate, void>({
@@ -184,6 +227,10 @@ export const {
   useDeleteDocumentMutation,
   useGetChatMutation,
   useUpdateDocumentMutation,
+  useAskQuestionMutation,
+  useGetUserSessionsQuery,
+  useGetSessionQueriesQuery,
+  useEndSessionMutation,
   useGetDocumentAggregateQuery,
   useGetFileSizeAggregateQuery,
   useGetDailyAggregateQuery,

@@ -36,48 +36,48 @@ interface StoredFile {
   url: string;
 }
 
-const DocumentService = {
-  getFiles: async (): Promise<StoredFile[]> => {
-    const storedFiles = localStorage.getItem("selectedFiles");
-    if (storedFiles) {
-      return JSON.parse(storedFiles);
-    }
-    return [];
-  },
+// const DocumentService = {
+//   getFiles: async (): Promise<StoredFile[]> => {
+//     const storedFiles = localStorage.getItem("selectedFiles");
+//     if (storedFiles) {
+//       return JSON.parse(storedFiles);
+//     }
+//     return [];
+//   },
 
-  openFile: async (file: StoredFile) => {
-    try {
-      if (file.url) {
-        window.open(file.url, "_blank");
-        return;
-      }
-      const storedFiles = localStorage.getItem("selectedFiles");
-      if (storedFiles) {
-        const filesData = JSON.parse(storedFiles) as StoredFile[];
-        const fileData = filesData.find((f) => f.name === file.name);
+//   openFile: async (file: StoredFile) => {
+//     try {
+//       if (file.url) {
+//         window.open(file.url, "_blank");
+//         return;
+//       }
+//       const storedFiles = localStorage.getItem("selectedFiles");
+//       if (storedFiles) {
+//         const filesData = JSON.parse(storedFiles) as StoredFile[];
+//         const fileData = filesData.find((f) => f.name === file.name);
 
-        if (fileData?.content) {
-          // Convert base64 to binary
-          const binaryString = window.atob(fileData.content.split(",")[1]);
-          const bytes = new Uint8Array(binaryString.length);
-          for (let i = 0; i < binaryString.length; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
-          }
-          const blob = new Blob([bytes], { type: fileData.type });
-          const url = URL.createObjectURL(blob);
-          window.open(url, "_blank");
-        } else {
-          toast.error("File content not found");
-        }
-      } else {
-        toast.error("No files found");
-      }
-    } catch (error) {
-      console.error("Error opening file:", error);
-      toast.error("Error opening file");
-    }
-  },
-};
+//         if (fileData?.content) {
+//           // Convert base64 to binary
+//           const binaryString = window.atob(fileData.content.split(",")[1]);
+//           const bytes = new Uint8Array(binaryString.length);
+//           for (let i = 0; i < binaryString.length; i++) {
+//             bytes[i] = binaryString.charCodeAt(i);
+//           }
+//           const blob = new Blob([bytes], { type: fileData.type });
+//           const url = URL.createObjectURL(blob);
+//           window.open(url, "_blank");
+//         } else {
+//           toast.error("File content not found");
+//         }
+//       } else {
+//         toast.error("No files found");
+//       }
+//     } catch (error) {
+//       console.error("Error opening file:", error);
+//       toast.error("Error opening file");
+//     }
+//   },
+// };
 
 export default function Document() {
   const [files, setfiles] = useState<File[]>([]);
@@ -137,34 +137,6 @@ export default function Document() {
     }
   }, []);
 
-  const onSubmitFile = useCallback(
-    async (files: File[]) => {
-      console.log("files", files);
-      try {
-        if (!files || files.length === 0) {
-          toast.error("No files selected");
-          return;
-        }
-        const formData = new FormData();
-        files.forEach((file) => {
-          formData.append("files", file);
-        });
-        const response = await uploadFileDocument(formData).unwrap();
-        if (response) {
-          toast.success(t("document.add_document_success"));
-        }
-      } catch (error) {
-        console.error("Upload error:", error);
-        toast.error("Error uploading files");
-      }
-    },
-    [uploadFileDocument]
-  );
-
-  const handleFileOpen = async (file: StoredFile) => {
-    await DocumentService.openFile(file);
-  };
-
   const onDeleteDocument = useCallback(
     async (id: string) => {
       try {
@@ -186,7 +158,6 @@ export default function Document() {
       <>
         <div className="flex flex-col gap-8">
           <AddDocumentForm
-            onSubmit={onSubmitFile}
             isLoading={isUploading}
             documents={documents as unknown as Document[]}
           />
@@ -242,9 +213,7 @@ export default function Document() {
                     <CardHeader>
                       <CardTitle
                         className="text-sm truncate"
-                        onClick={() =>
-                          handleFileOpen(doc as unknown as StoredFile)
-                        }
+                        onClick={() => window.open(doc.file_url, "_blank")}
                       >
                         {doc.title}
                       </CardTitle>
@@ -252,7 +221,7 @@ export default function Document() {
                     <CardContent>
                       <div className="flex flex-col gap-6 ">
                         <div className="flex flex-col gap-2">
-                          <span className="text-sm flex justify-between text-gray-500 flex items-center gap-2">
+                          <span className="text-sm flex justify-between text-gray-500 items-center gap-2">
                             {t("document.last_modified_description")}:{" "}
                             {new Date(doc.created_at).toLocaleDateString()}
                           </span>
