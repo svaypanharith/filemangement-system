@@ -19,31 +19,38 @@ interface EditProfileDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   initialData: User;
+  initialImage: string;
 }
 
 export function EditProfileDialog({
   open,
   onOpenChange,
   initialData,
+  initialImage
 }: EditProfileDialogProps) {
   const { t } = useTranslation();
   const [updateProfileMutation, { isLoading }] = useUpdateProfileMutation();
   const [openImageCropUpload, setOpenImageCropUpload] = useState(false);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
-  console.log("imageSrc pass to crop image", imageSrc);
+
   const handleUpdateProfile = useCallback(
-    (data: { first_name: string; last_name: string; username: string }) => {
+    async (data: { first_name: string; last_name: string; username: string, avatar: string }) => {
       try {
-        updateProfileMutation({
+      const response = await updateProfileMutation({
           username: data.username,
           first_name: data.first_name,
           last_name: data.last_name,
+          avatar: data.avatar || "",
         });
-        toast.success(t("user_account.edit_profile_success"));
-        setTimeout(() => {
+        if(response.data?.status !== 200){
+          toast.error(response.data?.message || "something went wrong")
           onOpenChange(false);
-        }, 1000);
+          return;
+        } 
+        toast.success(t("user_account.edit_profile_success"));
+        onOpenChange(false);
       } catch (error) {
+        toast.error(error as string);
         console.error("Error updating profile:", error);
       }
     },
@@ -59,6 +66,7 @@ export function EditProfileDialog({
           imageurl={imageSrc || ""}
           onImageCropUpload={(imageSrc) => {
             setImageSrc(imageSrc);
+      
           }}
           onOpenImageCropUpload={() => {
             onOpenChange(false);
@@ -67,12 +75,12 @@ export function EditProfileDialog({
           isLoading={isLoading}
           initialData={initialData}
           onOpenChange={onOpenChange}
-
           onSave={(data) => {
             handleUpdateProfile({
               first_name: data.first_name,
               last_name: data.last_name,
               username: data.username,
+              avatar: imageSrc || initialImage,
             });
           }}
         />

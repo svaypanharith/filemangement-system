@@ -1,13 +1,12 @@
 "use client";
-import Header from "@/components/share/header";
+
 import SignUpForm from "@/components/auth/SignUp-Form";
 import { useTranslation } from "react-i18next";
-import { Base } from "@/components/share/base";
 import { useSignUpMutation } from "@/redux/slices/auth-slice";
 import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/provider/AuthProvider";
+import { Base } from "@/components/share/base";
 
 export default function SignupPage() {
   const { t } = useTranslation();
@@ -33,13 +32,12 @@ export default function SignupPage() {
   );
 
   return (
-    <Base header={<Header back title={t("signup.title")} />}>
-      <SignUpForm
-        onSubmit={onSubmit}
-        isLoading={isLoading}
-        onSuccess={isSubmitted}
-
-      />
-    </Base>
+     <Base title={t("signup.title")}>
+        <SignUpForm
+          onSubmit={onSubmit}
+          isLoading={isLoading}
+          onSuccess={isSubmitted}
+        />
+     </Base>
   );
 }

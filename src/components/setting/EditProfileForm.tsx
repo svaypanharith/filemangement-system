@@ -11,11 +11,11 @@ import { UserIcon } from "lucide-react";
 import Image from "next/image";
 import { Input } from "../ui/input";
 import { getLocalStorage } from "@/utils/storage";
-import { useEffect } from "react";
-import { useAppDispatch } from "@/redux/store";
 import { setUserProfile } from "@/redux/slices/userprofileslice";
-import { useAppSelector } from "@/redux/store";
+import { useAppSelector, useAppDispatch } from "@/redux/store";
 import { RootState } from "@/redux/store";
+import { useCallback} from "react";
+
 
 interface EditProfileFormProps {
   onOpenChange: (open: boolean) => void;
@@ -50,7 +50,6 @@ export default function EditProfileForm({
     (state: RootState) => state.userProfile.userProfile
   );
 
-
   let image = "";
   const userImageRaw = getLocalStorage(`user_image_${initialData.id}`);
   if (userImageRaw) {
@@ -64,90 +63,87 @@ export default function EditProfileForm({
       image = "";
     }
   }
-
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      first_name:  userProfile?.first_name || "",
-      last_name: userProfile?.last_name || "",
-      username: userProfile?.username || "",
+      first_name: userProfile?.first_name || initialData.first_name,
+      last_name: userProfile?.last_name || initialData.last_name  ,
+      username: userProfile?.username || initialData.username,
     },
   });
-
-  useEffect(() => {
-    if (initialData) {
-      dispatch(
-        setUserProfile({
-          first_name: initialData.first_name,
-          last_name: initialData.last_name,
-          username: initialData.username,
-        })
-      );
-    }
-  }, [initialData, form]);
-
-  useEffect(() => {
-    const subscription = form.watch((value) => {
-      if (value.first_name && value.last_name && value.username) {
-        dispatch(
-          setUserProfile({
-            first_name: value.first_name,
-            last_name: value.last_name,
-            username: value.username,
-          })
-        );
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [form, dispatch]);
-
   const onSubmit = (data: FormSchemaType) => {
     onSave(data);
   };
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onImageCropUpload(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-      onOpenImageCropUpload(true);
-    }
-  };
+
+  const handleImageUpload = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          onImageCropUpload(reader.result as string);
+          const currentValues = form.getValues();
+          dispatch(
+            setUserProfile({
+              first_name: currentValues.first_name,
+              last_name: currentValues.last_name,
+              username: currentValues.username,
+            })
+          );
+        };
+        reader.readAsDataURL(file);
+        onOpenImageCropUpload(true);
+      }
+    },
+    [form, dispatch, onImageCropUpload, onOpenImageCropUpload]
+  );
 
   return (
     <div className="flex flex-col gap-4 w-full justify-center items-center">
       <div className="flex items-center gap-4 flex-col">
         {imageurl || image ? (
-          <Image
-            src={imageurl || image}
-            width={80}
-            height={80}
-            alt="profile"
-            className="rounded-full object-cover"
-          />
+          <div className="flex flex-col items-center justify-center gap-2">
+            <label
+              htmlFor="image-upload"
+              className="cursor-pointer relative overflow-hidden"
+            >
+              <Input
+                type="file"
+                className="hidden"
+                id="image-upload"
+                onChange={handleImageUpload}
+              />
+              <Image
+                src={imageurl || image}
+                width={80}
+                height={80}
+                alt="profile"
+                className="rounded-full object-cover hover:opacity-80 transition-opacity"
+              />
+            </label>
+            <span className="text-sm font-semibold text-blue-500">
+              profile image
+            </span>
+          </div>
         ) : (
-        <div className="flex flex-col items-center justify-center">
-        <label
-          htmlFor="image-upload"
-          className="bg-gray-100 w-24 h-24 flex items-center text-center justify-center rounded-full p-2 cursor-pointer relative overflow-hidden"
-          onClick={() => {}}
-        >
-          <Input
-            type="file"
-            className="hidden"
-            id="image-upload"
-            onChange={handleImageUpload}
-          />
-          <UserIcon className="h-8 w-8 text-blue-500" />
-        </label>
-        <span className="text-sm font-semibold text-blue-500">
-          {t("user_account.upload_image")}
-        </span>
-        </div>
-      )}
+          <div className="flex flex-col items-center justify-center">
+            <label
+              htmlFor="image-upload"
+              className="bg-gray-100 w-24 h-24 flex items-center text-center justify-center rounded-full p-2 cursor-pointer relative overflow-hidden"
+            >
+              <Input
+                type="file"
+                className="hidden"
+                id="image-upload"
+                onChange={handleImageUpload}
+              />
+              <UserIcon className="h-8 w-8 text-blue-500" />
+            </label>
+            <span className="text-sm font-semibold text-blue-500">
+              {t("user_account.upload_image")}
+            </span>
+          </div>
+        )}
       </div>
       <FormProvider {...form}>
         <form
@@ -157,15 +153,15 @@ export default function EditProfileForm({
           <MInput
             label={t("user_account.name")}
             type="text"
-            placeholder={userProfile?.first_name || ""}
-            defaultValue={userProfile?.first_name || ""}
+            placeholder={userProfile?.first_name || initialData.first_name}
+            defaultValue={userProfile?.first_name || initialData.first_name}
             error={form.formState.errors.first_name?.message}
             onChange={(e) => {
               form.setValue("first_name", e.target.value);
             }}
           />
           <MInput
-            defaultValue={userProfile?.last_name || ""}
+            defaultValue={userProfile?.last_name || initialData.last_name}
             label={t("user_account.last_name")}
             type="text"
             placeholder={userProfile?.last_name || ""}
@@ -175,7 +171,7 @@ export default function EditProfileForm({
             }}
           />
           <MInput
-            defaultValue={userProfile?.username || ""}
+            defaultValue={userProfile?.username || initialData.username}
             label={t("user_account.user_name")}
             type="text"
             placeholder={userProfile?.username || ""}

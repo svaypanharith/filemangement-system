@@ -16,11 +16,13 @@ import Image from "next/image";
 interface UserAccountDetailProps {
   onOpenEditProfileDialog: () => void;
   onGetProfileInfo: (user: UserType) => void;
+  onInitailimage:(image:string) => void;
 }
 
 export default function UserAccountDetail({
   onOpenEditProfileDialog,
   onGetProfileInfo,
+  onInitailimage,
 }: UserAccountDetailProps) {
   const { t } = useTranslation();
   const { data: profile } = useGetProfileInfoQuery(undefined, {
@@ -45,6 +47,11 @@ export default function UserAccountDetail({
       image = "";
     }
   }
+  useEffect(() => {
+    if (image) {
+      onInitailimage(image);
+    }
+  }, [image]);
   return (
     <>
       <div className="w-full mx-auto">

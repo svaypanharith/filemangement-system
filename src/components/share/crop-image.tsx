@@ -89,9 +89,20 @@ export default function ImageCropUpload({
       { type: "image/jpeg" }
     );
 
+    const convertImageToBase64 = (image: File) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+    };
+
+    const imageDataUrl = await convertImageToBase64(croppedImageFile);
+
     const reader = new FileReader();
     reader.onloadend = () => {
-      const imageDataUrl = reader.result as string;
+
 
       const userImageData = {
         userId: userid,
@@ -100,7 +111,7 @@ export default function ImageCropUpload({
         fileType: croppedImageFile.type,
         timestamp: Date.now()
       };
-      onCropComplete(imageDataUrl)
+      onCropComplete(imageDataUrl as unknown as string)
       setLocalStorage(`user_image_${userid}`, JSON.stringify(userImageData));
       toast.success(t("user_account.crope_image_success"));
     };

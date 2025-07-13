@@ -27,7 +27,7 @@ const SignInPage = () => {
         if (response.status !== 200) {
           throw new Error(response.message || "Sign in failed");
         }
-        toast.success(response.message || "Sign in successful");
+        toast.success(t("signin.sigin_success"));
         login(response.access_token || "");
         setIsSubmitted(true);
       } catch (error: any) {
@@ -38,12 +38,14 @@ const SignInPage = () => {
   );
 
   return (
-    <Base header={<Header back title={t("signin.title")} />}>
+    <Base title={t("signin.title")}>
+      <div className="w-full flex flex-col items-center justify-center">        
       <SignInForm
         onSubmitData={onSubmit}
         isLoading={isLoading}
         onSuccess={isSubmitted}
       />
+      </div>
     </Base>
   );
 };

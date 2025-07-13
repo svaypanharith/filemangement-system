@@ -73,7 +73,7 @@ export const SignInForm = ({
           </p>
           <MInput
             required
-            label={t("signin.label.email")}
+            label={t("signin.email")}
             placeholder={t("signin.label.email")}
             type="email"
             rounded
@@ -86,7 +86,7 @@ export const SignInForm = ({
             {...form.register("password")}
             error={form.formState.errors.password?.message}
             required
-            label={t("signin.label.password")}
+            label={t("signin.password")}
             placeholder={t("signin.label.password")}
             onChange={(e) => {
               console.log(e.target.value);
@@ -97,7 +97,7 @@ export const SignInForm = ({
             <p className="text-sm flex text-gray-500 gap-2">
               {t("signin.dont_have_account")}
               <Link href="/signup" className="text-blue-500">
-                {t("signin.title")}
+                {t("signup.title")}
               </Link>
             </p>
             <p className="text-sm text-gray-500">

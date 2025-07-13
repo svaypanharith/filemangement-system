@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import SwitchLanguage from "@/components/share/SwitchLanguage";
 import { useRouter } from "next/navigation";
 import MButton from "@/components/m-ui/m-button";
@@ -54,20 +53,25 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="container mx-auto px-4 py-20">
-          <div className="text-center max-w-4xl mx-auto">
+        <div className="container mx-auto py-4 ">
+          <div className=" max-w-4xl mx-auto text-center gap-6">
             <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
               <Sparkles className="h-4 w-4" />
               {t("welcome.ai_powered")}
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-              {t("welcome.title")}
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> {t("welcome.title_description")}</span>
-            </h1>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-              {t("welcome.description")}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+
+            <div className="w-full flex flex-col gap-6 items-center justify-center">
+              <h1 className="text-5xl md:text-6xl font-bold text-gray-900 leading-tight">
+                {t("welcome.title")}
+              </h1>
+              <h1 className=" text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"> {t("welcome.title_description")}</h1>
+
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                {t("welcome.description")}
+              </p>
+            </div>
+  
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">
               <Button size="lg" className="bg-gradient-to-r cursor-pointer from-blue-600 to-purple-600 
               hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 text-lg font-semibold"
               onClick={() => router.push("/signup")}

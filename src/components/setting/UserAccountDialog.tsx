@@ -17,6 +17,7 @@ export default function UserAccountDialog({
   const { t } = useTranslation();
   const [openEditProfileDialog, setOpenEditProfileDialog] = useState(false);
   const [initialData, setInitialData] = useState<User | null>(null);
+  const [initialImage, setInitialImage] = useState<string | null>(null);
   return (
     <>
       <MDialog
@@ -25,6 +26,9 @@ export default function UserAccountDialog({
         content={
           <div className="w-full mx-auto">
             <UserAccountDetail
+              onInitailimage={(image) => {
+                setInitialImage(image);
+              }}
               onGetProfileInfo={(user) => {
                 setInitialData(user);
               }}
@@ -39,6 +43,7 @@ export default function UserAccountDialog({
         onOpenChange={onOpenChange}
       />
       <EditProfileDialog
+      initialImage={initialImage || ""}
         initialData={initialData || {
           id: "",
           username: "",

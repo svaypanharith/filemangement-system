@@ -62,6 +62,10 @@
     "signin_with_google": "Sign in with Google",
     "description": "Enter your credentials to sign in!",
     "button": "Sign in",
+    "email": "Email",
+    "password": "Password",
+    "sigin_success": "Sign in successfully",
+    "sigin_failed": "Sign in failed",
     "dont_have_account": "Don't have an account?",
     "forgot_password": "Forgot password?",
     "label": {
