@@ -14,7 +14,7 @@ import {
   useGetDailyAggregateQuery,
 
 } from "@/redux/slices/data-slice";
-import { useEffect, useState } from "react";
+import { useEffect, useState , useMemo } from "react";
 import { useTheme } from "next-themes";
 
 interface BarChartData {
@@ -76,7 +76,7 @@ const [data, setData] = useState<BarChartData[]>([]);
     label: { label: "value" },
   };
 
-  return (
+  return useMemo(() => (
     <div className="flex flex-col gap-8">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <MCardStatistics
@@ -169,5 +169,5 @@ const [data, setData] = useState<BarChartData[]>([]);
         </Tabs>
       </div>
     </div>
-  );
+  ), [statistic, fileSize, dailyAggregate, weeklyAggregate, monthlyAggregate, yearlyAggregate, resolvedTheme, t, isSelected, data]);
 }

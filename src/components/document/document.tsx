@@ -5,16 +5,15 @@ import { Search } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Trash } from "lucide-react";
 import MAlertDialog from "../m-ui/m-alert-dialog";
-import { getLocalStorage } from "@/utils/storage";
 import MButton from "@/components/m-ui/m-button";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setSidebarTrigger } from "@/redux/slices/sidebartrigger-slice";
 import { useCallback, useMemo } from "react";
-import { useUploadFileDocumentMutation } from "@/redux/slices/data-slice";
 import { useDeleteDocumentMutation } from "@/redux/slices/data-slice";
 import { Pencil } from "lucide-react";
+
 import {
   Select,
   SelectContent,
@@ -27,60 +26,8 @@ import { useGetDocumentsQuery } from "@/redux/slices/data-slice";
 import {  DocumentType } from "@/redux/slices/data.types";
 import EditDocumentDialog from "./EditDocimentDialog";
 
-interface StoredFile {
-  name: string;
-  size: number;
-  type: string;
-  lastModified: number;
-  content: string;
-  url: string;
-}
-
-// const DocumentService = {
-//   getFiles: async (): Promise<StoredFile[]> => {
-//     const storedFiles = localStorage.getItem("selectedFiles");
-//     if (storedFiles) {
-//       return JSON.parse(storedFiles);
-//     }
-//     return [];
-//   },
-
-//   openFile: async (file: StoredFile) => {
-//     try {
-//       if (file.url) {
-//         window.open(file.url, "_blank");
-//         return;
-//       }
-//       const storedFiles = localStorage.getItem("selectedFiles");
-//       if (storedFiles) {
-//         const filesData = JSON.parse(storedFiles) as StoredFile[];
-//         const fileData = filesData.find((f) => f.name === file.name);
-
-//         if (fileData?.content) {
-//           // Convert base64 to binary
-//           const binaryString = window.atob(fileData.content.split(",")[1]);
-//           const bytes = new Uint8Array(binaryString.length);
-//           for (let i = 0; i < binaryString.length; i++) {
-//             bytes[i] = binaryString.charCodeAt(i);
-//           }
-//           const blob = new Blob([bytes], { type: fileData.type });
-//           const url = URL.createObjectURL(blob);
-//           window.open(url, "_blank");
-//         } else {
-//           toast.error("File content not found");
-//         }
-//       } else {
-//         toast.error("No files found");
-//       }
-//     } catch (error) {
-//       console.error("Error opening file:", error);
-//       toast.error("Error opening file");
-//     }
-//   },
-// };
 
 export default function Document() {
-  const [files, setfiles] = useState<File[]>([]);
   const [isopenDeleteDialog, setIsopenDeleteDialog] = useState(false);
   const [isopenNoteDialog, setIsopenNoteDialog] = useState(false);
   const [selectedFileName, setSelectedFileName] = useState<string>("");
@@ -88,9 +35,6 @@ export default function Document() {
   const [settingColorCode, setSettingColorCode] = useState<string>("");
   const [settingTags, setSettingTags] = useState<string>("");
 
-  const [noteColors, setNoteColors] = useState<Record<string, string>>({});
-  const [uploadFileDocument, { isLoading: isUploading }] =
-    useUploadFileDocumentMutation();
   const [deleteDocument] = useDeleteDocumentMutation();
 
   const { t } = useTranslation();
@@ -106,36 +50,6 @@ export default function Document() {
     );
   }, [t, dispatch]);
 
-  useEffect(() => {
-    // Load all note colors from localStorage
-    const storedColors: Record<string, string> = {};
-    files.forEach((file) => {
-      const color = getLocalStorage(`note-${file.name}`);
-      if (color) {
-        storedColors[file.name] = color;
-      }
-    });
-    setNoteColors(storedColors);
-  }, [files]);
-
-  useEffect(() => {
-    try {
-      const storedFiles = localStorage.getItem("selectedFiles");
-      if (storedFiles) {
-        const filesData = JSON.parse(storedFiles) as StoredFile[];
-        const files = filesData.map(
-          (fileData) =>
-            new File([], fileData.name, {
-              type: fileData.type,
-              lastModified: fileData.lastModified,
-            })
-        );
-        setfiles(files);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
 
   const onDeleteDocument = useCallback(
     async (id: string) => {
@@ -145,6 +59,7 @@ export default function Document() {
           toast.success("Document deleted successfully");
         }
         setIsopenDeleteDialog(false);
+        // refetch()
       } catch (error) {
         console.error(error);
         toast.error("Error deleting document");
@@ -158,8 +73,7 @@ export default function Document() {
       <>
         <div className="flex flex-col gap-8">
           <AddDocumentForm
-            isLoading={isUploading}
-            documents={documents as unknown as Document[]}
+           documents={documents}
           />
           <div className="flex flex-col gap-8 border-2 border-gray-200 p-8  shadow-xl rounded-2xl">
             <div className="flex justify-between">
@@ -279,18 +193,15 @@ export default function Document() {
           open={isopenNoteDialog}
           onOpenChange={setIsopenNoteDialog}
           fileName={selectedFileName}
-          initialColor={noteColors[selectedFileName]}
         />
       </>
     ),
     [
       documents,
       isLoadingDocuments,
-      isUploading,
       isopenDeleteDialog,
       isopenNoteDialog,
       selectedFileName,
-      noteColors,
       t,
     ]
   );

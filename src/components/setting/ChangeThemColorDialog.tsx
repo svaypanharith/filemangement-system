@@ -37,21 +37,9 @@ export default function ChangeThemColorDialog({
       if (isDark) {
         setSwitchTheme(true);
         setTheme("dark");
-        toast.success("Theme changed to dark", {
-          style: {
-            background: "#000",
-            color: "#fff",
-          },
-        });
       } else {
         setSwitchTheme(false);
         setTheme("light");
-        toast.success("Theme changed to light", {
-          style: {
-            background: "#fff",
-            color: "#000",
-          },
-        });
       }
 
       setSelectedColor(isDark ? "dark" : "light");

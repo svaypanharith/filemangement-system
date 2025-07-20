@@ -11,35 +11,16 @@ import { useUploadFileDocumentMutation } from "@/redux/slices/data-slice";
 
 
 interface AddDocumentProps {
-  isLoading?: boolean;
   documents?: DocumentType[];
 }
 
 export default function AddDocumentForm({
-  isLoading,
   documents,
 }: AddDocumentProps) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const { t } = useTranslation();
-  const [uploadFileDocument] = useUploadFileDocumentMutation();
+  const [uploadFileDocument , {isLoading: isUploading}] = useUploadFileDocumentMutation();
 
-  // read file as base64
-  const readFileAsBase64 = (file: File): Promise<string> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const result = e.target?.result as string;
-        console.log(
-          "File read as base64:",
-          file.name,
-          result.substring(0, 100) + "..."
-        ); // Log first 100 chars
-        resolve(result);
-      };
-      reader.onerror = (e) => reject(e);
-      reader.readAsDataURL(file);
-    });
-  };
 
   const onSubmitFile = useCallback(
     async (files: File[]) => {
@@ -49,9 +30,8 @@ export default function AddDocumentForm({
           return;
         }
         
-        files.forEach((file, index) => {
+        files.forEach((file) => {
           if (!file.name || file.size === 0) {
-            console.error(`Invalid file at index ${index}:`, file);
             toast.error(`Invalid file: ${file.name}`);
             return;
           }
@@ -63,20 +43,29 @@ export default function AddDocumentForm({
         });
         
         const response = await uploadFileDocument(formData).unwrap();
-        if (response) {
-          toast.success("Files uploaded successfully");
+        if (response.message !== "Files uploaded successfully") {
+          throw new Error(response.message);
         }
+        toast.success("upload file successfully !");
       } catch (error) {
-        console.error("Upload error:", error);
         toast.error("Error uploading files");
       }
     },
     [uploadFileDocument]
   );
 
-  const handleFileInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
+   const handleFileInputChange = async (e: React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     
+    let files: File[] = [];
+    
+    if ('files' in e.target) {
+      files = Array.from(e.target.files || []);
+    }
+    else if ('dataTransfer' in e) {
+      files = Array.from(e.dataTransfer.files || []);
+    }
     if (files.length > 0) {
       try {
         const existingFiles = documents || [];
@@ -87,29 +76,6 @@ export default function AddDocumentForm({
         setSelectedFiles(files);
         await onSubmitFile(files);
       } catch (error) {
-        console.error("Error processing files:", error);
-        toast.error("Error uploading files");
-      }
-    }
-  };
-
-  const handleFileDrop = async (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const files = Array.from(e.dataTransfer.files);
-    
-    
-    if (files.length > 0) {
-      try {
-        const existingFiles = documents || [];
-        if (existingFiles.find((file: any) => file.title === files[0].name)) {
-          toast.error("File already exists");
-          return;
-        }
-        setSelectedFiles(files);
-        await onSubmitFile(files);
-      } catch (error) {
-        console.error("Error processing dropped files:", error);
         toast.error("Error uploading files");
       }
     }
@@ -122,7 +88,7 @@ export default function AddDocumentForm({
         e.preventDefault();
         e.stopPropagation();
       }}
-      onDrop={handleFileDrop}
+      onDrop={handleFileInputChange}
     >
       <div className="flex flex-col gap-2 items-center justify-center">
         <div className="flex flex-col items-center gap-6 w-full max-w-md">
@@ -138,8 +104,7 @@ export default function AddDocumentForm({
               />
             </label>
           </div>
-          {isLoading && <LoadingAnimation />}
-          {/* // the name file is need to respone from api */}
+          {isUploading && <LoadingAnimation />}
           {selectedFiles.length > 0 ? (
             <div className="flex flex-col gap-2 w-full">
               {selectedFiles.map((file, index) => (

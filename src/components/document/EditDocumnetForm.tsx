@@ -20,6 +20,7 @@ interface EditDocumentFormProps {
   initialData: EditDocumentFormDataType;
   onSubmitData: (data: EditDocumentFormDataType) => void;
   onCancel: () => void;
+  // onEditSuccess?: () => void;
 }
 
 export default function EditDocumentForm({

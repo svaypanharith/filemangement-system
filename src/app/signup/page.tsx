@@ -24,8 +24,8 @@ export default function SignupPage() {
         login(response.access_token || "");
         toast.success(response.message || t("signup.signup_success"));
         setIsSubmitted(true);
-      } catch (error) {
-        console.error(error);
+      } catch (error:any) {
+        toast.error(error.message || t("signup.signup_error"));
       }
     },
     [signUp]

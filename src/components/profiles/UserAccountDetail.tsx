@@ -17,6 +17,7 @@ interface UserAccountDetailProps {
   onOpenEditProfileDialog: () => void;
   onGetProfileInfo: (user: UserType) => void;
   onInitailimage:(image:string) => void;
+  onEditSuccess?: boolean;
 }
 
 export default function UserAccountDetail({
@@ -25,7 +26,7 @@ export default function UserAccountDetail({
   onInitailimage,
 }: UserAccountDetailProps) {
   const { t } = useTranslation();
-  const { data: profile } = useGetProfileInfoQuery(undefined, {
+  const { data: profile  } = useGetProfileInfoQuery(undefined, {
     refetchOnMountOrArgChange: false,
   });
   useEffect(() => {

@@ -39,7 +39,7 @@ export default function MInput({
       <Input
         className={cn(
           className,
-          "h-15  shadow-sm border border-gray-200",
+          "h-15  shadow-sm border border-gray-200 truncate",
           rounded && "rounded-lg"
         )}
         defaultValue={defaultValue}

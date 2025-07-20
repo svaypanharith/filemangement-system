@@ -26,7 +26,7 @@ export function EditProfileDialog({
   open,
   onOpenChange,
   initialData,
-  initialImage
+  initialImage,
 }: EditProfileDialogProps) {
   const { t } = useTranslation();
   const [updateProfileMutation, { isLoading }] = useUpdateProfileMutation();
@@ -40,7 +40,7 @@ export function EditProfileDialog({
           username: data.username,
           first_name: data.first_name,
           last_name: data.last_name,
-          avatar: data.avatar || "",
+          avatar: "test",
         });
         if(response.data?.status !== 200){
           toast.error(response.data?.message || "something went wrong")

@@ -1,7 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "@/redux/middleware/base-query";
 
-
 import {
   user,
   DocumentType,
@@ -24,7 +23,7 @@ import { API_URL } from "@/utils/env";
 const dataSlice = createApi({
   reducerPath: "data",
   baseQuery: baseQuery,
-  tagTypes: ["Data", "Profile", "Query", "Session"],
+  tagTypes: ["Data", "Profile", "Query", "Session", "Documents"],
   endpoints: (builder) => ({
     getChat: builder.mutation<ChatResponseData, ChatRequest>({
       query: (data) => ({
@@ -61,6 +60,7 @@ const dataSlice = createApi({
         method: "PUT",
         body: data,
       }),
+      invalidatesTags: ["Profile"],
     }),
     // update password
     updatePassword: builder.mutation<
@@ -91,6 +91,7 @@ const dataSlice = createApi({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["Documents"],
     }),
     // get all documents
     getDocuments: builder.query<DocumentType, void>({
@@ -98,6 +99,7 @@ const dataSlice = createApi({
         url: `${API_URL}/documents`,
         method: "GET",
       }),
+      providesTags: ["Documents"],
     }),
     deleteDocument: builder.mutation<
       {
@@ -113,6 +115,7 @@ const dataSlice = createApi({
         method: "DELETE",
         body: data,
       }),
+      invalidatesTags: ["Documents"],
     }),
 
     updateDocument: builder.mutation<
@@ -132,6 +135,7 @@ const dataSlice = createApi({
         method: "PUT",
         body: data,
       }),
+      invalidatesTags: ["Documents"],
     }),
 
     // Ask a question to AI
@@ -154,7 +158,10 @@ const dataSlice = createApi({
     }),
 
     // Get session queries
-    getSessionQueries: builder.query<SessionQueriesResponse, { session_id: number }>({
+    getSessionQueries: builder.query<
+      SessionQueriesResponse,
+      { session_id: number }
+    >({
       query: ({ session_id }) => ({
         url: `${API_URL}/sessions/queries?session_id=${session_id}`,
         method: "GET",
@@ -192,7 +199,7 @@ const dataSlice = createApi({
         method: "GET",
       }),
     }),
-     
+
     getWeeklyAggregate: builder.query<weeklyaggregate, void>({
       query: () => ({
         url: `${API_URL}/documents/weekly-count `,
@@ -213,7 +220,6 @@ const dataSlice = createApi({
         method: "GET",
       }),
     }),
-    
   }),
 });
 
@@ -237,5 +243,5 @@ export const {
   useGetDailyAggregateQuery,
   useGetWeeklyAggregateQuery,
   useGetMonthlyAggregateQuery,
-  useGetYearlyAggregateQuery, 
+  useGetYearlyAggregateQuery,
 } = dataSlice;
