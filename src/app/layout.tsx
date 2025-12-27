@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
-import I18nProvider from "@/provider/I18nProvider";
-import { SnackBarAppToaster } from "@/hooks/usesnack-bar";
-import LoadLanguageProvider from "@/provider/LoadLanguageProvider";
-import ClientProvider from "@/provider/ClientProvider";
-import { AuthProvider } from "@/provider/AuthProvider";
-import { ThemeProvider } from "@/provider/ThemProvider";
+import localFont from 'next/font/local';
+import type { Metadata } from 'next';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from '@/them/them';
+import ClientProvider from '@/provider/ClientProvider';
+import I18nProvider from '@/provider/I18nProvider';
+import { ReactNode } from 'react';
+import './globals.css';
 
 const poppins = localFont({
   src: "../../public/assets/fonts/KantumruyPro-Regular.ttf",
@@ -15,39 +15,26 @@ const poppins = localFont({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "StudySesh",
-  description: "StudySesh",
-  icons: {
-    icon: "/logo.png",
-  },
-};
+// export const metadata: Metadata = {
+//   title: "StudySesh",
+//   description: "StudySesh",
+//   icons: {
+//     icon: "/logo.png",
+//   },
+// };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head />
-      <body className={`${poppins.variable} font-poppins antialiased`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          <ClientProvider>
-            <I18nProvider>
-              <LoadLanguageProvider>
-                <AuthProvider>{children}</AuthProvider>
-              </LoadLanguageProvider>
-            </I18nProvider>
-          </ClientProvider>
-        </ThemeProvider>
-
-        <SnackBarAppToaster />
+    <html lang="en" className={`${poppins.variable} antialiased`}>
+      <body>
+        <ClientProvider>
+          <I18nProvider>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              {children}
+            </ThemeProvider>
+          </I18nProvider>
+        </ClientProvider>
       </body>
     </html>
   );

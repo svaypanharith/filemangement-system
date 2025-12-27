@@ -1,17 +1,13 @@
 "use client";
 
 import MButton from "@/components/m-ui/m-button";
-import Image from "next/image";
-import googleIcon from "../../../public/assets/icon/google.svg";
-import { Separator } from "@/components/ui/separator";
 import MInput from "@/components/m-ui/m-input";
 import MInputPassword from "@/components/m-ui/m-input-password";
 import { useTranslation } from "react-i18next";
-import { useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { passwordValidation } from "@/components/m-ui/m-input-password";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider } from "react-hook-form";
 import { useEffect } from "react";
 
 const password_error_messages = {
@@ -59,90 +55,97 @@ export default function SignUpForm({
       password_confirmation: "",
     },
   });
+
   useEffect(() => {
     if (onSuccess) {
       form.reset();
     }
-  }, [onSuccess]);
-
-  const onSubmitForm = (data: FormSchemaType) => {
-    onSubmit(data);
-  };
+  }, [onSuccess, form]);
 
   return (
-    <div className="flex flex-col bg-gray-50 rounded-2xl shadow-xl max-w-[600px] w-full items-center justify-center p-6 gap-4">
-     <div className="flex w-full flex-col gap-4">
-        <div className="flex w-full flex-col gap-2">
-          <p className="text-2xl font-bold font-roboto">{t("signup.title")}</p>
-          <p className="text-sm text-gray-500">{t("signup.description")}</p>
-        </div>
-      </div> 
+    <div className="w-full bg-gray-50 rounded-2xl shadow-lg max-w-[600px] w-full h-full gap-10 p-10 ">
+      {/* Header Section */}
+      <div className="mb-8 text-center md:text-left">
+        <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+          {t("signup.title")}
+        </h2>
+        <p className="mt-2 text-gray-500 font-medium">
+          {t("signup.description")}
+        </p>
+      </div>
+
       <FormProvider {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmitForm)}
-          className="w-full gap-4"
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-6"
         >
-          <div className="flex w-full flex-col gap-4">
+          {/* Section: Personal Info (Grid) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <MInput
               required
+              {...form.register("first_name")}
               error={form.formState.errors.first_name?.message}
-              onChange={(e) => {
-                form.setValue("first_name", e.target.value);
-              }}
               label={t("signup.first_name")}
-              placeholder={t("signup.first_name")}
-            />
-            <MInput
+              placeholder="John"
               rounded
+            />
+            <MInput
+              required
+              {...form.register("last_name")}
               error={form.formState.errors.last_name?.message}
-              onChange={(e) => {
-                form.setValue("last_name", e.target.value);
-              }}
-              required
               label={t("signup.last_name")}
-              placeholder={t("signup.last_name")}
-              type="text"
+              placeholder="Doe"
+              rounded
             />
+          </div>
+
+          {/* Section: Account Info (Single Column) */}
+          <div className="space-y-4">
             <MInput
               required
+              {...form.register("username")}
               error={form.formState.errors.username?.message}
-              onChange={(e) => {
-                form.setValue("username", e.target.value);
-              }}
               label={t("signup.username")}
-              placeholder={t("signup.username")}
+              placeholder="johndoe123"
+              rounded
             />
             <MInput
               required
+              {...form.register("email")}
               error={form.formState.errors.email?.message}
-              onChange={(e) => {
-                form.setValue("email", e.target.value);
-              }}
               label={t("signup.email")}
-              placeholder={t("signup.email")}
+              placeholder="name@example.com"
               type="email"
               rounded
             />
+          </div>
+
+          {/* Section: Security (Grid) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <MInputPassword
               required
-              error={form.formState.errors.password?.message}
               {...form.register("password")}
+              error={form.formState.errors.password?.message}
               label={t("signup.password")}
-              placeholder={t("signup.password")}
+              placeholder="••••••••"
             />
             <MInputPassword
               required
-              error={form.formState.errors.password_confirmation?.message}
               {...form.register("password_confirmation")}
+              error={form.formState.errors.password_confirmation?.message}
               label={t("signup.confirm_password")}
-              placeholder={t("signup.confirm_password")}
+              placeholder="••••••••"
             />
+          </div>
+
+          {/* Submit Button */}
+          <div className="pt-2">
             <MButton
               loading={isLoading}
               type="submit"
               preset="primary"
               size="lg"
-              className="w-full rounded-full shadow-lg shadow-gray-200"
+              className="w-full py-6 text-lg font-semibold rounded-xl shadow-md transition-all hover:shadow-lg active:scale-[0.98]"
               disabled={isLoading}
             >
               {t("signup.button")}
