@@ -15,6 +15,7 @@ import {
 import SearchIcon from '@mui/icons-material/Search'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import MenuIcon from '@mui/icons-material/Menu'
+import SwitchLanguage from '@/components/share/SwitchLanguage'
 import { useState } from 'react'
 
 interface HeaderProps {
@@ -23,7 +24,7 @@ interface HeaderProps {
 
 export default function Header({ onSidebarOpenChange }: HeaderProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
   const handleMenuClick = () => {
     setIsSidebarOpen(!isSidebarOpen)
@@ -40,19 +41,12 @@ export default function Header({ onSidebarOpenChange }: HeaderProps) {
       }}
     >
       <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        
         {/* Left */}
         <Box display="flex" alignItems="center" gap={2}>
           <IconButton edge="start">
             <MenuIcon onClick={() => handleMenuClick()} />
           </IconButton>
-
-          <Typography variant="h6" fontWeight={600} color="text.primary">
-            Admin
-          </Typography>
         </Box>
-
-        {/* Search */}
         <Box
           sx={{
             display: { xs: 'none', md: 'flex' },
@@ -71,13 +65,14 @@ export default function Header({ onSidebarOpenChange }: HeaderProps) {
           />
         </Box>
 
-        {/* Right */}
         <Box display="flex" alignItems="center" gap={2}>
           <IconButton>
             <Badge badgeContent={3} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>
+
+          <SwitchLanguage />
 
           <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
             <Avatar sx={{ width: 36, height: 36 }}>A</Avatar>

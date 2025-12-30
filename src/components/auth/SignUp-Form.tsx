@@ -1,14 +1,17 @@
 "use client";
 
-import MButton from "@/components/m-ui/m-button";
-import MInput from "@/components/m-ui/m-input";
-import MInputPassword from "@/components/m-ui/m-input-password";
+import { useState, useEffect } from "react";
+import dynamic from 'next/dynamic';
 import { useTranslation } from "react-i18next";
 import { useForm, FormProvider } from "react-hook-form";
-import { passwordValidation } from "@/components/m-ui/m-input-password";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+
+// Import components dynamically to ensure they're only loaded on the client side
+const MButton = dynamic(() => import("@/components/m-ui/m-button"), { ssr: false });
+const MInput = dynamic(() => import("@/components/m-ui/m-input"), { ssr: false });
+const MInputPassword = dynamic(() => import("@/components/m-ui/m-input-password"), { ssr: false });
+import { passwordValidation } from "@/components/m-ui/m-input-password";
 
 const password_error_messages = {
   confirm_password_required: "Confirm password is required",

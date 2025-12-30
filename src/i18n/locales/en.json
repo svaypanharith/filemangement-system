@@ -83,6 +83,8 @@
     "copy_message": "Message copied to clipboard"
   },
   "dashboard": {
+    "document_management": "Document Management",
+    "Intelligent_document_platform": "Intelligent Document Platform",
     "dashboard": "Dashboard",
     "document": "Document",
     "chatbot": "Chatbot",

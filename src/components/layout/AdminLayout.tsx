@@ -10,7 +10,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   return (
     <Box display="flex" minHeight="100vh" position="relative">
-      <Sidebar isOpen={isSidebarOpen} />
+      <Sidebar isOpen={!isSidebarOpen} />
       <Box 
         component="main"
         sx={{

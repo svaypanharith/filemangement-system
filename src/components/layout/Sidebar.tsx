@@ -1,5 +1,4 @@
 'use client'
-
 import {
   Drawer,
   List,
@@ -24,10 +23,15 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import HistoryIcon from '@mui/icons-material/History'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useTranslation } from "react-i18next";
+
 
 const drawerWidth = 300
 
+// const { t } = useTranslation()
+
 const menu = [
+  
   {
     section: 'WORKSPACE',
     items: [
@@ -71,7 +75,7 @@ const menu = [
     section: 'SYSTEM',
     items: [
       { title: 'Audit Logs', path: '/logs', icon: <HistoryIcon /> },
-      { title: 'Settings', path: '/settings', icon: <SettingsIcon /> }
+      { title: 'Settings', path: '/dashboard/setting', icon: <SettingsIcon /> }
     ]
   }
 ]
@@ -82,6 +86,8 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen }: SidebarProps) {
   const pathname = usePathname()
+
+  const { t } = useTranslation()
 
   return (
     <Drawer
@@ -105,10 +111,10 @@ export default function Sidebar({ isOpen }: SidebarProps) {
     >
       <Box px={3} py={2.5}>
         <Typography fontSize={18} fontWeight={700} color='white'>
-          Document Management 
+          {t('dashboard.document_management')}
         </Typography>
         <Typography fontSize={12} color="white">
-          Intelligent Document Platform
+          {t('dashboard.Intelligent_document_platform')}
         </Typography>
       </Box>
       <Box px={2} py={2} flexGrow={1}>
