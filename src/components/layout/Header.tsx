@@ -17,8 +17,18 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import MenuIcon from '@mui/icons-material/Menu'
 import { useState } from 'react'
 
-export default function Header() {
+interface HeaderProps {
+  onSidebarOpenChange: (open: boolean) => void
+}
+
+export default function Header({ onSidebarOpenChange }: HeaderProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  const handleMenuClick = () => {
+    setIsSidebarOpen(!isSidebarOpen)
+    onSidebarOpenChange(isSidebarOpen)
+  }
 
   return (
     <AppBar
@@ -34,7 +44,7 @@ export default function Header() {
         {/* Left */}
         <Box display="flex" alignItems="center" gap={2}>
           <IconButton edge="start">
-            <MenuIcon />
+            <MenuIcon onClick={() => handleMenuClick()} />
           </IconButton>
 
           <Typography variant="h6" fontWeight={600} color="text.primary">

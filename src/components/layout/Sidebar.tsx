@@ -76,31 +76,41 @@ const menu = [
   }
 ]
 
-export default function Sidebar() {
+interface SidebarProps {
+  isOpen: boolean
+}
+
+export default function Sidebar({ isOpen }: SidebarProps) {
   const pathname = usePathname()
 
   return (
     <Drawer
       variant="permanent"
       sx={{
-        width: drawerWidth,
+        width: isOpen ? drawerWidth : 0,
+        flexShrink: 0,
         '& .MuiDrawer-paper': {
-          width: drawerWidth,
+          width: isOpen ? drawerWidth : 0,
+          boxSizing: 'border-box',
           backgroundColor: '#0047AB',
-          borderRight: '1px solid #E5E7EB'
+          borderRight: '1px solid #E5E7EB',
+          position: 'fixed',
+          height: '100vh',
+          transition: 'width 0.3s ease',
+          overflowX: 'hidden',
+          whiteSpace: 'nowrap',
+          zIndex: (theme) => theme.zIndex.drawer
         }
       }}
     >
-      {/* Brand */}
       <Box px={3} py={2.5}>
         <Typography fontSize={18} fontWeight={700} color='white'>
-          DocuFlow AI
+          Document Management 
         </Typography>
         <Typography fontSize={12} color="white">
           Intelligent Document Platform
         </Typography>
       </Box>
-      {/* Menu */}
       <Box px={2} py={2} flexGrow={1}>
         {menu.map(group => (
           <Box key={group.section} mb={2.5}>
