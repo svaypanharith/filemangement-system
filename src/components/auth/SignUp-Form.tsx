@@ -82,7 +82,8 @@ export default function SignUpForm({
           onSubmit={form.handleSubmit(onSubmitForm)}
           className="w-full gap-4"
         >
-          <div className="flex w-full flex-col gap-4">
+          <div className="flex w-full flex-col gap-8">
+          <div className="flex flex-row gap-6 w-full ">
             <MInput
               required
               error={form.formState.errors.first_name?.message}
@@ -93,6 +94,7 @@ export default function SignUpForm({
               placeholder={t("signup.first_name")}
             />
             <MInput
+              className="w-full"
               rounded
               error={form.formState.errors.last_name?.message}
               onChange={(e) => {
@@ -103,6 +105,8 @@ export default function SignUpForm({
               placeholder={t("signup.last_name")}
               type="text"
             />
+             </div>
+             <div className="flex flex-row gap-6 w-full ">
             <MInput
               required
               error={form.formState.errors.username?.message}
@@ -123,6 +127,8 @@ export default function SignUpForm({
               type="email"
               rounded
             />
+            </div>
+            <div className="flex flex-row gap-6 w-full ">
             <MInputPassword
               required
               error={form.formState.errors.password?.message}
@@ -137,6 +143,7 @@ export default function SignUpForm({
               label={t("signup.confirm_password")}
               placeholder={t("signup.confirm_password")}
             />
+            </div>
             <MButton
               loading={isLoading}
               type="submit"
@@ -147,6 +154,7 @@ export default function SignUpForm({
             >
               {t("signup.button")}
             </MButton>
+          
           </div>
         </form>
       </FormProvider>
