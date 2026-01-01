@@ -2,29 +2,29 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const storedToken = request.cookies.get("auth_token")?.value;
-  const { pathname } = request.nextUrl;
+  // const storedToken = request.cookies.get("auth_token")?.value;
+  // const { pathname } = request.nextUrl;
 
-  const publicPaths = ["/", "/login", "/signup", "/forgot-password", "/signin"];
-  const isPublicPath = publicPaths.includes(pathname);
-  const isDashboardPath = pathname.startsWith("/dashboard");
-
-
-  if (isDashboardPath && !storedToken) {
-    return NextResponse.redirect(new URL("/signin", request.url));
-  }
+  // const publicPaths = ["/", "/login", "/signup", "/forgot-password", "/signin"];
+  // const isPublicPath = publicPaths.includes(pathname);
+  // const isDashboardPath = pathname.startsWith("/dashboard");
 
 
-  if (isPublicPath && storedToken) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
+  // if (isDashboardPath && !storedToken) {
+  //   return NextResponse.redirect(new URL("/signin", request.url));
+  // }
 
 
-  if (!isPublicPath && !storedToken) {
-    return NextResponse.redirect(new URL("/signin", request.url));
-  }
+  // if (isPublicPath && storedToken) {
+  //   return NextResponse.redirect(new URL("/dashboard", request.url));
+  // }
 
-  return NextResponse.next();
+
+  // if (!isPublicPath && !storedToken) {
+  //   return NextResponse.redirect(new URL("/signin", request.url));
+  // }
+
+  // return NextResponse.next();
 }
 
 // Configure which paths the middleware should run on
