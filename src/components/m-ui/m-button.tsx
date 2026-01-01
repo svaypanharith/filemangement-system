@@ -17,7 +17,7 @@ interface MButtonProps {
   className?: string;
 }
 
-const MButton = React.forwardRef<HTMLButtonElement, ButtonProps & MButtonProps>(
+const MButton = React.forwardRef<HTMLButtonElement, Omit<ButtonProps, 'size'> & MButtonProps>(
   (
     {
       loading,
