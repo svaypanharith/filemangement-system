@@ -1,4 +1,4 @@
-import React, { Suspense } from "react"
+import React, { Suspense, JSX } from "react"
 import Markdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 
@@ -184,11 +184,12 @@ const COMPONENTS = {
   hr: withClass("hr", "border-foreground/20"),
 }
 
-function withClass(Tag: keyof JSX.IntrinsicElements, classes: string) {
-  const Component = ({ node, ...props }: any) => (
+function withClass<T extends keyof JSX.IntrinsicElements>(Tag: T, classes: string) {
+  const Component = ({ node, ...props }: JSX.IntrinsicElements[T] & { node?: unknown }) => (
+    // @ts-ignore - TypeScript has trouble with the dynamic tag here
     <Tag className={classes} {...props} />
   )
-  Component.displayName = Tag
+  Component.displayName = Tag.toString()
   return Component
 }
 

@@ -31,19 +31,18 @@ export function AudioVisualizer({
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const audioContextRef = useRef<AudioContext | null>(null)
   const analyserRef = useRef<AnalyserNode | null>(null)
-  const animationFrameRef = useRef<number>()
+  const animationFrameRef = useRef<number | undefined>(undefined)
   const containerRef = useRef<HTMLDivElement>(null)
 
   // Cleanup function to stop visualization and close audio context
-  const cleanup = () => {
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current)
-    }
-    if (audioContextRef.current) {
-      audioContextRef.current.close()
-    }
+const cleanup = () => {
+  if (animationFrameRef.current !== undefined) {
+    cancelAnimationFrame(animationFrameRef.current)
   }
-
+  if (audioContextRef.current) {
+    audioContextRef.current.close()
+  }
+}
   // Cleanup on unmount
   useEffect(() => {
     return cleanup

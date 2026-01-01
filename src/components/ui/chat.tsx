@@ -199,7 +199,7 @@ export function Chat({
     <ChatContainer className={className}>
       {isEmpty && append && suggestions ? (
         <PromptSuggestions
-          label={label}
+          label={label || ""}
           append={append}
           suggestions={suggestions}
         />
