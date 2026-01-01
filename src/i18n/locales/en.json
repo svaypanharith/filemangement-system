@@ -1,6 +1,8 @@
 {
   "welcome": {
     "title": "Welcome to the",
+    "meet_our_expert_team": "Meet Our Expert Team",
+    "passionate_developers": "Passionate developers dedicated to building amazing experiences",
     "title_description": "File Management System",
     "description": "This is a file management system that allows you to manage your files and folders.",
     "button": "Get Started",

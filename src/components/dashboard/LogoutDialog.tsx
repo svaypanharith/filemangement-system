@@ -15,12 +15,12 @@ type LogoutDialogProps = {
 
 const LogoutDialog = ({ open, onOpenChange, onSuccess }: LogoutDialogProps) => {
   const { t } = useTranslation("");
-  // const { logout } = useAuth();
+  const { logout } = useAuth();
   const [signOut, { isLoading }] = useSignOutMutation();
 
   const handleLogout = async () => {
     try {
-      // logout();
+      logout();
       window.location.href = "/";
     } catch (error: any) {
       console.error("Logout error:", error);

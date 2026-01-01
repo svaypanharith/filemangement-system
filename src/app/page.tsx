@@ -20,6 +20,7 @@ import {
   Users,
   ArrowRight,
   Upload,
+  User
 } from "lucide-react";
 
 export default function Home() {
@@ -211,10 +212,10 @@ export default function Home() {
   <div className="container mx-auto px-4">
     <div className="text-center mb-16">
       <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-        Meet Our Expert Team
+        {t("welcome.meet_our_expert_team")}
       </h2>
       <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-        Passionate developers dedicated to building amazing experiences
+        {t("welcome.passionate_developers")}
       </p>
     </div>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -265,7 +266,7 @@ export default function Home() {
         <div className="p-6">
           <h3 className="text-xl font-semibold text-gray-900">Vibol Sovichea</h3>
           <p className="text-blue-600 mb-4">Lead Developer</p>
-          <p className="text-gray-600 mb-4">Creating beautiful and intuitive user experiences that people love.</p>
+          <p className="text-gray-600 mb-4">A visionary in the digital space, our Lead Developer is obsessed with clean code and cutting-edge tech. [Name] leads our engineering team with a focus on high-performance applications and intuitive user experiences that push the boundaries of what's possible.</p>
           <div className="flex space-x-4">
             <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
               <Github className="w-5 h-5" />
@@ -278,20 +279,8 @@ export default function Home() {
       </div>
 
       <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-        <div className="relative h-80 w-full">
-          <Image
-          src="/images/"
-          alt="Developer 2"
-          fill
-          className="object-cover"
-          />
-         
-          {/* <Image
-            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-            alt="Developer 2"
-            fill
-            className="object-cover"
-          /> */}
+        <div className="w-full flex items-center justify-center h-80">
+           <User color="blue" size={100} />
         </div>
         <div className="p-6">
           <h3 className="text-xl font-semibold text-gray-900">Peng ReakSmey</h3>
@@ -308,13 +297,9 @@ export default function Home() {
         </div>
       </div>
             <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
-        <div className="relative h-80 w-full">
-          <Image
-          src="/images/"
-          alt="Developer 2"
-          fill
-          className="object-cover"
-          />
+        <div className="relative h-80 w-full flex items-center justify-center">
+          <User color="blue" size={100} />
+        
          
           {/* <Image
             src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"

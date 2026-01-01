@@ -10,7 +10,7 @@ import {
   Divider,
   Chip
 } from '@mui/material'
-import { useMemo } from 'react'
+import { Bot } from 'lucide-react'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import DescriptionIcon from '@mui/icons-material/Description'
 import FolderIcon from '@mui/icons-material/Folder'
@@ -28,10 +28,6 @@ import { useTranslation } from "react-i18next";
 
 
 const drawerWidth = 250
-
-// const { t } = useTranslation()
-
-
 interface SidebarProps {
   isOpen: boolean
 }
@@ -59,7 +55,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
       {
         title: t('dashboard.chat_both'),
         path: '/ai/search',
-        icon: <FindInPageIcon />,
+        icon: <Bot />,
         badge: 'AI'
       },
       {
@@ -91,8 +87,6 @@ export default function Sidebar({ isOpen }: SidebarProps) {
     ]
   }
 ]
-
-
 
 
   return (
