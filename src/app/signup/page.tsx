@@ -13,9 +13,8 @@ export default function SignupPage() {
   const { t } = useTranslation();
   const [signUp, { isLoading }] = useSignUpMutation();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  // const { login } = useAuth();
+  const { login } = useAuth();
 
-  // Set isMounted to true after component mounts (client-side only)
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -27,7 +26,7 @@ export default function SignupPage() {
         if (response.status !== 200) {
           throw new Error(response.message || "Something went wrong");
         }
-        // login(response.access_token || "");
+        login(response.access_token || "");
         toast.success(response.message || t("signup.signup_success"));
         setIsSubmitted(true);
       } catch (error: any) {

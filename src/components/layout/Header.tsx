@@ -16,7 +16,12 @@ import SearchIcon from '@mui/icons-material/Search'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import MenuIcon from '@mui/icons-material/Menu'
 import SwitchLanguage from '@/components/share/SwitchLanguage'
+import { useGetProfileInfoQuery } from '@/redux/slices/data-slice'
 import { useState } from 'react'
+import { getLocalStorage } from "@/utils/storage";
+import Image from 'next/image';
+
+
 
 interface HeaderProps {
   onSidebarOpenChange: (open: boolean) => void
@@ -25,6 +30,18 @@ interface HeaderProps {
 export default function Header({ onSidebarOpenChange }: HeaderProps) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+
+    const { data: profile } = useGetProfileInfoQuery();
+   let image = "";
+    const userImageRaw = getLocalStorage(`user_image_${profile?.user.id}`);
+    if (userImageRaw) {
+      try {
+        const parsed = typeof userImageRaw === "string" ? JSON.parse(userImageRaw) : userImageRaw;
+        image = parsed?.imageDataUrl || "";
+      } catch {
+        image = "";
+      }
+    }
 
   const handleMenuClick = () => {
     setIsSidebarOpen(!isSidebarOpen)
@@ -71,22 +88,17 @@ export default function Header({ onSidebarOpenChange }: HeaderProps) {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-
-          <SwitchLanguage />
-
-          <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-            <Avatar sx={{ width: 36, height: 36 }}>A</Avatar>
-          </IconButton>
-
-          <Menu
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={() => setAnchorEl(null)}
-          >
-            <MenuItem>Profile</MenuItem>
-            <MenuItem>Settings</MenuItem>
-            <MenuItem>Logout</MenuItem>
-          </Menu>
+           <div className="flex items-center gap-4">
+                  <SwitchLanguage />
+                  <span className="text-sm font-medium text-black">{profile?.user.email}</span>
+                  {userImageRaw ? <Image src={image || ""} alt="profile" width={36} height={36} className="rounded-full" /> : 
+                  <div className="bg-gray-100 rounded-full p-2 cursor-pointer">
+                    <span className="text-sm font-medium text-black w-8 h-8 flex items-center justify-center">
+                      {profile?.user.email.split("@")[0].slice(0, 1).toUpperCase()}
+                    </span>
+                  </div>
+          }
+                </div>
         </Box>
 
       </Toolbar>

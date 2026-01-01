@@ -66,6 +66,7 @@ export default function SignUpForm({
   }, [onSuccess]);
 
   const onSubmitForm = (data: FormSchemaType) => {
+  
     onSubmit(data);
   };
 

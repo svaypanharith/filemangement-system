@@ -83,6 +83,13 @@
     "copy_message": "Message copied to clipboard"
   },
   "dashboard": {
+    "workspace": "Workspace",
+    "documents": "Documents",
+    "folders": "Folders",
+    "upload": "Upload",
+    "chat_both": "Chat Both",
+    "smart_summary": "Smart Summary",
+    "document_insights": "Document Insights",
     "document_management": "Document Management",
     "Intelligent_document_platform": "Intelligent Document Platform",
     "dashboard": "Dashboard",

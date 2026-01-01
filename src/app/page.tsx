@@ -7,6 +7,9 @@ import SwitchLanguage from "@/components/share/SwitchLanguage";
 import { useRouter } from "next/navigation";
 import MButton from "@/components/m-ui/m-button";
 import { useTranslation } from "react-i18next";
+import Image from "next/image";
+
+import { Github, Linkedin, Twitter } from "lucide-react";
 import {
   Brain,
   Zap,
@@ -202,6 +205,143 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+
+      <section className="py-20 bg-white">
+  <div className="container mx-auto px-4">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Meet Our Expert Team
+      </h2>
+      <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        Passionate developers dedicated to building amazing experiences
+      </p>
+    </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {/* Team Member 1 */}
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div className="relative h-80 w-full">
+           
+           <Image
+  src="/assets/Image/Gemini_Generated_Image_9fsdp69fsdp69fsd.png"
+  alt="Developer 1"
+  width={400}  // Required: Add width
+  height={400} // Required: Add height
+  className="object-cover w-full h-80" // Ensure full width and fixed height
+  priority // Optional: Preload important images
+/>
+          
+        </div>
+        <div className="p-6">
+          <h3 className="text-xl font-semibold text-gray-900">Svay Panharith</h3>
+          <p className="text-blue-600 mb-4">Full Stack Developer</p>
+          <p className="text-gray-600 mb-4">Full-stack developer with 8+ years of experience in modern web technologies.</p>
+          <div className="flex space-x-4">
+            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
+              <Github className="w-5 h-5" />
+            </a>
+            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
+              <Linkedin className="w-5 h-5" />
+            </a>
+            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
+              <Twitter className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </div>
+    
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div className="relative h-80 w-full">
+     <Image
+  src="/assets/Image/vicheaimage.jpg"
+  alt="Developer 1"
+  width={400}
+  height={400}
+  className="object-cover w-full h-80"
+  priority 
+/>
+      
+        </div>
+        <div className="p-6">
+          <h3 className="text-xl font-semibold text-gray-900">Vibol Sovichea</h3>
+          <p className="text-blue-600 mb-4">Lead Developer</p>
+          <p className="text-gray-600 mb-4">Creating beautiful and intuitive user experiences that people love.</p>
+          <div className="flex space-x-4">
+            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
+              <Github className="w-5 h-5" />
+            </a>
+            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
+              <Linkedin className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div className="relative h-80 w-full">
+          <Image
+          src="/images/"
+          alt="Developer 2"
+          fill
+          className="object-cover"
+          />
+         
+          {/* <Image
+            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+            alt="Developer 2"
+            fill
+            className="object-cover"
+          /> */}
+        </div>
+        <div className="p-6">
+          <h3 className="text-xl font-semibold text-gray-900">Peng ReakSmey</h3>
+          <p className="text-blue-600 mb-4">Frontend Developer</p>
+          <p className="text-gray-600 mb-4">Creating beautiful and intuitive user experiences that people love.</p>
+          <div className="flex space-x-4">
+            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
+              <Github className="w-5 h-5" />
+            </a>
+            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
+              <Linkedin className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </div>
+            <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105">
+        <div className="relative h-80 w-full">
+          <Image
+          src="/images/"
+          alt="Developer 2"
+          fill
+          className="object-cover"
+          />
+         
+          {/* <Image
+            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+            alt="Developer 2"
+            fill
+            className="object-cover"
+          /> */}
+        </div>
+        <div className="p-6">
+          <h3 className="text-xl font-semibold text-gray-900">NyTa TEP</h3>
+          <p className="text-blue-600 mb-4">UI/UX Designer</p>
+          <p className="text-gray-600 mb-4">Creating beautiful and intuitive user experiences that people love.</p>
+          <div className="flex space-x-4">
+            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
+              <Github className="w-5 h-5" />
+            </a>
+            <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
+              <Linkedin className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </div>
+      {/* Add more team members as needed */}
+      
+    </div>
+  </div>
+</section>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">

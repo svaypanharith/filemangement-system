@@ -10,6 +10,7 @@ import {
   Divider,
   Chip
 } from '@mui/material'
+import { useMemo } from 'react'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import DescriptionIcon from '@mui/icons-material/Description'
 import FolderIcon from '@mui/icons-material/Folder'
@@ -26,59 +27,10 @@ import { usePathname } from 'next/navigation'
 import { useTranslation } from "react-i18next";
 
 
-const drawerWidth = 300
+const drawerWidth = 250
 
 // const { t } = useTranslation()
 
-const menu = [
-  
-  {
-    section: 'WORKSPACE',
-    items: [
-      { title: 'Dashboard', path: '/dashboard', icon: <DashboardIcon /> },
-      { title: 'Documents', path: '/dashboard/document', icon: <DescriptionIcon /> },
-      { title: 'Folders', path: '/dashboard/folder', icon: <FolderIcon /> },
-      { title: 'Upload', path: '/dashboard/upload', icon: <UploadFileIcon /> }
-    ]
-  },
-  {
-    section: 'AI INTELLIGENCE',
-    items: [
-      {
-        title: 'Chat Both',
-        path: '/ai/search',
-        icon: <FindInPageIcon />,
-        badge: 'AI'
-      },
-      {
-        title: 'Smart Summary',
-        path: '/ai/summary',
-        icon: <AutoAwesomeIcon />,
-        badge: 'AI'
-      },
-      {
-        title: 'Document Insights',
-        path: '/ai/insights',
-        icon: <PsychologyIcon />,
-        badge: 'AI'
-      }
-    ]
-  },
-  {
-    section: 'MANAGEMENT',
-    items: [
-      { title: 'Users & Roles', path: '/users', icon: <PeopleIcon /> },
-      { title: 'Access Control', path: '/security', icon: <SecurityIcon /> }
-    ]
-  },
-  {
-    section: 'SYSTEM',
-    items: [
-      { title: 'Audit Logs', path: '/logs', icon: <HistoryIcon /> },
-      { title: 'Settings', path: '/dashboard/setting', icon: <SettingsIcon /> }
-    ]
-  }
-]
 
 interface SidebarProps {
   isOpen: boolean
@@ -88,6 +40,60 @@ export default function Sidebar({ isOpen }: SidebarProps) {
   const pathname = usePathname()
 
   const { t } = useTranslation()
+
+
+  const menu = [
+  
+  {
+    section: t('dashboard.workspace'),
+    items: [
+      { title: t('dashboard.dashboard'), path: '/dashboard', icon: <DashboardIcon /> },
+      { title: t('dashboard.documents'), path: '/dashboard/document', icon: <DescriptionIcon /> },
+      { title: t('dashboard.folders'), path: '/dashboard/folder', icon: <FolderIcon /> },
+      { title: t('dashboard.upload'), path: '/dashboard/upload', icon: <UploadFileIcon /> }
+    ]
+  },
+  {
+    section: t('dashboard.ai_intelligence'),
+    items: [
+      {
+        title: t('dashboard.chat_both'),
+        path: '/ai/search',
+        icon: <FindInPageIcon />,
+        badge: 'AI'
+      },
+      {
+        title: t('dashboard.smart_summary'),
+        path: '/ai/summary',
+        icon: <AutoAwesomeIcon />,
+        badge: 'AI'
+      },
+      {
+        title: t('dashboard.document_insights'),
+        path: '/ai/insights',
+        icon: <PsychologyIcon />,
+        badge: 'AI'
+      }
+    ]
+  },
+  {
+    section: 'MANAGEMENT',
+    items: [
+      { title: t('dashboard.users_roles'), path: '/users', icon: <PeopleIcon /> },
+      { title: t('dashboard.access_control'), path: '/security', icon: <SecurityIcon /> }
+    ]
+  },
+  {
+    section: 'SYSTEM',
+    items: [
+      { title: 'Audit Logs', path: '/logs', icon: <HistoryIcon /> },
+      { title: t('dashboard.settings'), path: '/dashboard/setting', icon: <SettingsIcon /> }
+    ]
+  }
+]
+
+
+
 
   return (
     <Drawer
