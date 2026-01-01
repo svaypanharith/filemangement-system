@@ -1,17 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import dynamic from 'next/dynamic';
+import MButton from "@/components/m-ui/m-button";
+import Image from "next/image";
+import googleIcon from "../../../public/assets/icon/google.svg";
+import { Separator } from "@/components/ui/separator";
+import MInput from "@/components/m-ui/m-input";
+import MInputPassword from "@/components/m-ui/m-input-password";
 import { useTranslation } from "react-i18next";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { passwordValidation } from "@/components/m-ui/m-input-password";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-// Import components dynamically to ensure they're only loaded on the client side
-const MButton = dynamic(() => import("@/components/m-ui/m-button"), { ssr: false });
-const MInput = dynamic(() => import("@/components/m-ui/m-input"), { ssr: false });
-const MInputPassword = dynamic(() => import("@/components/m-ui/m-input-password"), { ssr: false });
-import { passwordValidation } from "@/components/m-ui/m-input-password";
+import { FormProvider } from "react-hook-form";
+import { useEffect } from "react";
 
 const password_error_messages = {
   confirm_password_required: "Confirm password is required",
@@ -58,101 +59,102 @@ export default function SignUpForm({
       password_confirmation: "",
     },
   });
-
   useEffect(() => {
     if (onSuccess) {
       form.reset();
     }
-  }, [onSuccess, form]);
+  }, [onSuccess]);
+
+  const onSubmitForm = (data: FormSchemaType) => {
+    onSubmit(data);
+  };
 
   return (
-    <div className="w-full bg-gray-50 rounded-2xl shadow-lg max-w-[600px] w-full h-full gap-10 p-10 ">
-      {/* Header Section */}
-      <div className="mb-8 text-center md:text-left">
-        <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-          {t("signup.title")}
-        </h2>
-        <p className="mt-2 text-gray-500 font-medium">
-          {t("signup.description")}
-        </p>
-      </div>
-
+    <div className="flex flex-col bg-gray-50 rounded-2xl shadow-xl max-w-[600px] w-full items-center justify-center p-6 gap-4">
+     <div className="flex w-full flex-col gap-4">
+        <div className="flex w-full flex-col gap-2">
+          <p className="text-2xl font-bold font-roboto">{t("signup.title")}</p>
+          <p className="text-sm text-gray-500">{t("signup.description")}</p>
+        </div>
+      </div> 
       <FormProvider {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6"
+          onSubmit={form.handleSubmit(onSubmitForm)}
+          className="w-full gap-4"
         >
-          {/* Section: Personal Info (Grid) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex w-full flex-col gap-8">
+          <div className="flex flex-row gap-6 w-full ">
             <MInput
               required
-              {...form.register("first_name")}
               error={form.formState.errors.first_name?.message}
+              onChange={(e) => {
+                form.setValue("first_name", e.target.value);
+              }}
               label={t("signup.first_name")}
-              placeholder="John"
-              rounded
+              placeholder={t("signup.first_name")}
             />
             <MInput
-              required
-              {...form.register("last_name")}
+              className="w-full"
+              rounded
               error={form.formState.errors.last_name?.message}
+              onChange={(e) => {
+                form.setValue("last_name", e.target.value);
+              }}
+              required
               label={t("signup.last_name")}
-              placeholder="Doe"
-              rounded
+              placeholder={t("signup.last_name")}
+              type="text"
             />
-          </div>
-
-          {/* Section: Account Info (Single Column) */}
-          <div className="space-y-4">
+             </div>
+             <div className="flex flex-row gap-6 w-full ">
             <MInput
               required
-              {...form.register("username")}
               error={form.formState.errors.username?.message}
+              onChange={(e) => {
+                form.setValue("username", e.target.value);
+              }}
               label={t("signup.username")}
-              placeholder="johndoe123"
-              rounded
+              placeholder={t("signup.username")}
             />
             <MInput
               required
-              {...form.register("email")}
               error={form.formState.errors.email?.message}
+              onChange={(e) => {
+                form.setValue("email", e.target.value);
+              }}
               label={t("signup.email")}
-              placeholder="name@example.com"
+              placeholder={t("signup.email")}
               type="email"
               rounded
             />
-          </div>
-
-          {/* Section: Security (Grid) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            </div>
+            <div className="flex flex-row gap-6 w-full ">
             <MInputPassword
               required
-              {...form.register("password")}
               error={form.formState.errors.password?.message}
+              {...form.register("password")}
               label={t("signup.password")}
-              placeholder="••••••••"
+              placeholder={t("signup.password")}
             />
             <MInputPassword
               required
-              {...form.register("password_confirmation")}
               error={form.formState.errors.password_confirmation?.message}
+              {...form.register("password_confirmation")}
               label={t("signup.confirm_password")}
-              placeholder="••••••••"
+              placeholder={t("signup.confirm_password")}
             />
-          </div>
-
-          {/* Submit Button */}
-          <div className="pt-2">
+            </div>
             <MButton
               loading={isLoading}
               type="submit"
               preset="primary"
               size="lg"
-              className="w-full py-6 text-lg font-semibold rounded-xl shadow-md transition-all hover:shadow-lg active:scale-[0.98]"
+              className="w-full rounded-full shadow-lg shadow-gray-200"
               disabled={isLoading}
             >
               {t("signup.button")}
             </MButton>
+          
           </div>
         </form>
       </FormProvider>

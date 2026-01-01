@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  const storedToken = request.cookies.get("auth_token")?.value;
-  const { pathname } = request.nextUrl;
+  // const storedToken = request.cookies.get("auth_token")?.value;
+  // const { pathname } = request.nextUrl;
 
   // const publicPaths = ["/", "/login", "/signup", "/forgot-password", "/signin"];
   // const isPublicPath = publicPaths.includes(pathname);

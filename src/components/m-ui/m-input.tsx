@@ -24,14 +24,14 @@ export default function MInput({
   onChange,
   className,
   required,
-  rounded,
+  rounded, 
   error,
   defaultValue,
   value,
 }: MInputProps) {
   console.log("type", type);
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 w-full">
       <p className="text-sm text-black">
         {label}
         {required && <span className="text-red-500 p-1">*</span>}
