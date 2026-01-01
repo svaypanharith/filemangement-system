@@ -1,6 +1,8 @@
 {
   "welcome": {
     "title": "Welcome to the",
+    "meet_our_expert_team": "Meet Our Expert Team",
+    "passionate_developers": "Passionate developers dedicated to building amazing experiences",
     "title_description": "File Management System",
     "description": "This is a file management system that allows you to manage your files and folders.",
     "button": "Get Started",
@@ -83,6 +85,15 @@
     "copy_message": "Message copied to clipboard"
   },
   "dashboard": {
+    "workspace": "Workspace",
+    "documents": "Documents",
+    "folders": "Folders",
+    "upload": "Upload",
+    "chat_both": "Chat Both",
+    "smart_summary": "Smart Summary",
+    "document_insights": "Document Insights",
+    "document_management": "Document Management",
+    "Intelligent_document_platform": "Intelligent Document Platform",
     "dashboard": "Dashboard",
     "document": "Document",
     "chatbot": "Chatbot",

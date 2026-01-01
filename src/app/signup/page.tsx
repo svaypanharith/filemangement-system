@@ -3,16 +3,21 @@
 import SignUpForm from "@/components/auth/SignUp-Form";
 import { useTranslation } from "react-i18next";
 import { useSignUpMutation } from "@/redux/slices/auth-slice";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useAuth } from "@/provider/AuthProvider";
 import { Base } from "@/components/share/base";
 
 export default function SignupPage() {
+  const [isMounted, setIsMounted] = useState(false);
   const { t } = useTranslation();
   const [signUp, { isLoading }] = useSignUpMutation();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { login } = useAuth();
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const onSubmit = useCallback(
     async (data: any) => {
@@ -24,7 +29,7 @@ export default function SignupPage() {
         login(response.access_token || "");
         toast.success(response.message || t("signup.signup_success"));
         setIsSubmitted(true);
-      } catch (error:any) {
+      } catch (error: any) {
         toast.error(error.message || t("signup.signup_error"));
       }
     },

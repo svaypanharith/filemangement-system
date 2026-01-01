@@ -24,7 +24,7 @@ export default function MInput({
   onChange,
   className,
   required,
-  rounded,
+  rounded, 
   error,
   defaultValue,
   value,

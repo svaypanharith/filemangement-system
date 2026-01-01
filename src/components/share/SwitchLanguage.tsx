@@ -48,7 +48,9 @@ export default function SwitchLanguage() {
                   width={20}
                   height={20}
                 />
+              <span className="text-black">
                 {t("switchLanguage.English")}
+              </span>
               </div>
             </SelectItem>
             <SelectItem value="km">
@@ -59,7 +61,9 @@ export default function SwitchLanguage() {
                   width={20}
                   height={20}
                 />
+              <span className="text-black">
                 {t("switchLanguage.Khmer")}
+              </span>
               </div>
             </SelectItem>
           </SelectContent>

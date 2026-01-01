@@ -6,6 +6,8 @@
   "welcome": {
     "welcome": "សូមស្វាគមន៍ទៅកាន់",
     "title": "សូមស្វាគមន៍មកកាន់",
+    "meet_our_expert_team": "ជួបជាមួយក្រុមអ្នកជំនាញរបស់យើង",
+    "passionate_developers": "ក្រុមអ្នកអភិវឌ្ឍន៍ដែលមានឆន្ទៈខ្ពស់ ក្នុងការបង្កើតបទពិសោធន៍ដ៏អស្ចារ្យជូនអ្នក",
     "file_management": "ប្រព័ន្នគ្រប់គ្រងឯកសារ",
     "title_description": "ប្រព័ន្នគ្រប់គ្រងឯកសារ",
     "description": "ជាបច្ចេកទេសដែលអនុញ្ញាតឱ្យអ្នករក្សាទុកប្រព័ន្ធបច្ចេកទេសរបស់អ្នក",
@@ -93,8 +95,18 @@
     "copy_message": "សារត្រូវបានចម្លងទៅកាន់ clipboard"
   },
   "dashboard": {
+    "workspace": "កន្លែងធ្វើការ",
     "dashboard": "ផ្ទាំងគ្រប់គ្រង",
-    "document": "ឯកសារ",
+    "folders": "ថតឯកសារ",
+    "upload": "ដាក់",
+    "chat_both": "ប្រព័ន្ធជជែកឆ្លាតវៃ",
+    "ai_intelligence": "AI បញ្ញា",
+    "smart_summary": "សង្ខេបឆ្លាតវៃ",
+    "document_insights": "ការយល់ដឹងអំពីឯកសារ",
+    "settings": "ការកំណត់",
+    "document_management": "គ្រប់គ្រងឯកសារ",
+    "Intelligent_document_platform": "វេទិកាឯកសារឆ្លាតវៃ",
+    "documents": "ឯកសារ",
     "chatbot": "ប្រព័ន្នAI",
     "folder": "ផ្ទាំងគ្រប់គ្រង",
     "total_document": "ចំនួនឯកសារទាំងអស់",

@@ -41,7 +41,8 @@ export default function RootLayout({
           <ClientProvider>
             <I18nProvider>
               <LoadLanguageProvider>
-                <AuthProvider>{children}</AuthProvider>
+                <AuthProvider>
+                  {children}</AuthProvider>
               </LoadLanguageProvider>
             </I18nProvider>
           </ClientProvider>

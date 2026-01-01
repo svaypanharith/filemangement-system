@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useTranslation } from "react-i18next";
 import { Separator } from "@/components/ui/separator";
-import SideBarMenu from "../share/SideBarMenu";
+// import SideBarMenu from "../share/SideBarMenu";
 import { MenuData } from "./MenuItem";
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -49,14 +49,14 @@ export function AppSidebar() {
             </SidebarGroupLabel>
             <Separator />
             <SidebarGroupContent className="flex flex-col gap-8">
-              <SideBarMenu items={data.Dashboard} />
+              {/* <SideBarMenu items={data.Dashboard} />
               <SideBarMenu items={data.menuItems} />
               <SideBarMenu 
                 items={data.chatbot} 
                 collapsible={true}
                 onSessionSelect={handleSessionSelect}
                 selectedSessionId={selectedSessionId}
-              />
+              /> */}
             </SidebarGroupContent>
           </SidebarGroup>
         </div>

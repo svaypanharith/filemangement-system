@@ -38,7 +38,7 @@ const MButton = React.forwardRef<HTMLButtonElement, ButtonProps & MButtonProps>(
       lg: "text-lg px-8 py-4",
     };
     const presetStyle = {
-      primary: "bg-indigo-700 text-white hover:bg-indigo-800 rounded-full",
+      primary: "bg-[#0047AB] text-white hover:bg-[#0047AB]/80 rounded-full",
       secondary:
         "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80 rounded-full",
       danger:
