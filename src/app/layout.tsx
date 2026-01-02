@@ -16,8 +16,8 @@ const poppins = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "StudySesh",
-  description: "StudySesh",
+  title: "EKASA",
+  description: "EKASA",
   icons: {
     icon: "/logo.png",
   },
