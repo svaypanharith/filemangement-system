@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: "EKASA",
   description: "EKASA",
   icons: {
-    icon: "/logo.png",
+    icon: "/assets/icon/ai-doc.png",
   },
 };
 
