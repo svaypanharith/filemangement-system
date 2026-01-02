@@ -236,7 +236,7 @@ export default function Home() {
         <div className="p-6">
           <h3 className="text-xl font-semibold text-gray-900">Svay Panharith</h3>
           <p className="text-blue-600 mb-4">Full Stack Developer</p>
-          <p className="text-gray-600 mb-4">Full-stack developer with 8+ years of experience in modern web technologies.</p>
+          <p className="text-gray-600 mb-4">Full-stack developer with 1+ years of experience in modern web technologies.</p>
           <div className="flex space-x-4">
             <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
               <Github className="w-5 h-5" />
@@ -266,7 +266,7 @@ export default function Home() {
         <div className="p-6">
           <h3 className="text-xl font-semibold text-gray-900">Vibol Sovichea</h3>
           <p className="text-blue-600 mb-4">Lead Developer</p>
-          <p className="text-gray-600 mb-4">A visionary in the digital space, our Lead Developer is obsessed with clean code and cutting-edge tech. [Name] leads our engineering team with a focus on high-performance applications and intuitive user experiences that push the boundaries of what's possible.</p>
+          <p className="text-gray-600 mb-4">A visionary in the digital space, our Lead Developer is obsessed with clean code and cutting-edge tech. Vibol Sovichea leads our engineering team with a focus on high-performance applications and intuitive user experiences that push the boundaries of what's possible.</p>
           <div className="flex space-x-4">
             <a href="#" className="text-gray-400 hover:text-blue-600 transition-colors">
               <Github className="w-5 h-5" />
