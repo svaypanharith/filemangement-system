@@ -10,7 +10,7 @@ import {
   Divider,
   Chip
 } from '@mui/material'
-import { Bot } from 'lucide-react'
+import { Bot , AudioLines } from 'lucide-react'
 import DashboardIcon from '@mui/icons-material/Dashboard'
 import DescriptionIcon from '@mui/icons-material/Description'
 import FolderIcon from '@mui/icons-material/Folder'
@@ -39,14 +39,12 @@ export default function Sidebar({ isOpen }: SidebarProps) {
 
 
   const menu = [
-  
   {
     section: t('dashboard.workspace'),
     items: [
       { title: t('dashboard.dashboard'), path: '/dashboard', icon: <DashboardIcon /> },
-      { title: t('dashboard.documents'), path: '/dashboard/document', icon: <DescriptionIcon /> },
-      { title: t('dashboard.folders'), path: '/dashboard/folder', icon: <FolderIcon /> },
-      { title: t('dashboard.upload'), path: '/dashboard/upload', icon: <UploadFileIcon /> }
+      { title: t('dashboard.my_documents'), path: '/dashboard/mydocument', icon: <DescriptionIcon /> },
+      { title: t('dashboard.upload'), path: '/dashboard/document', icon: <UploadFileIcon /> }
     ]
   },
   {
@@ -54,40 +52,27 @@ export default function Sidebar({ isOpen }: SidebarProps) {
     items: [
       {
         title: t('dashboard.chat_both'),
-        path: '/ai/search',
+        path: '/dashboard/chatbot',
         icon: <Bot />,
         badge: 'AI'
       },
-      {
-        title: t('dashboard.smart_summary'),
-        path: '/ai/summary',
-        icon: <AutoAwesomeIcon />,
-        badge: 'AI'
-      },
-      {
-        title: t('dashboard.document_insights'),
-        path: '/ai/insights',
-        icon: <PsychologyIcon />,
-        badge: 'AI'
-      }
+        {
+          title: t('dashboard.voice_convert'),
+          path: '/ai/voice',
+          icon: <AudioLines/>,
+          badge: 'AI'
+        },
+    
     ]
   },
+
   {
-    section: 'MANAGEMENT',
+    section: t('dashboard.system'),
     items: [
-      { title: t('dashboard.users_roles'), path: '/users', icon: <PeopleIcon /> },
-      { title: t('dashboard.access_control'), path: '/security', icon: <SecurityIcon /> }
-    ]
-  },
-  {
-    section: 'SYSTEM',
-    items: [
-      { title: 'Audit Logs', path: '/logs', icon: <HistoryIcon /> },
       { title: t('dashboard.settings'), path: '/dashboard/setting', icon: <SettingsIcon /> }
     ]
   }
 ]
-
 
   return (
     <Drawer
@@ -175,15 +160,6 @@ export default function Sidebar({ isOpen }: SidebarProps) {
             </List>
           </Box>
         ))}
-      </Box>
-
-      <Box px={3} py={2}>
-        <Typography fontSize={13} fontWeight={600} color='white'>
-          Admin User
-        </Typography>
-        <Typography fontSize={12} color="white">
-          AI Access Enabled
-        </Typography>
       </Box>
     </Drawer>
   )
